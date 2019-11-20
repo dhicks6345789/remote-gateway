@@ -161,6 +161,10 @@ os.system("ufw allow http > /dev/null 2>&1")
 os.system("ufw allow https > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
 
+# Copy index.html over to the web server's live folder.
+os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
+os.system("cp index.html /var/www/html")
+
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
 print("Stopping Tomcat...")
