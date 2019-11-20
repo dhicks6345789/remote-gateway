@@ -161,7 +161,7 @@ runIfPathMissing("/etc/guacamole", "mkdir /etc/guacamole")
 runIfPathMissing("/etc/guacamole/extensions", "mkdir /etc/guacamole/extensions")
 runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 # Build and install Guacamole.
-runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v")
+runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 # Copy accross Guacamole user mapping file.
 os.system("cp user-mapping.xml /etc/guacamole")
 # Enable the Guacamole server service.
@@ -173,7 +173,7 @@ os.system("cp default /etc/nginx/sites-available/default")
 os.system("cp tomcat9 /etc/default/tomcat9")
 os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
 # Copy over the Guacamole client (pre-compiled Java servlet)...
-os.system("cp /root/code/guacamole-1.0.0.war /etc/guacamole/guacamole.war")
+os.system("cp guacamole-1.0.0.war /etc/guacamole/guacamole.war")
 runIfPathMissing("/var/lib/tomcat9/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/")
 print("Starting Nginx...")
 os.system("systemctl start nginx")
