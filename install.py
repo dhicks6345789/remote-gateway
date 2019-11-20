@@ -67,6 +67,7 @@ print("Installing...")
 
 # Set up the Debian sources.list file - we need to use a library not included in the current Debian release.
 copyfile("sources.list", "/etc/apt/sources.list", mode="0644")
+os.system("apt-get update")
 
 # Make sure dos2unix (line-end conversion utility) is installed.
 runIfPathMissing("/usr/bin/dos2unix", "apt-get install -y dos2unix")
