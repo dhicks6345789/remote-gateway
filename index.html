@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>My Start Online</title>
+        
+        <!-- <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff"> -->
+        
+        <!-- Load Bootstrap CSS. -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <!-- Load Bootstrap's Javascript componenets, along with JQuery and Popper. -->
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <script>
+            function getDoc(id) {
+                const url = 'https://www.googleapis.com/drive/v3/files/'+id+'?alt=media'
+                console.log(url);
+                if(self.fetch) {
+                    var setHeaders = new Headers();
+                    setHeaders.append('Authorization', 'Bearer ' + authToken.access_token);
+                    setHeaders.append('Content-Type', mime);
+                
+                    var setOptions = {
+                        method: 'GET',
+                        headers: setHeaders
+                    };
+                    fetch(url,setOptions).then(response => {
+                        if(response.ok) {
+                            var reader = response.body.getReader();
+                            var decoder = new TextDecoder();
+                            reader.read().then(function(result) {
+                                var data = {}
+                                data = decoder.decode(result.value, {stream: !result.done});
+                                console.log(data);
+                            });
+                        } else {
+                            console.log("Response was not ok.");
+                        }
+                    }).catch(error => {
+                        console.log("There is an error " + error.message);
+                    });
+                }
+            }
+            
+            function canonicaliseURL(theURL, theAppendage) {
+                if (theURL == null) {
+                    return(theAppendage);
+                }
+                if (!(theURL.startsWith("/") || theURL.startsWith("http"))) {
+                    return(theAppendage + theURL);
+                }
+                return(theURL);
+            }
+        
+            $(function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has("googleID")) {
+                    $.ajax({
+                        type: "GET",
+                        dataType: "xml",
+                        url: "https://drive.google.com/file/d/" + urlParams.get("googleID") + "/view",
+                        headers: {"Access-Control-Allow-Origin":'*'},
+                        success: function(response) {
+                            console.log(response);
+                        }
+                    });
+                }
+                if (!(window.location.hostname.startsWith("mystart.online") || window.location.hostname.startsWith("www.mystart.online") )) {
+                    siteHostname = window.location.hostname.split(".")[0];
+                    configURL = "https://" + siteHostname + ".mystart.online/config/" + siteHostname;
+                } else {
+                    configURL = canonicaliseURL(urlParams.get("config"), "/config/");
+                }
+                console.log(configURL);
+                $.ajax({
+                    type: "GET",
+                    url: configURL,
+                    dataType: "xml",
+                    success: function(configXML) {
+                        XMLTitle = $(configXML).find("config")[0].attributes["title"];
+                        if (XMLTitle != undefined) {
+                            $("#mainTitle").html(XMLTitle.nodeValue);
+                            document.title = XMLTitle.nodeValue;
+                        }
+                        $(configXML).find("item").each(function(itemCount) {
+                            cellY = Math.floor(itemCount / 4);
+                            cellX = itemCount - (cellY * 4);
+                            cellY = cellY + 1;
+                            if (cellX == 0) {
+                                newIconBrowserRow = $("#iconBrowserRow-0").clone().show().prop("id", "jobBrowserRow-" + cellY).appendTo("#iconBrowser").children();
+                                for (columnX = 0; columnX < 4; columnX = columnX + 1) {
+                                    newIconBrowserRow[columnX].id = "iconBrowserCell-" + columnX + "-" + cellY;
+                                }
+                            }
+                            newItemCell = $("#itemCell-0-0").clone().show().prop("id", "itemCell-" + cellX + "-" + cellY).appendTo("#iconBrowserCell-" + cellX + "-" + cellY).children();
+                            newItemCell[0].href = $(this).attr("url");
+                            newItemCell[0].children[0].src = canonicaliseURL($(this).attr("icon"), "/siteIcons/");
+                            newItemCell[0].children[1].innerHTML = $(this).attr("title");
+                        });
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1 class="text-center" id="mainTitle">My Start Online</h1>
+        
+        <div class="container-fluid" id="iconBrowser">
+            <div class="row" id="iconBrowserRow-0" style="display:none">
+                <div class="col-sm-3 text-center" id="iconBrowserCell-0-0"></div>
+                <div class="col-sm-3 text-center" id="iconBrowserCell-1-0"></div>
+                <div class="col-sm-3 text-center" id="iconBrowserCell-2-0"></div>
+                <div class="col-sm-3 text-center" id="iconBrowserCell-3-0"></div>
+            </div>
+        </div>
+        
+        <div id="itemCell-0-0" style="display:none">
+            <a href="/" target="_blank">
+                <img src="siteIcons/default.svg" alt="Default icon" height="100%" width="100%"/>
+                <h2>Title</h2>
+            </a>
+        </div>
+    </body>
+</html>
