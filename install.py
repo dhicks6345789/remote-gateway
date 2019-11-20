@@ -6,7 +6,7 @@ import shutil
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-googleKey"]
+validValueOptions = ["-serverName", "-serverIP"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -64,6 +64,9 @@ def runExpect(inputArray):
   os.system("rm temp.expect")
 
 print("Installing...")
+
+getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
+getUserOption("-serverIP", "Please enter this server's IP address")
 
 # Set up the Debian sources.list file - we need to use a library not included in the current Debian release.
 copyfile("sources.list", "/etc/apt/sources.list", mode="0644")
@@ -177,6 +180,7 @@ os.system("systemctl enable guacd > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
+replaceVariables("/etc/nginx/sites-available/default", )
 # Copy over the Tomcat config files.
 os.system("cp tomcat9 /etc/default/tomcat9")
 os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
