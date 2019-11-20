@@ -106,7 +106,7 @@ runIfPathMissing("/usr/share/doc/libavutil-dev", "apt-get install -y libavutil-d
 runIfPathMissing("/usr/share/doc/libswscale-dev", "apt-get install -y libswscale-dev")
 
 # Make sure FreeRDP (library used by Guacamole to handle RDP connections) is installed.
-runIfPathMissing("/usr/share/doc/libfreerdp-dev", "apt-get install -y libfreerdp-dev")
+runIfPathMissing("/usr/share/doc/libfreerdp2-dev", "apt-get install -y libfreerdp2-dev")
 
 # Make sure Pango (library used by Guacamole to support SSH and Telnet connections) is installed.
 runIfPathMissing("/usr/share/doc/libpango1.0-dev", "apt-get install -y libpango1.0-dev")
