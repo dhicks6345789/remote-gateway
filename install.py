@@ -184,7 +184,7 @@ os.system("systemctl start guacd")
 
 # Set up Cron.
 copyfile("crontab", "/var/spool/cron/crontabs/root", mode="0600")
-os.system("cp monthlyCronjob /etc/guacamole")
-os.system("dos2unix /root/code/cronjob.sh > /dev/null 2>&1")
-os.system("chmod u+x /root/code/cronjob.sh")
+os.system("dos2unix monthlyCronjob.sh > /dev/null 2>&1")
+os.system("cp monthlyCronjob.sh /etc/guacamole")
+os.system("chmod u+x /etc/guacamole/monthlyCronjob.sh")
 os.system("/etc/init.d/cron restart")
