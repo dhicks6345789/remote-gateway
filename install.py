@@ -139,7 +139,7 @@ runIfPathMissing("/usr/share/doc/libvorbis-dev", "apt-get install -y libvorbis-d
 runIfPathMissing("/usr/share/doc/libwebp-dev", "apt-get install -y libwebp-dev")
 
 # Make sure the Tomcat servlet container is installed (used for serving Guacamole client contents to users connecting to the Guacamole server via web).
-runIfPathMissing("/usr/share/doc/tomcat8", "apt-get install -y tomcat8 tomcat8-admin tomcat8-common tomcat8-user")
+runIfPathMissing("/usr/share/doc/tomcat9", "apt-get install -y tomcat9 tomcat9-admin tomcat9-common tomcat9-user")
 
 # Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL)...
 runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
