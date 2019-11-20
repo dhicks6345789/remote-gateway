@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
 import os
-import sys
-import time
+#import sys
+#import time
 import shutil
-import hashlib
+#import hashlib
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-domainName", "-contentFolderPath", "-jekyllFolderPath"]
+validValueOptions = ["-googleKey"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -39,12 +39,6 @@ def getUserOption(optionName, theMessage):
     if not optionName in userOptions.keys():
         userOptions[optionName] = input(theMessage + ": ")
     return(userOptions[optionName])
-
-def askUserMenu(theOptions):
-    for optionCount in range(0, len(theOptions)):
-        print(str(optionCount+1) + ": " + theOptions[optionCount])
-    userSelection = input("Selection: ")
-    return(int(userSelection))
 
 def readFile(theFilename):
     fileDataHandle = open(theFilename, "r")
@@ -94,58 +88,27 @@ runIfPathMissing("/usr/share/doc/build-essential", "apt-get install -y build-ess
 # Make sure ZLib (compression library, required for building other packages) is installed.
 runIfPathMissing("/usr/share/doc/zlib1g-dev", "apt-get install -y zlib1g-dev")
 
-# Make sure ruby-dev (the Ruby development environment) is installed.
-runIfPathMissing("/usr/share/doc/ruby-dev", "apt-get install -y ruby-dev")
-
-# Make sure Jekyll (static site generation tool) is installed.
-runIfPathMissing("/usr/local/bin/jekyll", "gem install bundler jekyll concurrent-ruby")
-runIfPathMissing("/root/.bundle", "bundle install")
-os.system("mkdir /.bundle > /dev/null 2>&1")
-os.system("chown www-data:www-data /.bundle > /dev/null 2>&1")
-
-# Make sure Pandoc (conversion utility for converting various file formats, in this case DOCX to Markdown) is installed.
-# Note that we need version 2.7.1, released March 2019, as it contains a bug fix to handle O365-created DOCX files properly - the version included by Debian Stretch is not yet up to date.
-runIfPathMissing("/usr/bin/pandoc", "wget https://github.com/jgm/pandoc/releases/download/2.7.1/pandoc-2.7.1-1-amd64.deb; dpkg -i pandoc-2.7.1-1-amd64.deb; rm pandoc-2.7.1-1-amd64.deb")
-
 # Make sure Flask (Python web-publishing framework) is installed.
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
-
-# Make sure XLRD (Python library for handling Excel files, required for Excel support in Pandas) is installed.
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/xlrd", "pip3 install xlrd")
-
-# Make sure Pandas (Python data-analysis library) is installed.
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/pandas", "pip3 install pandas")
-
-# Make sure Numpy (Python maths library) is installed.
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/numpy", "pip3 install numpy")
+#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
 
 # Make sure Expect (command-line automation utility) is installed.
 runIfPathMissing("/usr/bin/expect", "apt-get -y install expect")
 
-# Make sure rclone (for mounting cloud-based filesystems such as Google Drive) is installed.
-runIfPathMissing("/usr/bin/rclone", "curl https://rclone.org/install.sh | sudo bash")
-
-# Make sure FUSE (for mounting user filesystems, used by rclone) is installed.
-runIfPathMissing("/usr/bin/fusermount", "apt-get -y install fuse")
+sys.exit(0)
 
 # Make sure Apache (web server) is installed...
-runIfPathMissing("/etc/apache2", "apt-get install -y apache2")
+#runIfPathMissing("/etc/apache2", "apt-get install -y apache2")
 # ...with SSL enabled...
-os.system("a2enmod ssl > /dev/null")
+#os.system("a2enmod ssl > /dev/null")
 # ...and mod_rewrite...
-os.system("a2enmod rewrite > /dev/null")
+#os.system("a2enmod rewrite > /dev/null")
 # ...along with mod_wsgi...
-runIfPathMissing("/usr/share/doc/libapache2-mod-wsgi-py3", "apt-get install -y libapache2-mod-wsgi-py3 python-dev")
-os.system("a2enmod wsgi > /dev/null")
+#runIfPathMissing("/usr/share/doc/libapache2-mod-wsgi-py3", "apt-get install -y libapache2-mod-wsgi-py3 python-dev")
+#os.system("a2enmod wsgi > /dev/null")
 # ...and Certbot, for Let's Encrypt SSL certificates.
-runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y certbot python-certbot-apache")
+#runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y certbot python-certbot-apache")
 
-# /var/www/html is written by the build process run via a WSGI process, running as the www-data user, so the www-data user
-# needs to be able to write in /var/www/html.
-os.system("chown www-data:www-data /var/www/html")
-os.system("chown www-data:www-data /var/www/html/index.html")
-
-getUserOption("-domainName", "Please enter this site's domain name")
+#getUserOption("-domainName", "Please enter this site's domain name")
 
 # If this project already includes a Let's Encrypt certificate, install that. Otherwise, ask the user if we should set one up.
 # Code goes here - check if there's an archived SSL cedtiftcate to unpack.
