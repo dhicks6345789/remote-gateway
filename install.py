@@ -145,9 +145,9 @@ runIfPathMissing("/usr/share/doc/tomcat9", "apt-get install -y tomcat9 tomcat9-a
 # Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL)...
 runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
 # ...with support for Let's Encrypt. See here:
-# https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-9
-# Also, see later section on crontab for daily certbot renew / backup process.
-#runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python-certbot-nginx -t stretch-backports")
+# https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-10
+# Also, see later section on crontab for monthly certbot renew / backup process.
+runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python3-acme python3-certbot python3-mock python3-openssl python3-pkg-resources python3-pyparsing python3-zope.interface")
 
 # Make sure UFW is installed (Debian firewall). 
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
