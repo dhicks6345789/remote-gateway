@@ -180,7 +180,7 @@ os.system("systemctl enable guacd > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
-replaceVariables("/etc/nginx/sites-available/default", )
+replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"],"SERVERIP":userOptions["-serverIP"]})
 # Copy over the Tomcat config files.
 os.system("cp tomcat9 /etc/default/tomcat9")
 os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
