@@ -163,15 +163,15 @@ runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 # Build and install Guacamole.
 runIfPathMissing("/root/code/guacamole-server-1.0.0", "cd /root/code; tar -xzf guacamole-server-1.0.0.tar.gz; cd /root/code/guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v")
 # Copy accross Guacamole user mapping file.
-os.system("cp /root/code/user-mapping.xml /etc/guacamole")
+os.system("cp user-mapping.xml /etc/guacamole")
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
 # Copy over the Nginx config files.
-os.system("cp /root/code/nginx.conf /etc/nginx/nginx.conf")
-os.system("cp /root/code/default /etc/nginx/sites-available/default")
+os.system("cp nginx.conf /etc/nginx/nginx.conf")
+os.system("cp default /etc/nginx/sites-available/default")
 # Copy over the Tomcat config files.
-os.system("cp /root/code/tomcat9 /etc/default/tomcat9")
-os.system("cp /root/code/server.xml /usr/share/tomcat9/skel/conf/server.xml")
+os.system("cp tomcat9 /etc/default/tomcat9")
+os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
 # Copy over the Guacamole client (pre-compiled Java servlet)...
 os.system("cp /root/code/guacamole-1.0.0.war /etc/guacamole/guacamole.war")
 runIfPathMissing("/var/lib/tomcat9/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/")
@@ -183,7 +183,8 @@ print("Starting Guacamole server...")
 os.system("systemctl start guacd")
 
 # Set up Cron.
-copyfile("/root/code/crontab", "/var/spool/cron/crontabs/root", mode="0600")
+copyfile("crontab", "/var/spool/cron/crontabs/root", mode="0600")
+os.system("cp monthlyCronjob /etc/guacamole")
 os.system("dos2unix /root/code/cronjob.sh > /dev/null 2>&1")
 os.system("chmod u+x /root/code/cronjob.sh")
 os.system("/etc/init.d/cron restart")
