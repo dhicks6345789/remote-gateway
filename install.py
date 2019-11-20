@@ -2,9 +2,7 @@
 
 import os
 import sys
-#import time
 import shutil
-#import hashlib
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
@@ -88,11 +86,7 @@ runIfPathMissing("/usr/share/doc/build-essential", "apt-get install -y build-ess
 # Make sure ZLib (compression library, required for building other packages) is installed.
 runIfPathMissing("/usr/share/doc/zlib1g-dev", "apt-get install -y zlib1g-dev")
 
-# Make sure Flask (Python web-publishing framework) is installed.
-#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
 
-# Make sure Expect (command-line automation utility) is installed.
-#runIfPathMissing("/usr/bin/expect", "apt-get -y install expect")
 
 # Make sure Cairo (library used by Guacamole for rendering graphics) is installed.
 runIfPathMissing("/usr/share/doc/libcairo2-dev", "apt-get install -y libcairo2-dev")
@@ -148,175 +142,48 @@ runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
 # Also, see later section on crontab for daily certbot renew / backup process.
 #runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python-certbot-nginx -t stretch-backports")
 
-sys.exit(0)
+# Make sure UFW is installed (Debian firewall). 
+runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
+# Set up firewall rules - allow HTTP and HTTPS from external IP addresses, but only allow Tomcat's port 8080 from localhost.
+os.system("ufw allow OpenSSH > /dev/null 2>&1")
+os.system("ufw allow http > /dev/null 2>&1")
+os.system("ufw allow https > /dev/null 2>&1")
+os.system("echo y | ufw enable > /dev/null 2>&1")
 
-# Make sure Apache (web server) is installed...
-#runIfPathMissing("/etc/apache2", "apt-get install -y apache2")
-# ...with SSL enabled...
-#os.system("a2enmod ssl > /dev/null")
-# ...and mod_rewrite...
-#os.system("a2enmod rewrite > /dev/null")
-# ...along with mod_wsgi...
-#runIfPathMissing("/usr/share/doc/libapache2-mod-wsgi-py3", "apt-get install -y libapache2-mod-wsgi-py3 python-dev")
-#os.system("a2enmod wsgi > /dev/null")
-# ...and Certbot, for Let's Encrypt SSL certificates.
-#runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y certbot python-certbot-apache")
+print("Stopping Guacamole...")
+os.system("systemctl stop guacd")
+print("Stopping Tomcat...")
+os.system("systemctl stop tomcat9")
+print("Stopping Nginx...")
+os.system("systemctl stop nginx")
+# Make sure Guacamole's config folders exist.
+runIfPathMissing("/etc/guacamole", "mkdir /etc/guacamole")
+runIfPathMissing("/etc/guacamole/extensions", "mkdir /etc/guacamole/extensions")
+runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
+# Build and install Guacamole.
+runIfPathMissing("/root/code/guacamole-server-1.0.0", "cd /root/code; tar -xzf guacamole-server-1.0.0.tar.gz; cd /root/code/guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v")
+# Copy accross Guacamole user mapping file.
+os.system("cp /root/code/user-mapping.xml /etc/guacamole")
+# Enable the Guacamole server service.
+os.system("systemctl enable guacd > /dev/null 2>&1")
+# Copy over the Nginx config files.
+os.system("cp /root/code/nginx.conf /etc/nginx/nginx.conf")
+os.system("cp /root/code/default /etc/nginx/sites-available/default")
+# Copy over the Tomcat config files.
+os.system("cp /root/code/tomcat9 /etc/default/tomcat9")
+os.system("cp /root/code/server.xml /usr/share/tomcat9/skel/conf/server.xml")
+# Copy over the Guacamole client (pre-compiled Java servlet)...
+os.system("cp /root/code/guacamole-1.0.0.war /etc/guacamole/guacamole.war")
+runIfPathMissing("/var/lib/tomcat9/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/")
+print("Starting Nginx...")
+os.system("systemctl start nginx")
+print("Starting Tomcat...")
+os.system("systemctl start tomcat9")
+print("Starting Guacamole server...")
+os.system("systemctl start guacd")
 
-#getUserOption("-domainName", "Please enter this site's domain name")
-
-# If this project already includes a Let's Encrypt certificate, install that. Otherwise, ask the user if we should set one up.
-# Code goes here - check if there's an archived SSL cedtiftcate to unpack.
-print("Set up Let's Encrypt certificate?")
-print("This server needs to have a valid DNS entry pointing at it first - select \"no\" and you'll get a non-SSL server for testing, re-run this script with the \"-redoApacheConfig\" option to change.")
-userSelection = askUserMenu(["Yes - single domain name.","Yes - wildcard domain.","No"])
-# Stop Apache while we update the config.
-os.system("apachectl stop")
-# Pause for a moment to make sure apache has actually stopped.
-time.sleep(4)
-if userSelection == 1:
-    print("Code goes here...")
-    #os.system("certbot")
-elif userSelection == 2:
-    print("Code goes here...")
-elif userSelection == 3:
-    # Copy over the Apache configuration file.
-    copyfile("000-default-without-SSL.conf", "/etc/apache2/sites-available/000-default.conf", mode="0744")
-replaceVariables("/etc/apache2/sites-available/000-default.conf", {"DOMAINNAME":userOptions["-domainName"]})
-# Copy over the WSGI configuration file.
-copyfile("api.wsgi", "/var/www/api.wsgi", mode="0744")
-# Copy over the API.
-os.makedirs("/var/www/api", exist_ok=True)
-copyfile("api.py", "/var/www/api/api.py", mode="0744")
-copyfile("build.html", "/var/www/api/build.html", mode="744")
-# Start Apache back up again.
-os.system("apachectl start")
-
-# Make sure Rclone is set up to connect to the user's cloud storage - we might need to ask the user for some details.
-if not os.path.exists("/root/.config/rclone/rclone.conf"):
-    print("Configuring rclone...")
-    getUserOption("-contentFolderPath", "Please enter the path that contains the content")
-    getUserOption("-jekyllFolderPath", "Please enter the path that contains the Jekyll setup")
-    runExpect([
-        "spawn /usr/bin/rclone config",
-        "expect \"n/s/q>\"",
-        "send \"n\\r\"",
-        "expect \"name>\"",
-        "send \"drive\\r\"",
-        "expect \"Storage>\"",
-        "send \"drive\\r\"",
-        "expect \"client_id>\"",
-        "expect_user -timeout 3600 -re \"(.*)\\n\"",
-        "send \"$expect_out(1,string)\\r\"",
-        "expect \"client_secret>\"",
-        "expect_user -timeout 3600 -re \"(.*)\\n\"",
-        "send \"$expect_out(1,string)\\r\"",
-        "expect \"scope>\"",
-        "send \"drive.readonly\\r\"",
-        "expect \"root_folder_id>\"",
-        "send \"\\r\"",
-        "expect \"service_account_file>\"",
-        "send \"\\r\"",
-        "expect \"y/n>\"",
-        "send \"n\\r\"",
-        "expect \"y/n>\"",
-        "send \"n\\r\"",
-        "expect \"Enter verification code>\"",
-        "expect_user -timeout 3600 -re \"(.*)\\n\"",
-        "send \"$expect_out(1,string)\\r\"",
-        "expect \"y/n>\"",
-        "send \"n\\r\"",
-        "expect \"y/e/d>\"",
-        "send \"y\\r\"",
-      
-        "expect \"e/n/d/r/c/s/q>\"",
-        "send \"n\\r\"",
-        "expect \"name>\"",
-        "send \"content\\r\"",
-        "expect \"Storage>\"",
-        "send \"cache\\r\"",
-        "expect \"remote>\"",
-        "send \"drive:"+userOptions["-contentFolderPath"]+"\\r\"",
-        "expect \"plex_url>\"",
-        "send \"\\r\"",
-        "expect \"plex_username>\"",
-        "send \"\\r\"",
-        "expect \"y/g/n>\"",
-        "send \"n\\r\"",
-        "expect \"chunk_size>\"",
-        "send \"10M\\r\"",
-        "expect \"info_age>\"",
-        "send \"1y\\r\"",
-        "expect \"chunk_total_size>\"",
-        "send \"1G\\r\"",
-        "expect \"y/n>\"",
-        "send \"n\\r\"",
-        "expect \"y/e/d>\"",
-        "send \"y\\r\"",
-        
-        
-        "expect \"e/n/d/r/c/s/q>\"",
-        "send \"n\\r\"",
-        "expect \"name>\"",
-        "send \"jekyll\\r\"",
-        "expect \"Storage>\"",
-        "send \"cache\\r\"",
-        "expect \"remote>\"",
-        "send \"drive:"+userOptions["-jekyllFolderPath"]+"\\r\"",
-        "expect \"plex_url>\"",
-        "send \"\\r\"",
-        "expect \"plex_username>\"",
-        "send \"\\r\"",
-        "expect \"y/g/n>\"",
-        "send \"n\\r\"",
-        "expect \"chunk_size>\"",
-        "send \"10M\\r\"",
-        "expect \"info_age>\"",
-        "send \"1y\\r\"",
-        "expect \"chunk_total_size>\"",
-        "send \"1G\\r\"",
-        "expect \"y/n>\"",
-        "send \"n\\r\"",
-        "expect \"y/e/d>\"",
-        "send \"y\\r\"",
-        
-        "send \"q\\r\""
-    ])
-
-# Set up rclone to mount the user's cloud storage - first, stop any existing rclone mount process...
-os.system("systemctl stop rclone-content")
-os.system("systemctl stop rclone-jekyll")
-# ...make sure FUSE is configured to allow non-root users to access mounts...
-copyfile("fuse.conf", "/etc/fuse.conf", mode="644")
-# ...make sure the mount point and cache folders exist...
-os.makedirs("/mnt/content", exist_ok=True)
-os.makedirs("/mnt/jekyll", exist_ok=True)
-os.makedirs("/var/cache/rclone-content", exist_ok=True)
-os.makedirs("/var/cache/rclone-jekyll", exist_ok=True)
-# ...then set up systemd to mount the repository.
-copyfile("rclone-content.service", "/etc/systemd/system/rclone-content.service", mode="644")
-copyfile("rclone-jekyll.service", "/etc/systemd/system/rclone-jekyll.service", mode="644")
-os.system("systemctl start rclone-content")
-os.system("systemctl start rclone-jekyll")
-os.system("systemctl enable rclone-content")
-os.system("systemctl enable rclone-jekyll")
-
-# Copy accross the build.sh script.
-copyfile("build.sh", "/usr/local/bin/build.sh", mode="755")
-
-# Copy over the Python scipt that cleans up HTML files.
-copyfile("tidyHTML.py", "/usr/local/bin/tidyHTML.py", mode="0755")
-os.system("chown www-data:www-data /usr/local/bin/tidyHTML.py")
-
-# Install DocsToMarkdown.
-runIfPathMissing("/usr/local/bin/docsToMarkdown.py", "curl https://raw.githubusercontent.com/dhicks6345789/docs-to-markdown/master/docsToMarkdown.py -o /usr/local/bin/docsToMarkdown.py; chmod a+x /usr/local/bin/docsToMarkdown.py; echo > /var/log/build.log; chown www-data:www-data /var/log/build.log")
-runIfPathMissing("/var/local/jekyll", "mkdir /var/local/jekyll; chown www-data:www-data /var/local/jekyll")
-copyfile("docsToMarkdown.json", "/var/local/docsToMarkdown.json", mode="644")
-os.system("chown www-data:www-data /var/local/docsToMarkdown.json")
-
-# Make sure we have a (hashed) build password stored.
-if not os.path.exists("/var/local/buildPassword.txt"):
-    getUserOption("-buildPassword", "Enter a password to use for site rebuilds")
-    correctPasswordHash = hashlib.sha256(userOptions["-buildPassword"].encode("utf-8")).hexdigest()
-    writeFile("/var/local/buildPassword.txt", correctPasswordHash)
-    os.system("chown www-data:www-data /var/local/buildPassword.txt")
-    
+# Set up Cron.
+copyfile("/root/code/crontab", "/var/spool/cron/crontabs/root", mode="0600")
+os.system("dos2unix /root/code/cronjob.sh > /dev/null 2>&1")
+os.system("chmod u+x /root/code/cronjob.sh")
+os.system("/etc/init.d/cron restart")
