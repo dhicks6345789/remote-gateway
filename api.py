@@ -27,33 +27,8 @@ def runCommand(theCommand):
     return(result)
 
 @app.route("/")
-def api():
+def index():
     return "Hello world!"
 
-@app.route("/build")
-def build():
-    processRunning = False
-    for psLine in runCommand("ps ax").split("\n"):
-        if not psLine.find("build.sh") == -1:
-            processRunning = True
-
-    if flask.request.args.get("action") == "run":
-        correctPasswordHash = getFile("/var/local/buildPassword.txt")
-        passedPasswordHash = hashlib.sha256(flask.request.args.get("password").encode("utf-8")).hexdigest()
-        if passedPasswordHash == correctPasswordHash:
-            if not processRunning:
-                os.system("bash /usr/local/bin/build.sh &")
-            return "RUNNING"
-        return "WRONGPASSWORD"
-    elif flask.request.args.get("action") == "getStatus":
-        if processRunning:
-            return "RUNNING"
-        else:
-            return "NOTRUNNING"
-    elif flask.request.args.get("action") == "getLogs":
-        return re.sub(".\[\d*?m", "", getFile("/var/log/build.log"))
-    else:
-        return getFile("/var/www/api/build.html")
-    
 if __name__ == "__main__":
     app.run()
