@@ -8,12 +8,6 @@ import hashlib
 # The Flask library.
 import flask
 
-def flushPrint(theString):
-    print(theString + "\n")
-    sys.stdout.flush()
-
-flushPrint("Imported Flask.")
-
 app = flask.Flask(__name__)
 
 def getFile(theFilename):
@@ -35,9 +29,7 @@ def runCommand(theCommand):
 
 @app.route("/")
 def index():
-    flushPrint("In index.")
     return "Hello world!"
 
 if __name__ == "__main__":
-    flushPrint("Started main.")
     app.run()
