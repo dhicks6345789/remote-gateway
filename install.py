@@ -6,7 +6,7 @@ import shutil
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName", "-serverIP"]
+validValueOptions = ["-serverName", "-serverIP", "-googleClientID"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
