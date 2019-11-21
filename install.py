@@ -171,7 +171,7 @@ os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
 os.system("cp index.html /var/www/html")
 
 # Copy the Python API over to the appropriate uWSGI folder.
-os.system("cp wsgi.py /var/lib/nginx/uwsgi")
+os.system("cp api.py /var/lib/nginx/uwsgi")
 
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
