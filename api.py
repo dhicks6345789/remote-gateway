@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import sys
+print(sys.path)
 sys.path.append("/var/lib/nginx/uwsgi")
 
 # Standard Python libraries.
