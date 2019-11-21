@@ -30,9 +30,10 @@ server {
         #        proxy_set_header   X-Forwarded-Host $server_name;
         #}
 	
-	location = /api { rewrite ^ /api/; }
-	location /api { $uri @api; }
-	location @api {
+	#location = /api { rewrite ^ /api/; }
+	#location /api { $uri @api; }
+	#location @api {
+	location /api/ {
 		include uwsgi_params;
 		uwsgi_pass unix:/tmp/api.sock;
 	}
