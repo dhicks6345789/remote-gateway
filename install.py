@@ -67,6 +67,7 @@ print("Installing...")
 
 getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
 getUserOption("-serverIP", "Please enter this server's IP address")
+getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
 
 # Set up the Debian sources.list file - we need to use a library not included in the current Debian release.
 copyfile("sources.list", "/etc/apt/sources.list", mode="0644")
