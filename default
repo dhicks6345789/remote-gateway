@@ -19,7 +19,7 @@ server {
         }
 	
 	# Proxy connection to uWSGI application server.
-        location /api {
+        location /api/ {
                 include            uwsgi_params;
                 uwsgi_pass         uwsgicluster;
 
