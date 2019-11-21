@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 #ExecStart=/usr/local/bin/uwsgi --socket 127.0.0.1:8090 --uid www-data --gid www-data --home /var/lib/nginx/uwsgi -w api --callable app
-ExecStart=/usr/local/bin/uwsgi -s /tmp/api.sock --manage-script-name --mount /api=api:app
+ExecStart=/usr/local/bin/uwsgi -s /tmp/api.sock --manage-script-name --home /var/lib/nginx/uwsgi --mount /api=api:app
 # Requires systemd version 211 or newer
 RuntimeDirectory=uwsgi
 Restart=always
