@@ -153,7 +153,7 @@ runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
 runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python3-acme python3-certbot python3-mock python3-openssl python3-pkg-resources python3-pyparsing python3-zope.interface")
 runIfPathMissing("/usr/share/doc/python3-certbot-nginx", "apt-get install -y python3-certbot-nginx")
 # Make sure uWSGI (WSGI component for Nginx) is installed.
-runIfPathMissing("/something/uwsgi", "pip3 install uwsgi")
+runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
 
 # Make sure UFW is installed (Debian firewall). 
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
@@ -166,6 +166,9 @@ os.system("echo y | ufw enable > /dev/null 2>&1")
 # Copy index.html over to the web server's live folder.
 os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
 os.system("cp index.html /var/www/html")
+
+# Copy the Python API over to the appropriate uWSGI folder.
+os.system("cp wsgi.py /var/lib/nginx/uwsgi")
 
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
