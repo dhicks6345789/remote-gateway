@@ -192,6 +192,8 @@ runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.
 os.system("cp user-mapping.xml /etc/guacamole")
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
+# Enable the uWSGI server service.
+os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
