@@ -17,13 +17,24 @@ server {
                 proxy_cookie_path /guacamole/ /;
                 access_log off;
         }
+	
+	# Proxy connection to uWSGI application server.
+        location /api/ {
+                include            uwsgi_params;
+                uwsgi_pass         uwsgicluster;
 
-    #listen [::]:443 ssl ipv6only=on; # managed by Certbot
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/<<SERVERNAME>>/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/<<SERVERNAME>>/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+                proxy_redirect     off;
+                proxy_set_header   Host $host;
+                proxy_set_header   X-Real-IP $remote_addr;
+                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header   X-Forwarded-Host $server_name;
+        }
+
+	listen 443 ssl; # managed by Certbot
+	ssl_certificate /etc/letsencrypt/live/<<SERVERNAME>>/fullchain.pem; # managed by Certbot
+	ssl_certificate_key /etc/letsencrypt/live/<<SERVERNAME>>/privkey.pem; # managed by Certbot
+	include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
 # Virtual Host configuration for <<SERVERNAME>>
