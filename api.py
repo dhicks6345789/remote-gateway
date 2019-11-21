@@ -7,6 +7,8 @@ import hashlib
 # The Flask library.
 import flask
 
+SERVER_NAME = "manage.knightsbridgeschool.com"
+
 app = flask.Flask(__name__)
 
 def getFile(theFilename):
