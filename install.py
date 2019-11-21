@@ -170,6 +170,7 @@ os.system("echo y | ufw enable > /dev/null 2>&1")
 # Copy index.html over to the web server's live folder.
 os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
 os.system("cp index.html /var/www/html")
+replaceVariables("/var/www/html/index.html", {"GOOGLECLIENTID":userOptions["-googleClientID"]})
 
 # Copy the Python API over to the appropriate uWSGI folder.
 os.system("cp api.py /var/lib/nginx/uwsgi")
