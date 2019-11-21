@@ -142,6 +142,9 @@ runIfPathMissing("/usr/share/doc/libvorbis-dev", "apt-get install -y libvorbis-d
 # Make sure libwebp (library used by Guacamole to support WebP image data) is installed.
 runIfPathMissing("/usr/share/doc/libwebp-dev", "apt-get install -y libwebp-dev")
 
+# Make sure Flask (Python web-publishing framework) is installed.
+runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
+
 # Make sure the Tomcat servlet container is installed (used for serving Guacamole client contents to users connecting to the Guacamole server via web).
 runIfPathMissing("/usr/share/doc/tomcat9", "apt-get install -y tomcat9 tomcat9-admin tomcat9-common tomcat9-user")
 
