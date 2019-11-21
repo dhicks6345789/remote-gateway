@@ -28,7 +28,7 @@ def runCommand(theCommand):
     return(result)
 
 @app.route("/")
-def index():
+def api():
     return "Hello world!"
 
 if __name__ == "__main__":
