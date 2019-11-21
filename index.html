@@ -29,9 +29,19 @@
         <meta name="google-signin-client_id" content="<<GOOGLECLIENTID>>.apps.googleusercontent.com">
         
         <script>
+            // The "page ready" function, called when the HTML has finished loading and the DOM is ready to use.
             $(function() {
                 console.log("Hello, world!");
             });
+            
+            // Callback called after successful user sign-in.
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            }
         </script>
     </head>
     <body>
