@@ -7,6 +7,10 @@ import hashlib
 # The Flask library.
 import flask
 
+def flushPrint(theString):
+    print(theString + "\n")
+    sys.stdout.flush()
+
 flushPrint("Imported Flask.")
 
 app = flask.Flask(__name__)
@@ -27,10 +31,6 @@ def runCommand(theCommand):
     result = commandHandle.read()
     commandHandle.close()
     return(result)
-
-def flushPrint(theString):
-    print(theString + "\n")
-    sys.stdout.flush()
 
 @app.route("/")
 def index():
