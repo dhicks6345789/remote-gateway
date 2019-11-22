@@ -15,7 +15,7 @@ import google.auth.transport.requests
 app = flask.Flask(__name__)
 
 # Google client ID, taken from the Google API console - this value is inserted at build time.
-clientID = "<<GOOGLECLIENTID>>"
+clientID = "<<GOOGLECLIENTID>>.apps.googleusercontent.com"
 clientSecret = "<<GOOGLECLIENTSECRET>>"
 
 def getFile(theFilename):
