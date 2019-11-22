@@ -101,7 +101,7 @@ def googleTokenSignin():
     # Do the verification - if a string is returned, that's an error, but otherwise
     # we should have the user's information, including their user ID.
     IDInfo = verifyGoogleIDToken(flask.request.values.get('idToken', None))
-    if not isinstance(IDInfo, basestring):
+    if not isinstance(IDInfo, str):
         return "OK"
     return IDInfo
     
