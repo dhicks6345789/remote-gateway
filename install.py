@@ -149,14 +149,14 @@ runIfPathMissing("/usr/share/doc/libwebp-dev", "apt-get install -y libwebp-dev")
 runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
 
 # Make sure the Python libraries for Google's authentication library are installed.
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google/auth", "pip install --upgrade google-auth")
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_oauthlib", "pip install --upgrade google-auth-oauthlib")
+runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google/auth", "pip3 install google-auth")
+runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_oauthlib", "pip3 install google-auth-oauthlib")
 
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/googleapiclient", "pip install --upgrade google-api-python-client")
+runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/googleapiclient", "pip3 install google-api-python-client")
 
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_httplib2.py", "pip install --upgrade google-auth-httplib2")
+runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_httplib2.py", "pip3 install google-auth-httplib2")
 
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/oauth2client", "pip install --upgrade oauth2client")
+runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/oauth2client", "pip3 install oauth2client")
 
 
 
