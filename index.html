@@ -46,10 +46,14 @@
                 idToken = googleUser.getAuthResponse().id_token;
                 // Check the user credentials with our server, make sure they are valid before trying to continue.
                 doAPICall("googleTokenSignin", {}, function(result) {
-                    if(result == "OK") {
-                        // Okay, the user has done a valid login - get their basic profile details.
-                        var profile = googleUser.getBasicProfile();
-                        console.log('Email: ' + profile.getEmail());
+                    if(result.startWith("OK")) {
+                        // Okay, the user has done a valid login, and their Guacamole username and password should have been
+                        // returned from the API call.
+                        resultSplit = result.split(" ");
+                        username = resultSplit[1];
+                        password = resultSplit[2];
+                        console.log("Username: " + username);
+                        console.log("Password: " + password);
                     } else {
                         // Code goes here - if there was some issue with the user credentials check, return some
                         // useful information for the user.
