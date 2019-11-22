@@ -69,10 +69,6 @@ getUserOption("-serverName", "Please enter this server's full name (e.g. server.
 getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
 getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
 
-# Set up the Debian sources.list file - we need to use a library not included in the current Debian release.
-copyfile("sources.list", "/etc/apt/sources.list", mode="0644")
-os.system("apt-get update")
-
 # Make sure dos2unix (line-end conversion utility) is installed.
 runIfPathMissing("/usr/bin/dos2unix", "apt-get install -y dos2unix")
 
@@ -115,9 +111,12 @@ runIfPathMissing("/usr/share/doc/libswscale-dev", "apt-get install -y libswscale
 
 # Make sure FreeRDP (library used by Guacamole to handle RDP connections) is installed.
 # Note that, hopefully, in a future version of Gaucamole, this dependancy is going to
-# change from libfreerdp-dev to freerdp2-dev. For the moment, we have to include Debioan
+# change from libfreerdp-dev to freerdp2-dev. For the moment, we have to include Debian
 # Stretch repositories to be able to install libfreerdp-dev.
-runIfPathMissing("/usr/share/doc/libfreerdp-dev", "apt-get install -y libfreerdp-dev")
+runIfPathMissing("/usr/share/doc/libfreerdp-dev", "echo \"deb http://deb.debian.org/debian/ stretch main\" > /etc/apt/sources.list.d/temp-debian-stretch.list")
+runIfPathMissing("/usr/share/doc/libfreerdp-dev", "apt-get update; apt-get install -y libmysql-java libfreerdp-dev; rm /etc/apt/sources.list.d/temp-debian-stretch.list; apt-get update")
+
+
 
 # Make sure Pango (library used by Guacamole to support SSH and Telnet connections) is installed.
 runIfPathMissing("/usr/share/doc/libpango1.0-dev", "apt-get install -y libpango1.0-dev")
