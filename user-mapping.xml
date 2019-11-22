@@ -1,23 +1,15 @@
 <user-mapping>
     <!-- A user, using md5 to hash the password (MD5 hash of "Jumbal12"). -->
-    <authorize username="timetabler0001" password="9407F81AC391A5AD7C186BBE8234F7D0" encoding="md5">
-        <connection name="Timetabler00001">
+    <authorize username="d.hicks@knightsbridgeschool.com" password="9407F81AC391A5AD7C186BBE8234F7D0" encoding="md5">
+        <connection name="Manage001">
             <protocol>rdp</protocol>
-            <param name="hostname">51.38.80.249</param>
+            <param name="hostname">192.168.1.150</param>
             <param name="port">3389</param>
-            <param name="username">timetabler</param>
-            <param name="password">Jumbal12</param>
-            <param name="domain">WIN-VJ53HR7UKCJ</param>
+            <param name="username">administrator</param>
+            <!-- <param name="password"></param> -->
+            <param name="domain">KS-MONITOR02</param>
             <param name="security">nla</param>
             <param name="ignore-cert">true</param>
-        </connection>
-    </authorize>
-    <authorize username="timetabler0002" password="9407F81AC391A5AD7C186BBE8234F7D0" encoding="md5">
-        <connection name="Timetabler00002">
-            <protocol>vnc</protocol>
-            <param name="hostname">51.68.213.116</param>
-            <param name="port">5901</param>
-            <param name="password">Jumbal12</param>
         </connection>
     </authorize>
 </user-mapping>
