@@ -6,7 +6,7 @@ import shutil
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName", "-serverIP", "-googleClientID"]
+validValueOptions = ["-serverName", "-serverIP", "-googleClientID", "-googleClientSecret"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -68,6 +68,7 @@ print("Installing...")
 getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
 getUserOption("-serverIP", "Please enter this server's IP address")
 getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
+getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
 
 # Set up the Debian sources.list file - we need to use a library not included in the current Debian release.
 copyfile("sources.list", "/etc/apt/sources.list", mode="0644")
@@ -185,7 +186,7 @@ os.system("echo y | ufw enable > /dev/null 2>&1")
 # Copy index.html over to the web server's live folder.
 os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
 os.system("cp index.html /var/www/html")
-replaceVariables("/var/www/html/index.html", {"GOOGLECLIENTID":userOptions["-googleClientID"]})
+replaceVariables("/var/www/html/index.html", {"GOOGLECLIENTID":userOptions["-googleClientID"],"GOOGLECLIENTSECRET":userOptions["-googleClientSecret"]})
 
 # Copy the Python API over to the appropriate uWSGI folder.
 os.system("cp api.py /var/lib/nginx/uwsgi")
