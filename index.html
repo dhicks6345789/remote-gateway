@@ -44,6 +44,7 @@
             function onGoogleSignIn(googleUser) {
                 // Check the user credentials with our server, make sure they are valid before trying to continue.
                 idToken = googleUser.getAuthResponse().id_token;
+                console.log("idToken: " + idToken);
                 doAPICall("googleTokenSignin", {}, function(result) {
                     if(result == "OK") {
                         // Okay, the user has done a valid login.
