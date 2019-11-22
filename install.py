@@ -6,7 +6,7 @@ import shutil
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName", "-serverIP", "-googleClientID", "-googleClientSecret"]
+validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -66,7 +66,6 @@ def runExpect(inputArray):
 print("Installing...")
 
 getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
-getUserOption("-serverIP", "Please enter this server's IP address")
 getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
 getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
 
@@ -215,7 +214,7 @@ os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
-replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"],"SERVERIP":userOptions["-serverIP"]})
+replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 # Copy over the Tomcat config files.
 os.system("cp tomcat9 /etc/default/tomcat9")
 os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
