@@ -34,14 +34,35 @@
                 console.log("Hello, world!");
             });
             
-            // Callback called after successful user sign-in.
-            function onSignIn(googleUser) {
-                var profile = googleUser.getBasicProfile();
-                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-                console.log('Name: ' + profile.getName());
-                console.log('Image URL: ' + profile.getImageUrl());
-                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            // A conveinience function to do API calls.
+            function doAPICall(functionName, parameters, resultFunction) {
+                $.post("/api/" + functionName, $.extend({idToken:idToken}, parameters), resultFunction);
             }
+            
+            // Called when the user signs in with a valid Google ID.
+            function onGoogleSignIn(googleUser) {
+                // Check the user credentials with our server, make sure they are valid before trying to continue.
+                idToken = googleUser.getAuthResponse().id_token;
+                doAPICall("googleTokenSignin", {}, function(result) {
+                    if(result == "OK") {
+                        // Okay, the user has done a valid login.
+                        console.log("Valid login!")
+                    } else {
+                        // Code goes here - if there was some issue with the user credentials check, return some
+                        // useful information for the user.
+                        console.log(result);
+                    }
+                });
+            }
+            
+            // Callback called after successful user sign-in.
+            //function onGoogleSignIn(googleUser) {
+            //    var profile = googleUser.getBasicProfile();
+            //    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            //    console.log('Name: ' + profile.getName());
+            //    console.log('Image URL: ' + profile.getImageUrl());
+            //    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            //}
         </script>
     </head>
     <body>
@@ -49,6 +70,14 @@
         <p class="text-center">
             To do: more stuff goes here.
         </p>
-        <div class="g-signin2 text-center" data-onsuccess="onSignIn"></div>
+        <table style="width:100%; vertical-align:middle;">
+            <tr>
+                <td style="width:49%; text-align:right;"></td>
+                <td style="width:2%; text-align:center;">
+                    <div class="g-signin2" data-onsuccess="onGoogleSignIn"></div>
+                </td>
+                <td style="width:49%; text-align:left;"></td>
+            </tr>
+        </table>
     </body>
 </html>
