@@ -180,7 +180,6 @@ runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
 os.system("ufw allow OpenSSH > /dev/null 2>&1")
 os.system("ufw allow http > /dev/null 2>&1")
 os.system("ufw allow https > /dev/null 2>&1")
-os.system("ufw allow 4822 > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
 
 # Copy index.html over to the web server's live folder.
