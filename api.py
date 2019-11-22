@@ -5,8 +5,12 @@ import cgi
 import sys
 import hashlib
 
-# The Flask library.
+# The Flask web application framework.
 import flask
+
+# Libraries for handling Google OAuth (i.e. user sign-in on the front page) authentication flow.
+import google.oauth2.id_token
+import google.auth.transport.requests
 
 app = flask.Flask(__name__)
 
