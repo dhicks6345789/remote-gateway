@@ -143,8 +143,22 @@ runIfPathMissing("/usr/share/doc/libvorbis-dev", "apt-get install -y libvorbis-d
 # Make sure libwebp (library used by Guacamole to support WebP image data) is installed.
 runIfPathMissing("/usr/share/doc/libwebp-dev", "apt-get install -y libwebp-dev")
 
+
+
 # Make sure Flask (Python web-publishing framework) is installed.
 runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
+
+# Make sure the Python libraries for Google's authentication library are installed.
+installLib.runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google/auth", "pip install --upgrade google-auth")
+installLib.runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_oauthlib", "pip install --upgrade google-auth-oauthlib")
+
+installLib.runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/googleapiclient", "pip install --upgrade google-api-python-client")
+
+installLib.runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_httplib2.py", "pip install --upgrade google-auth-httplib2")
+
+installLib.runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/oauth2client", "pip install --upgrade oauth2client")
+
+
 
 # Make sure the Tomcat servlet container is installed (used for serving Guacamole client contents to users connecting to the Guacamole server via web).
 runIfPathMissing("/usr/share/doc/tomcat9", "apt-get install -y tomcat9 tomcat9-admin tomcat9-common tomcat9-user")
