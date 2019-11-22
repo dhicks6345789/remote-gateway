@@ -17,7 +17,6 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         
         <!-- Load Bootstrap's Javascript componenets, along with JQuery and Popper. -->
-        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -29,9 +28,11 @@
         <meta name="google-signin-client_id" content="<<GOOGLECLIENTID>>.apps.googleusercontent.com">
         
         <script>
+            // A global variable to hold the Google authentication token.
+            idToken = "";
+            
             // The "page ready" function, called when the HTML has finished loading and the DOM is ready to use.
             $(function() {
-                console.log("Hello, world!");
             });
             
             // A conveinience function to do API calls.
@@ -41,12 +42,14 @@
             
             // Called when the user signs in with a valid Google ID.
             function onGoogleSignIn(googleUser) {
-                // Check the user credentials with our server, make sure they are valid before trying to continue.
+                // Set the global idToken variable - needs to be used in any API calls.
                 idToken = googleUser.getAuthResponse().id_token;
+                // Check the user credentials with our server, make sure they are valid before trying to continue.
                 doAPICall("googleTokenSignin", {}, function(result) {
                     if(result == "OK") {
-                        // Okay, the user has done a valid login.
-                        console.log("Valid login!")
+                        // Okay, the user has done a valid login - get their basic profile details.
+                        var profile = googleUser.getBasicProfile();
+                        console.log('Email: ' + profile.getEmail());
                     } else {
                         // Code goes here - if there was some issue with the user credentials check, return some
                         // useful information for the user.
@@ -54,15 +57,6 @@
                     }
                 });
             }
-            
-            // Callback called after successful user sign-in.
-            //function onGoogleSignIn(googleUser) {
-            //    var profile = googleUser.getBasicProfile();
-            //    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            //    console.log('Name: ' + profile.getName());
-            //    console.log('Image URL: ' + profile.getImageUrl());
-            //    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-            //}
         </script>
     </head>
     <body>
