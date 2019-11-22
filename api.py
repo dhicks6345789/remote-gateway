@@ -103,7 +103,7 @@ def googleTokenSignin():
     IDInfo = verifyGoogleIDToken(flask.request.values.get('idToken', None))
     if not isinstance(IDInfo, str):
         # Code goes here - reset user's password (to long key) and return it.
-        print(IDInfo)
+        print(IDInfo["email"])
         return "OK"
     return IDInfo
 
