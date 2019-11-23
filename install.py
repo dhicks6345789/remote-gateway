@@ -3,10 +3,11 @@
 import os
 import sys
 import shutil
+import hashlib
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword"]
+validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword", "-remotePassword"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -68,6 +69,8 @@ print("Installing...")
 getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
 getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
 getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
+getUserOption("-adminPassword", "Please enter the admin password for the remote server")
+getUserOption("-remotePassword", "Please enter the password to use for Guacamole")
 
 # Make sure dos2unix (line-end conversion utility) is installed.
 runIfPathMissing("/usr/bin/dos2unix", "apt-get install -y dos2unix")
@@ -205,7 +208,7 @@ runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 # Copy accross Guacamole user mapping file.
 os.system("cp user-mapping.xml /etc/guacamole")
-replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"]})
+replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"], "REMOTEPASSWORD":hashlib.md5(userOptions["-remotePassword"]).encode('utf-8')).hexdigest()})
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
 # Enable the uWSGI server service.
