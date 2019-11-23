@@ -1,6 +1,6 @@
 <user-mapping>
-    <!-- A user, using md5 to hash the password (MD5 hash of "Jumbal12"). -->
-    <authorize username="d.hicks@knightsbridgeschool.com" password="9407F81AC391A5AD7C186BBE8234F7D0" encoding="md5">
+    <!-- A user, using md5 to hash the password. -->
+    <authorize username="d.hicks@knightsbridgeschool.com" password="<<REMOTEPASSWORD>>" encoding="md5">
         <connection name="Manage001">
             <protocol>rdp</protocol>
             <param name="hostname">192.168.1.150</param>
