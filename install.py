@@ -159,7 +159,7 @@ runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/oauth2client", 
 
 
 # Make sure the Tomcat servlet container is installed (used for serving Guacamole client contents to users connecting to the Guacamole server via web).
-runIfPathMissing("/usr/share/doc/tomcat9", "apt-get install -y tomcat9 tomcat9-admin tomcat9-common tomcat9-user")
+runIfPathMissing("/usr/share/doc/tomcat8", "apt-get install -y tomcat8 tomcat8-admin tomcat8-common tomcat8-user")
 
 # Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL)...
 runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
@@ -192,7 +192,7 @@ replaceVariables("/var/lib/nginx/uwsgi/api.py", {"GOOGLECLIENTID":userOptions["-
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
 print("Stopping Tomcat...")
-os.system("systemctl stop tomcat9")
+os.system("systemctl stop tomcat8")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
 print("Stopping uWSGI...")
@@ -214,17 +214,17 @@ os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
 replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 # Copy over the Tomcat config files.
-os.system("cp tomcat9 /etc/default/tomcat9")
-os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
+os.system("cp tomcat8 /etc/default/tomcat8")
+os.system("cp server.xml /usr/share/tomcat8/skel/conf/server.xml")
 # Copy over the Guacamole client (pre-compiled Java servlet)...
 os.system("cp guacamole-1.0.0.war /etc/guacamole/guacamole.war")
-runIfPathMissing("/var/lib/tomcat9/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/")
+runIfPathMissing("/var/lib/tomcat8/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat8/webapps/")
 print("Starting uWSGI...")
 os.system("systemctl start emperor.uwsgi.service")
 print("Starting Nginx...")
 os.system("systemctl start nginx")
 print("Starting Tomcat...")
-os.system("systemctl start tomcat9")
+os.system("systemctl start tomcat8")
 print("Starting Guacamole server...")
 os.system("systemctl start guacd")
 
