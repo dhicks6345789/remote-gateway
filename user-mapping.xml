@@ -6,7 +6,7 @@
             <param name="hostname">192.168.1.150</param>
             <param name="port">3389</param>
             <param name="username">administrator</param>
-            <param name="password"></param>
+            <param name="password"><<ADMINPASSWORD>></param>
             <param name="domain">KS-MONITOR02</param>
             <param name="security">nla</param>
             <param name="ignore-cert">true</param>
