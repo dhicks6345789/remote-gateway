@@ -6,7 +6,7 @@ import shutil
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret"]
+validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -205,6 +205,7 @@ runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 # Copy accross Guacamole user mapping file.
 os.system("cp user-mapping.xml /etc/guacamole")
+replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"]})
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
 # Enable the uWSGI server service.
