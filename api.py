@@ -75,24 +75,6 @@ def verifyGoogleIDToken(theIDToken):
     # At this point, we've verified the Google login token.
     return(IDInfo)
 
-# Check the parameters passed to an API call. Takes a dict of parameter names / values and a list of required parameter names.
-# If a listed required parameter is not found, throws an error. Note that "idToken" is always considered a required parameter.
-#def checkParameters(theValues, requiredParameterNames):
-#    requiredParameters = {}
-#    # Verify the user's ID Token - if an error message (as a string) isn't returned, we know we have a valid
-#    # array with user data in it.
-#    IDInfo = verifyGoogleIDToken(theValues.get('idToken', None))
-#    if isinstance(IDInfo, str):
-#        raise ValueError("Invalid idToken.")
-#    for requiredParameterName in requiredParameterNames:
-#        theValue = theValues.get(requiredParameterName, None)
-#        if theValue == None:
-#            raise ValueError("Parameter named " + requiredParameterName + " not found.")
-#        else:
-#            requiredParameters[requiredParameterName] = theValue
-#    #requiredParameters[str("userID")] = userInfo[str("id")]
-#    return(IDInfo, requiredParameters)
-
 @app.route("/googleTokenSignin", methods=["POST"])
 def googleTokenSignin():
     """
@@ -103,7 +85,7 @@ def googleTokenSignin():
     IDInfo = verifyGoogleIDToken(flask.request.values.get('idToken', None))
     if not isinstance(IDInfo, str):
         # Code goes here - reset user's password (to long key) and return it.
-        return "OK: " + IDInfo["email"] + " Bananas"
+        return "OK: " + IDInfo["email"] + " <<REMOTEPASSWORD>>"
     return IDInfo
 
 if __name__ == "__main__":
