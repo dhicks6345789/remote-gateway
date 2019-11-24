@@ -52,7 +52,7 @@
                         resultSplit = result.split(" ");
                         username = resultSplit[1];
                         password = resultSplit[2];
-                        console.log("/guacamole/#/?username=" + username + "&password=" + password);
+                        window.location.replace("/guacamole/#/?username=" + username + "&password=" + password);
                     } else {
                         // Code goes here - if there was some issue with the user credentials check, return some
                         // useful information for the user.
