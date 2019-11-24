@@ -190,7 +190,7 @@ replaceVariables("/var/www/html/index.html", {"GOOGLECLIENTID":userOptions["-goo
 
 # Copy the Python API over to the appropriate uWSGI folder.
 os.system("cp api.py /var/lib/nginx/uwsgi")
-replaceVariables("/var/lib/nginx/uwsgi/api.py", {"GOOGLECLIENTID":userOptions["-googleClientID"],"GOOGLECLIENTSECRET":userOptions["-googleClientSecret"]})
+replaceVariables("/var/lib/nginx/uwsgi/api.py", {"GOOGLECLIENTID":userOptions["-googleClientID"],"GOOGLECLIENTSECRET":userOptions["-googleClientSecret"],"REMOTEPASSWORD":userOptions["-remotePassword"]})
 
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
