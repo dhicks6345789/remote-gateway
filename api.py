@@ -84,8 +84,12 @@ def googleTokenSignin():
     # we should have the user's information, including their email address.
     IDInfo = verifyGoogleIDToken(flask.request.values.get('idToken', None))
     if not isinstance(IDInfo, str):
-        # Code goes here - reset user's password (to long key) and return it.
-        return "OK: " + IDInfo["email"] + " <<REMOTEPASSWORD>>"
+        # Code goes here - check if the user is a valid user, not just any random passer-by with a GSuite account.
+        if IDInfo["email"] in ["d.hicks@knightsbridgeschool.com", "k.milani@knightsbridgeschool.com", "s.harrison@knightsbridgeschool.com"]:
+            # Code goes here - reset user's password (to long key) and return it.
+            return "OK: " + IDInfo["email"] + " <<REMOTEPASSWORD>>"
+        else:
+            return "ERROR: Not a valid user on this system - " + IDInfo["email"]
     return IDInfo
 
 if __name__ == "__main__":
