@@ -208,7 +208,7 @@ runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 # Build and install Guacamole.
 runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 # Copy accross Guacamole user mapping file.
-os.system("cp user-mapping.xml /etc/guacamole")
+os.system("cp /root/user-mapping.xml /etc/guacamole")
 #replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"], "REMOTEPASSWORD":hashlib.md5(userOptions["-remotePassword"].encode('utf-8')).hexdigest()})
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
