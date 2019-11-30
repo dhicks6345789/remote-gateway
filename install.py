@@ -7,7 +7,7 @@ import hashlib
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword", "-remotePassword"]
+#validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword", "-remotePassword"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -66,11 +66,11 @@ def runExpect(inputArray):
 
 print("Installing...")
 
-getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
-getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
-getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
-getUserOption("-adminPassword", "Please enter the admin password for the remote server")
-getUserOption("-remotePassword", "Please enter the password to use for Guacamole")
+#getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
+#getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
+#getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
+#getUserOption("-adminPassword", "Please enter the admin password for the remote server")
+#getUserOption("-remotePassword", "Please enter the password to use for Guacamole")
 
 # Make sure dos2unix (line-end conversion utility) is installed.
 runIfPathMissing("/usr/bin/dos2unix", "apt-get install -y dos2unix")
@@ -147,17 +147,17 @@ runIfPathMissing("/usr/share/doc/libwebp-dev", "apt-get install -y libwebp-dev")
 
 
 # Make sure Flask (Python web-publishing framework) is installed.
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
+#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
 
 # Make sure the Python libraries for Google's authentication library are installed.
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google/auth", "pip3 install google-auth")
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_oauthlib", "pip3 install google-auth-oauthlib")
+#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google/auth", "pip3 install google-auth")
+#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_oauthlib", "pip3 install google-auth-oauthlib")
 
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/googleapiclient", "pip3 install google-api-python-client")
+#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/googleapiclient", "pip3 install google-api-python-client")
 
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_httplib2.py", "pip3 install google-auth-httplib2")
+#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_httplib2.py", "pip3 install google-auth-httplib2")
 
-runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/oauth2client", "pip3 install oauth2client")
+#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/oauth2client", "pip3 install oauth2client")
 
 
 
@@ -169,13 +169,13 @@ runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
 # ...with support for Let's Encrypt. See here:
 # https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-10
 # Also, see later section on crontab for monthly certbot renew / backup process.
-runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python3-acme python3-certbot python3-mock python3-openssl python3-pkg-resources python3-pyparsing python3-zope.interface")
-runIfPathMissing("/usr/share/doc/python3-certbot-nginx", "apt-get install -y python3-certbot-nginx")
+runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python3-acme python3-certbot-nginx python3-mock python3-openssl python3-pkg-resources python3-pyparsing python3-zope.interface")
+#runIfPathMissing("/usr/share/doc/python3-certbot-nginx", "apt-get install -y python3-certbot-nginx")
 # Make sure uWSGI (WSGI component for Nginx) is installed.
-runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
-copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
+#runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
+#copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
 
-# Make sure UFW is installed (Debian firewall). 
+# Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
 # Set up firewall rules - allow HTTP and HTTPS from external IP addresses, but only allow Tomcat's port 8080 from localhost.
 os.system("ufw allow OpenSSH > /dev/null 2>&1")
@@ -184,13 +184,13 @@ os.system("ufw allow https > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
 
 # Copy index.html over to the web server's live folder.
-os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
-os.system("cp index.html /var/www/html")
-replaceVariables("/var/www/html/index.html", {"GOOGLECLIENTID":userOptions["-googleClientID"]})
+#os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
+#os.system("cp index.html /var/www/html")
+#replaceVariables("/var/www/html/index.html", {"GOOGLECLIENTID":userOptions["-googleClientID"]})
 
 # Copy the Python API over to the appropriate uWSGI folder.
-os.system("cp api.py /var/lib/nginx/uwsgi")
-replaceVariables("/var/lib/nginx/uwsgi/api.py", {"GOOGLECLIENTID":userOptions["-googleClientID"],"GOOGLECLIENTSECRET":userOptions["-googleClientSecret"],"REMOTEPASSWORD":userOptions["-remotePassword"]})
+#os.system("cp api.py /var/lib/nginx/uwsgi")
+#replaceVariables("/var/lib/nginx/uwsgi/api.py", {"GOOGLECLIENTID":userOptions["-googleClientID"],"GOOGLECLIENTSECRET":userOptions["-googleClientSecret"],"REMOTEPASSWORD":userOptions["-remotePassword"]})
 
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
@@ -198,8 +198,8 @@ print("Stopping Tomcat...")
 os.system("systemctl stop tomcat8")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
-print("Stopping uWSGI...")
-os.system("systemctl stop emperor.uwsgi.service")
+#print("Stopping uWSGI...")
+#os.system("systemctl stop emperor.uwsgi.service")
 # Make sure Guacamole's config folders exist.
 runIfPathMissing("/etc/guacamole", "mkdir /etc/guacamole")
 runIfPathMissing("/etc/guacamole/extensions", "mkdir /etc/guacamole/extensions")
@@ -208,23 +208,23 @@ runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 # Copy accross Guacamole user mapping file.
 os.system("cp user-mapping.xml /etc/guacamole")
-replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"], "REMOTEPASSWORD":hashlib.md5(userOptions["-remotePassword"].encode('utf-8')).hexdigest()})
+#replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"], "REMOTEPASSWORD":hashlib.md5(userOptions["-remotePassword"].encode('utf-8')).hexdigest()})
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
 # Enable the uWSGI server service.
-os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
+#os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
-replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
+#replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 # Copy over the Tomcat config files.
 os.system("cp tomcat8 /etc/default/tomcat8")
 os.system("cp server.xml /usr/share/tomcat8/skel/conf/server.xml")
 # Copy over the Guacamole client (pre-compiled Java servlet)...
 os.system("cp guacamole-1.0.0.war /etc/guacamole/guacamole.war")
 runIfPathMissing("/var/lib/tomcat8/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat8/webapps/")
-print("Starting uWSGI...")
-os.system("systemctl start emperor.uwsgi.service")
+#print("Starting uWSGI...")
+#os.system("systemctl start emperor.uwsgi.service")
 print("Starting Nginx...")
 os.system("systemctl start nginx")
 print("Starting Tomcat...")
