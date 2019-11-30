@@ -8,6 +8,7 @@ import hashlib
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
 #validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword", "-remotePassword"]
+validValueOptions = ["-serverName"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -66,7 +67,7 @@ def runExpect(inputArray):
 
 print("Installing...")
 
-#getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
+getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
 #getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
 #getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
 #getUserOption("-adminPassword", "Please enter the admin password for the remote server")
@@ -216,7 +217,7 @@ os.system("systemctl enable guacd > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
-#replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
+replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 # Copy over the Tomcat config files.
 os.system("cp tomcat8 /etc/default/tomcat8")
 os.system("cp server.xml /usr/share/tomcat8/skel/conf/server.xml")
