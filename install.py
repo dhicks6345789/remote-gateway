@@ -215,7 +215,7 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     print("two")
     os.system("echo \"CREATE USER 'guacamole_user'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "'; FLUSH PRIVILEGES;\" | mysql")
     print("three")
-    os.system("echo \"GRANT SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'localhost'; FLUSH PRIVILEGES;\" | mysql")
+    os.system("echo \"GRANT CREATE,SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'localhost'; FLUSH PRIVILEGES;\" | mysql")
     print("four")
     #os.system("echo \"FLUSH PRIVILEGES;\" | mysql")
    
