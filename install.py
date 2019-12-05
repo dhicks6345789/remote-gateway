@@ -203,6 +203,8 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
         "send \"y\\r\"",
         "expect \"\\[Y/n\\]\"",
         "send \"y\\r\"",
+        "expect \"\\[Y/n\\]\"",
+        "send \"y\\r\"",
         
         "interact"
     ])
