@@ -68,6 +68,7 @@ def runExpect(inputArray):
 print("Installing...")
 
 getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
+getUserOption("-databasePassword", "Please enter the password to set for Guacamole's database")
 #getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
 #getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
 #getUserOption("-adminPassword", "Please enter the admin password for the remote server")
@@ -191,7 +192,6 @@ os.system("echo y | ufw enable > /dev/null 2>&1")
 if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     os.system("apt-get install -y mariadb-server")
     print("Configuring MariaDB...")
-    getUserOption("-databasePassword", "Please enter the password to set for Guacamole's database")
     runExpect([
         "expect \"(enter for none):\"",
         "send \"\\r\"",
