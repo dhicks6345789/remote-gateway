@@ -208,16 +208,12 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
         "send \"y\\r\"",
         "interact"
     ])
-    runExpect([
-        "spawn mysql",
-        "expect \"MariaDB \\[(none)\\]>\"",
-        "send \"GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "' WITH GRANT OPTION;\\r\"",
-        "expect \"MariaDB \\[(none)\\]>\"",
-        "send \"FLUSH PRIVILEGES;\\r\"",
-        "expect \"MariaDB \\[(none)\\]>\"",
-        "send \"exit\\r\""
-    ])
+    # Create the mysql admin user.
+    os.system("echo \"GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "' WITH GRANT OPTION;\" | mysql")
+    os.system("echo FLUSH PRIVILEGES; | mysql -u admin -p" + userOptions["-databasePassword"])
+    # Create Guacamole's database (guacamole_db).
     os.system("echo CREATE DATABASE guacamole_db | mysql -u admin -p" + userOptions["-databasePassword"])
+    # Set up Guacamole's database using the provided schema.
     os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u admin -p" + userOptions["-databasePassword"] + " guacamole_db")
     
     
