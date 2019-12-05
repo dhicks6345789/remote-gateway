@@ -61,9 +61,9 @@ def replaceVariables(theFile, theKeyValues):
     writeFile(theFile, fileData)
     
 def runExpect(inputArray):
-  writeFile("temp.expect", inputArray)
-  os.system("expect temp.expect")
-  os.system("rm temp.expect")
+    writeFile("temp.expect", inputArray)
+    os.system("expect temp.expect")
+    os.system("rm temp.expect")
 
 print("Installing...")
 
@@ -93,6 +93,9 @@ runIfPathMissing("/usr/share/doc/build-essential", "apt-get install -y build-ess
 
 # Make sure ZLib (compression library, required for building other packages) is installed.
 runIfPathMissing("/usr/share/doc/zlib1g-dev", "apt-get install -y zlib1g-dev")
+
+# Make sure Expect (command-line automation utility) is installed.
+runIfPathMissing("/usr/bin/expect", "apt-get -y install expect")
 
 
 
@@ -185,8 +188,18 @@ os.system("ufw allow https > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
 
 # Make sure MariaDB (used by Guacamole for user management) is installed.
-runIfPathMissing("/usr/share/doc/mariadb-server", "apt-get install -y mariadb-server")
-
+if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
+    os.system("apt-get install -y mariadb-server")
+    print("Configuring MariaDB...")
+    getUserOption("-databasePassword", "Please enter the password to set for Guacamole's database")
+    runExpect([
+        "expect \"(enter for none):\"",
+        "send \"\\r\"",
+        "interact"
+    ])
+    
+    
+    
 # Copy index.html over to the web server's live folder.
 #os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
 #os.system("cp index.html /var/www/html")
