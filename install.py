@@ -63,7 +63,7 @@ def replaceVariables(theFile, theKeyValues):
 def runExpect(inputArray):
     writeFile("temp.expect", inputArray)
     os.system("expect temp.expect")
-    #os.system("rm temp.expect")
+    os.system("rm temp.expect")
 
 print("Installing...")
 
@@ -197,9 +197,10 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
         
         "expect \"(enter for none):\"",
         "send \"\\r\"",
-        
         "expect \"\\[Y/n\\]\"",
         "send \"n\\r\"",
+        "expect \"\\[Y/n\\]\"",
+        "send \"y\\r\"",
         
         "interact"
     ])
