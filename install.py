@@ -216,6 +216,10 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     # Set up Guacamole's database using the provided schema.
     os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u guacamole_user -p" + userOptions["-databasePassword"] + " guacamole_db")
     
+    Carry on with:
+    https://guacamole.apache.org/doc/gug/jdbc-auth.html
+        Got to "Installing database authentication"
+    
     
     
 # Copy index.html over to the web server's live folder.
