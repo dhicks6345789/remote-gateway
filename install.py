@@ -217,7 +217,8 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
         "expect \"MariaDB \\[(none)\\]>\"",
         "send \"exit\\r\""
     ])
-    #os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u root -p guacamole_db")
+    os.system("echo CREATE DATABASE guacamole_db | mysql -u admin -p" + userOptions["-databasePassword"])
+    os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u admin -p" + userOptions["-databasePassword"] + " guacamole_db")
     
     
     
