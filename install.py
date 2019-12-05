@@ -8,7 +8,7 @@ import hashlib
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
 #validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword", "-remotePassword"]
-validValueOptions = ["-serverName"]
+validValueOptions = ["-serverName", "-databasePassword"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
