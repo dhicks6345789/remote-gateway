@@ -209,12 +209,19 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
         "interact"
     ])
     # Create the mysql admin user.
-    os.system("echo \"GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "' WITH GRANT OPTION;\" | mysql")
-    os.system("echo FLUSH PRIVILEGES; | mysql -u admin -p" + userOptions["-databasePassword"])
+    
+    os.system("echo \"CREATE DATABASE guacamole_db;\" | mysql")
+    os.system("echo \"CREATE USER 'guacamole_user'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "';\" | mysql")
+    os.system("echo \"GRANT SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'localhost';\" | mysql")
+    os.system("echo \"FLUSH PRIVILEGES;\" | mysql")
+   
+    #os.system("echo \"GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "' WITH GRANT OPTION;\" | mysql")
+    #os.system("echo FLUSH PRIVILEGES; | mysql -u admin -p" + userOptions["-databasePassword"])
     # Create Guacamole's database (guacamole_db).
-    os.system("echo CREATE DATABASE guacamole_db | mysql -u admin -p" + userOptions["-databasePassword"])
+    #os.system("echo CREATE DATABASE guacamole_db | mysql -u admin -p" + userOptions["-databasePassword"])
+    
     # Set up Guacamole's database using the provided schema.
-    os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u admin -p" + userOptions["-databasePassword"] + " guacamole_db")
+    os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u guacamole_user -p" + userOptions["-databasePassword"] + " guacamole_db")
     
     
     
