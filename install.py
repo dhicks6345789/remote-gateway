@@ -208,6 +208,16 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
         "send \"y\\r\"",
         "interact"
     ])
+    runExpect([
+        "spawn mysql",
+        "expect \"MariaDB \\[(none)\\]>\"",
+        "send \"GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "' WITH GRANT OPTION;\\r\"",
+        "expect \"MariaDB \\[(none)\\]>\"",
+        "send \"FLUSH PRIVILEGES;\\r\"",
+        "expect \"MariaDB \\[(none)\\]>\"",
+        "send \"exit\\r\""
+    ])
+    #os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u root -p guacamole_db")
     
     
     
