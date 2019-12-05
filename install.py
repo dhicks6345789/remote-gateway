@@ -193,6 +193,8 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     os.system("apt-get install -y mariadb-server")
     print("Configuring MariaDB...")
     runExpect([
+        "spawn /usr/bin/mysql_secure_installation",
+        
         "expect \"(enter for none):\"",
         "send \"\\r\"",
         "interact"
