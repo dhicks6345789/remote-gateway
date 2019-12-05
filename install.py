@@ -210,9 +210,13 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     ])
     # Create the mysql admin user.
     
+    print("one")
     os.system("echo \"CREATE DATABASE guacamole_db;\" | mysql")
+    print("two")
     os.system("echo \"CREATE USER 'guacamole_user'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "';\" | mysql")
+    print("three")
     os.system("echo \"GRANT SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'localhost';\" | mysql")
+    print("four")
     os.system("echo \"FLUSH PRIVILEGES;\" | mysql")
    
     #os.system("echo \"GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "' WITH GRANT OPTION;\" | mysql")
@@ -221,6 +225,7 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     #os.system("echo CREATE DATABASE guacamole_db | mysql -u admin -p" + userOptions["-databasePassword"])
     
     # Set up Guacamole's database using the provided schema.
+    print("five")
     os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u guacamole_user -p" + userOptions["-databasePassword"] + " guacamole_db")
     
     
