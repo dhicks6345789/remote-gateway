@@ -210,6 +210,10 @@ if not os.path.exists("/usr/share/doc/mariadb-server"):
 # Make sure Maven is installed (Apche's build tool, used to build the Java-based Guacamole authentication extension).
 runIfPathMissing("/usr/share/doc/maven", "apt-get install -y maven")
 
+# Set up the Maven project to build the custom Guacamole authentication provider.
+os.makedirs("src/main/java/org/apache/guacamole/auth", exist_ok=True)
+os.system("cp MystartAuthenticationProvider.java src/main/java/org/apache/guacamole/auth")
+
 
 
 print("Stopping Guacamole...")
