@@ -214,7 +214,7 @@ runIfPathMissing("/usr/share/doc/maven", "apt-get install -y maven")
 os.makedirs("src/main/java/org/apache/guacamole/auth", exist_ok=True)
 os.system("cp MystartAuthenticationProvider.java src/main/java/org/apache/guacamole/auth")
 os.makedirs("src/main/resources", exist_ok=True)
-os.system("cp guac-manifest.json src/main/resources"
+os.system("cp guac-manifest.json src/main/resources")
 
 
 
