@@ -217,10 +217,10 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     # Set up Guacamole's database using the provided schema.
     os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u guacamole_user -p" + userOptions["-databasePassword"] + " guacamole_db")
     
-    # Copy over the Guacamole database authentication extension...
+    # Copy over the Guacamole database authentication extension.
     os.system("cp guacamole-auth-jdbc-1.0.0/mysql/guacamole-auth-jdbc-mysql-1.0.0.jar /etc/guacamole/extensions")
-    # ...and the MariaDB JDBC connector.
-    runIfPathMissing("mysql-connector-java_8.0.18-1debian10_all.deb", "wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.0.18-1debian10_all.deb; mkdir temp; cd temp; ar x ../mysql-connector-java_8.0.18-1debian10_all.deb; tar xf data.tar.xz")
+    # Obtain, extract and install the MySQL JDBC connector.
+    runIfPathMissing("mysql-connector-java_8.0.18-1debian10_all.deb", "wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.0.18-1debian10_all.deb; mkdir temp; cd temp; ar x ../mysql-connector-java_8.0.18-1debian10_all.deb; tar xf data.tar.xz; cp usr/share/java/mysql-connector-java-8.0.18.jar /etc/guacamole/lib; cd ..; rm -rf temp")
     # Copy over the Guacamole configuration file.
     os.system("cp guacamole.properties /etc/guacamole")
     replaceVariables("/etc/guacamole/guacamole.properties", {"DATABASEPASSWORD":userOptions["-databasePassword"]})
