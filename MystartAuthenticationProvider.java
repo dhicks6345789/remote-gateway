@@ -21,6 +21,9 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 		// Get the Guacamole server environment
 		//Environment environment = new LocalEnvironment();
 		
+		// Do nothing.
+		return null;
+		
 		// If wrong username, fail
 		if (!"bananas".equals(credentials.getUsername()))
 			return null;
