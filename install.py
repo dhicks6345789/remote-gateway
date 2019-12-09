@@ -98,7 +98,7 @@ runIfPathMissing("/usr/share/doc/zlib1g-dev", "apt-get install -y zlib1g-dev")
 runIfPathMissing("/usr/bin/expect", "apt-get -y install expect")
 
 # Make sure the Java Development Kit (JDK, used fro compiling Java applications) is installed.
-runIfPathMissing("/usr/bin/default-jdk", "apt-get install -y default-jdk")
+runIfPathMissing("/usr/share/doc/default-jdk", "apt-get install -y default-jdk")
 
 
 
