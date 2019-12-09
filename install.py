@@ -220,6 +220,8 @@ os.makedirs("src/main/resources", exist_ok=True)
 os.system("cp guac-manifest.json src/main/resources")
 # Build the extension.
 runIfPathMissing("target/guacamole-auth-mystart-1.0.0.jar", "mvn package")
+# Install the extension.
+os.system("cp target/guacamole-auth-mystart-1.0.0.jar /etc/guacamole/extensions")
 
 
 
