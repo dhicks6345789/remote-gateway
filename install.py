@@ -190,7 +190,7 @@ os.system("echo y | ufw enable > /dev/null 2>&1")
 
 # Make sure MariaDB (used by Guacamole for user management) is installed.
 # See: https://guacamole.apache.org/doc/gug/jdbc-auth.html#jdbc-auth-installation
-if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
+if not os.path.exists("/usr/share/doc/mariadb-server"):
     os.system("apt-get install -y mariadb-server")
     print("Configuring MariaDB...")
     runExpect([
