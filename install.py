@@ -218,6 +218,8 @@ os.makedirs("src/main/java/org/apache/guacamole/auth", exist_ok=True)
 os.system("cp MystartAuthenticationProvider.java src/main/java/org/apache/guacamole/auth")
 os.makedirs("src/main/resources", exist_ok=True)
 os.system("cp guac-manifest.json src/main/resources")
+# Build the extension.
+runIfPathMissing("target/guacamole-auth-mystart-1.0.0.jar", "mvn package")
 
 
 
