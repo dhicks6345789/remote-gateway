@@ -12,7 +12,7 @@ import org.apache.guacamole.protocol.GuacamoleConfiguration;
 public class MystartAuthenticationProvider extends SimpleAuthenticationProvider {
 	@Override
 	public String getIdentifier() {
-		return "tutorial";
+		return "mystart";
 	}
 
 	@Override
