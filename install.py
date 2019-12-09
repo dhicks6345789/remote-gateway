@@ -189,6 +189,7 @@ os.system("ufw allow https > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
 
 # Make sure MariaDB (used by Guacamole for user management) is installed.
+# See: https://guacamole.apache.org/doc/gug/jdbc-auth.html#jdbc-auth-installation
 if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     os.system("apt-get install -y mariadb-server")
     print("Configuring MariaDB...")
@@ -216,9 +217,10 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     # Set up Guacamole's database using the provided schema.
     os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u guacamole_user -p" + userOptions["-databasePassword"] + " guacamole_db")
     
-    Carry on with:
-    https://guacamole.apache.org/doc/gug/jdbc-auth.html
-        Got to "Installing database authentication"
+    # Copy over the Guacamole database authentication extension...
+    os.system("cp guacamole-auth-jdbc-1.0.0/mysql/guacamole-auth-jdbc-mysql-1.0.0.jar /etc/guacamole/extensions")
+    # ...and the MariaDB JDBC connector.
+    os.system("cp mariadb-java-client-2.5.2.jar /etc/guacamole/lib")
     
     
     
