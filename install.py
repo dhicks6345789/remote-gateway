@@ -220,7 +220,7 @@ if not os.path.exists("/usr/share/doc/mariadb-server/BANANAS"):
     # Copy over the Guacamole database authentication extension...
     os.system("cp guacamole-auth-jdbc-1.0.0/mysql/guacamole-auth-jdbc-mysql-1.0.0.jar /etc/guacamole/extensions")
     # ...and the MariaDB JDBC connector.
-    os.system("cp mariadb-java-client-2.5.2.jar /etc/guacamole/lib")
+    runIfPathMissing("mysql-connector-java_8.0.18-1debian10_all.deb", "curl https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.0.18-1debian10_all.deb")
     # Copy over the Guacamole configuration file.
     os.system("cp guacamole.properties /etc/guacamole")
     replaceVariables("/etc/guacamole/guacamole.properties", {"DATABASEPASSWORD":userOptions["-databasePassword"]})
