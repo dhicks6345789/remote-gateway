@@ -17,7 +17,14 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 
 	@Override
 	public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials credentials) throws GuacamoleException {
-		// Do nothing - yet.
-		return null;
+		// Get the Guacamole server environment
+		Environment environment = new LocalEnvironment();
+		
+		// If wrong username, fail
+		if (!"bananas".equals(credentials.getUsername()))
+			return null;
+		
+		// Successful login. Return configurations (STUB)
+		return new HashMap<String, GuacamoleConfiguration>();
 	}
 }
