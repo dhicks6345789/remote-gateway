@@ -25,10 +25,10 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 		return null;
 		
 		// If wrong username, fail
-		if (!"bananas".equals(credentials.getUsername()))
-			return null;
+		//if (!"bananas".equals(credentials.getUsername()))
+			//return null;
 		
 		// Successful login. Return configurations (STUB)
-		return new HashMap<String, GuacamoleConfiguration>();
+		//return new HashMap<String, GuacamoleConfiguration>();
 	}
 }
