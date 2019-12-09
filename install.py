@@ -7,7 +7,6 @@ import hashlib
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-#validValueOptions = ["-serverName", "-googleClientID", "-googleClientSecret", "-adminPassword", "-remotePassword"]
 validValueOptions = ["-serverName", "-databasePassword"]
 userOptions = {}
 optionCount = 1
@@ -65,14 +64,14 @@ def runExpect(inputArray):
     os.system("expect temp.expect")
     os.system("rm temp.expect")
 
-print("Installing...")
 
+
+# First, get some needed values from the user, if they haven't already provided them on the command line.
+print("Installing...")
 getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
 getUserOption("-databasePassword", "Please enter the password to set for Guacamole's database")
-#getUserOption("-googleClientID", "Please enter the Google Client ID used for the Log In With Google functionality")
-#getUserOption("-googleClientSecret", "Please enter the Google Client Secret used for the Log In With Google functionality")
-#getUserOption("-adminPassword", "Please enter the admin password for the remote server")
-#getUserOption("-remotePassword", "Please enter the password to use for Guacamole")
+
+
 
 # Make sure dos2unix (line-end conversion utility) is installed.
 runIfPathMissing("/usr/bin/dos2unix", "apt-get install -y dos2unix")
@@ -121,8 +120,6 @@ runIfPathMissing("/usr/share/doc/libswscale-dev", "apt-get install -y libswscale
 # Note that, hopefully, in a future version of Gaucamole, this dependancy is going to
 # change from libfreerdp-dev to freerdp2-dev. For the moment, we have to include Debian
 # Stretch repositories to be able to install libfreerdp-dev.
-#runIfPathMissing("/usr/share/doc/libfreerdp-dev", "echo \"deb http://deb.debian.org/debian/ stretch main\" > /etc/apt/sources.list.d/temp-debian-stretch.list")
-#runIfPathMissing("/usr/share/doc/libfreerdp-dev", "apt-get update; apt-get install -y libmysql-java libfreerdp-dev; rm /etc/apt/sources.list.d/temp-debian-stretch.list; apt-get update")
 runIfPathMissing("/usr/share/doc/libfreerdp-dev", "apt-get install -y libfreerdp-dev")
 
 # Make sure Pango (library used by Guacamole to support SSH and Telnet connections) is installed.
@@ -148,21 +145,6 @@ runIfPathMissing("/usr/share/doc/libvorbis-dev", "apt-get install -y libvorbis-d
 
 # Make sure libwebp (library used by Guacamole to support WebP image data) is installed.
 runIfPathMissing("/usr/share/doc/libwebp-dev", "apt-get install -y libwebp-dev")
-
-
-
-# Make sure Flask (Python web-publishing framework) is installed.
-#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
-
-# Make sure the Python libraries for Google's authentication library are installed.
-#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google/auth", "pip3 install google-auth")
-#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_oauthlib", "pip3 install google-auth-oauthlib")
-
-#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/googleapiclient", "pip3 install google-api-python-client")
-
-#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/google_auth_httplib2.py", "pip3 install google-auth-httplib2")
-
-#runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/oauth2client", "pip3 install oauth2client")
 
 
 
@@ -224,17 +206,11 @@ if not os.path.exists("/usr/share/doc/mariadb-server"):
     # Copy over the Guacamole configuration file.
     os.system("cp guacamole.properties /etc/guacamole")
     replaceVariables("/etc/guacamole/guacamole.properties", {"DATABASEPASSWORD":userOptions["-databasePassword"]})
-    
-    
-    
-# Copy index.html over to the web server's live folder.
-#os.system("rm /var/www/html/index.nginx-debian.html > /dev/null 2>&1")
-#os.system("cp index.html /var/www/html")
-#replaceVariables("/var/www/html/index.html", {"GOOGLECLIENTID":userOptions["-googleClientID"]})
 
-# Copy the Python API over to the appropriate uWSGI folder.
-#os.system("cp api.py /var/lib/nginx/uwsgi")
-#replaceVariables("/var/lib/nginx/uwsgi/api.py", {"GOOGLECLIENTID":userOptions["-googleClientID"],"GOOGLECLIENTSECRET":userOptions["-googleClientSecret"],"REMOTEPASSWORD":userOptions["-remotePassword"]})
+# Make sure Maven is installed (Apche's build tool, used to build the Java-based Guacamole authentication extension).
+runIfPathMissing("/usr/share/doc/maven", "apt-get install -y maven")
+
+
 
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
@@ -242,8 +218,6 @@ print("Stopping Tomcat...")
 os.system("systemctl stop tomcat8")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
-#print("Stopping uWSGI...")
-#os.system("systemctl stop emperor.uwsgi.service")
 # Make sure Guacamole's config folders exist.
 runIfPathMissing("/etc/guacamole", "mkdir /etc/guacamole")
 runIfPathMissing("/etc/guacamole/extensions", "mkdir /etc/guacamole/extensions")
@@ -268,8 +242,6 @@ os.system("cp server.xml /usr/share/tomcat8/skel/conf/server.xml")
 # Copy over the Guacamole client (pre-compiled Java servlet)...
 os.system("cp guacamole-1.0.0.war /etc/guacamole/guacamole.war")
 runIfPathMissing("/var/lib/tomcat8/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat8/webapps/")
-#print("Starting uWSGI...")
-#os.system("systemctl start emperor.uwsgi.service")
 print("Starting Nginx...")
 os.system("systemctl start nginx")
 print("Starting Tomcat...")
