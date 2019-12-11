@@ -23,9 +23,9 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 
 	@Override
 	public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials credentials) throws GuacamoleException {
-		String domain = credentials.getUsername().split(":")[0];
-		String username = credentials.getUsername().split(":")[1];
-		String loginToken = credentials.getPassword();
+		String username = credentials.getUsername()
+		String domain = credentials.getPassword().split(":")[0];
+		String loginToken = credentials.getPassword().split(":")[1];
 		
 		try {
 			URL url = new URL("https://" + domain + "/api/confirmGuacamoleLoginToken?guacamoleLoginToken=" + loginToken);
