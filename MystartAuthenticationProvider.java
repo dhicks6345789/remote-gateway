@@ -24,7 +24,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 	@Override
 	public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials credentials) throws GuacamoleException {
 		String domain = credentials.getUsername().split(":")[0];
-		String username = credentials.getUsername().split(":")[0];
+		String username = credentials.getUsername().split(":")[1];
 		String loginToken = credentials.getPassword();
 		
 		try {
@@ -37,8 +37,8 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			in.close();
 		
 			// If wrong username, fail.
-			//if (!confirmedUsername.equals(username))
-				//return null;
+			if (!confirmedUsername.equals(username))
+				return null;
 		
 			// Successful login. Return configurations (STUB).
 			return new HashMap<String, GuacamoleConfiguration>();
