@@ -31,7 +31,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 		con.setRequestMethod("GET");
 		int status = con.getResponseCode();
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		confirmedUsername = in.readLine();
+		String confirmedUsername = in.readLine();
 		in.close();
 		
 		// If wrong username, fail.
