@@ -1,11 +1,12 @@
 package org.apache.guacamole.auth;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.io.IOException;
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.net.auth.simple.SimpleAuthenticationProvider;
 import org.apache.guacamole.net.auth.Credentials;
@@ -21,7 +22,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 	}
 
 	@Override
-	public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials credentials) throws GuacamoleException {
+	public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials credentials) throws GuacamoleException,IOException {
 		String domain = credentials.getUsername().split(":")[0];
 		String username = credentials.getUsername().split(":")[0];
 		String loginToken = credentials.getPassword();
