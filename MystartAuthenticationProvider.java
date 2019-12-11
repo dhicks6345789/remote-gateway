@@ -21,6 +21,8 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 		// Get the Guacamole server environment
 		//Environment environment = new LocalEnvironment();
 		
+		https://timetabler.knightsbridgeschool.com/api/confirmGuacamoleLoginToken
+		
 		// Do nothing.
 		return null;
 		
