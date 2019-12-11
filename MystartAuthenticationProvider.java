@@ -27,19 +27,23 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 		String username = credentials.getUsername().split(":")[0];
 		String loginToken = credentials.getPassword();
 		
-		URL url = new URL("https://" + domain + "/api/confirmGuacamoleLoginToken?guacamoleLoginToken=" + loginToken);
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		con.setRequestMethod("GET");
-		int status = con.getResponseCode();
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String confirmedUsername = in.readLine();
-		in.close();
+		try {
+			URL url = new URL("https://" + domain + "/api/confirmGuacamoleLoginToken?guacamoleLoginToken=" + loginToken);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			int status = con.getResponseCode();
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String confirmedUsername = in.readLine();
+			in.close();
 		
-		// If wrong username, fail.
-		if (!confirmedUsername.equals(username))
-			return null;
+			// If wrong username, fail.
+			if (!confirmedUsername.equals(username))
+				return null;
 		
-		// Successful login. Return configurations (STUB).
-		return new HashMap<String, GuacamoleConfiguration>();
+			// Successful login. Return configurations (STUB).
+			return new HashMap<String, GuacamoleConfiguration>();
+		} catch(IOException ex) {
+        		return ex.toString;
+		}
 	}
 }
