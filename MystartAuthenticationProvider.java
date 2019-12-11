@@ -1,5 +1,6 @@
 package org.apache.guacamole.auth;
 
+import java.net.URL;
 import java.util.Map;
 import java.util.HashMap;
 import org.apache.guacamole.GuacamoleException;
