@@ -37,8 +37,8 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			in.close();
 		
 			// If wrong username, fail.
-			if (!confirmedUsername.equals(username))
-				return null;
+			//if (!confirmedUsername.equals(username))
+				//return null;
 		
 			// Successful login. Return configurations (STUB).
 			return new HashMap<String, GuacamoleConfiguration>();
