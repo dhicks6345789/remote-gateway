@@ -18,19 +18,23 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 
 	@Override
 	public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials credentials) throws GuacamoleException {
-		// Get the Guacamole server environment
-		//Environment environment = new LocalEnvironment();
+		String domain = credentials.getUsername().split(":")[0];
+		String username = credentials.getUsername().split(":")[0];
+		String loginToken = credentials.getPassword();
 		
-		https://timetabler.knightsbridgeschool.com/api/confirmGuacamoleLoginToken
+		URL url = new URL("https://" + domain + "/api/confirmGuacamoleLoginToken?guacamoleLoginToken=" + loginToken);
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+		int status = con.getResponseCode();
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		confirmedUsername = in.readLine();
+		in.close();
 		
-		// Do nothing.
-		return null;
+		// If wrong username, fail.
+		if (!confirmedUsername.equals(username))
+			return null;
 		
-		// If wrong username, fail
-		//if (!"bananas".equals(credentials.getUsername()))
-			//return null;
-		
-		// Successful login. Return configurations (STUB)
-		//return new HashMap<String, GuacamoleConfiguration>();
+		// Successful login. Return configurations (STUB).
+		return new HashMap<String, GuacamoleConfiguration>();
 	}
 }
