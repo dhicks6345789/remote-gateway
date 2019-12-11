@@ -23,7 +23,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 
 	@Override
 	public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials credentials) throws GuacamoleException {
-		String username = credentials.getUsername()
+		String username = credentials.getUsername();
 		String domain = credentials.getPassword().split(":")[0];
 		String loginToken = credentials.getPassword().split(":")[1];
 		
