@@ -43,7 +43,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			// Successful login. Return configurations (STUB).
 			return new HashMap<String, GuacamoleConfiguration>();
 		} catch(IOException ex) {
-        		return ex.toString;
+        		return ex.toString();
 		}
 	}
 }
