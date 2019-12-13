@@ -40,11 +40,17 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			if (!confirmedUsername.equals(username))
 				return null;
 			
-			GuacamoleConfiguration connectionConfig = new GuacamoleConfiguration();
-		
-			// Successful login. Return configurations (STUB).
-			// return new HashMap<String, GuacamoleConfiguration>();
-			return new HashMap<String, connectionConfig>();
+			Map<String, GuacamoleConfiguration> configs = new HashMap<String, GuacamoleConfiguration>();
+			
+			// Create new configuration.
+			GuacamoleConfiguration config = new GuacamoleConfiguration();
+			
+			// Set protocol
+			config.setProtocol("rdp");
+			//config.setParameter("name", "value");
+
+			configs.put("MyStart Connection", config);
+				return configs;
 		} catch(IOException ex) {
         		return null;
 		}
