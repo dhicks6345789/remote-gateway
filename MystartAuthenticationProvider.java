@@ -65,11 +65,11 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 					config.setProtocol(connectionDetails.get(parameter));
 				} else if (parameter.equals("remoteUsername")) {
 					config.setParameter("username", connectionDetails.get(parameter));
-				} else if (!parameter.equals("username")) {
+				} else if (!parameter.equals("username") && !parameter.equals("connectionTitle")) {
 					config.setParameter(parameter, connectionDetails.get(parameter));
 				}
 			}
-			configs.put("Timetabler", config);
+			configs.put(connectionDetails.get("connectionTitle"), config);
 			return configs;
 		} catch(IOException ex) {
         		return null;
