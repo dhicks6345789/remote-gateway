@@ -47,8 +47,13 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			
 			// Set protocol
 			config.setProtocol("rdp");
-			//config.setParameter("name", "value");
-
+			config.setParameter("hostname", "");
+			config.setParameter("port", "3389");
+			config.setParameter("username", "timetabler");
+			config.setParameter("password", "");
+			config.setParameter("domain", "");
+			config.setParameter("security", "nla");
+			config.setParameter("ignore-cert", "true");
 			configs.put("MyStart Connection", config);
 				return configs;
 		} catch(IOException ex) {
