@@ -49,16 +49,14 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			// Create new configuration.
 			GuacamoleConfiguration config = new GuacamoleConfiguration();
 			
-			// Set protocol
-			for(Map.Entry<String, HashMap> entry : connectionDetails.entrySet()) {
-				String parameter = entry.getKey();
-				HashMap value = entry.getValue();
+			// Set parameters
+			for (String parameter : connectionDetails.keySet()) {
 				if (parameter.equals("protocol")) {
-					config.setProtocol(value);
+					config.setProtocol(connectionDetails.get(parameter));
 				} else if (parameter.equals("remoteUsername")) {
-					config.setParameter("username", value);
+					config.setParameter("username", connectionDetails.get(parameter));
 				} else if (!parameter.equals("username")) {
-					config.setParameter(parameter, value);
+					config.setParameter(parameter, connectionDetails.get(parameter));
 				}
 			}
 			
