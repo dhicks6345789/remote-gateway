@@ -61,8 +61,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 				}
 			}
 			
-			
-			
+			configs.put("MyStart Connection", config);
 			return configs;
 		} catch(IOException ex) {
         		return null;
