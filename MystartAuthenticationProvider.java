@@ -69,7 +69,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 					config.setParameter(parameter, connectionDetails.get(parameter));
 				}
 			}
-			configs.put("MyStart Connection", config);
+			configs.put("Timetabler", config);
 			return configs;
 		} catch(IOException ex) {
         		return null;
