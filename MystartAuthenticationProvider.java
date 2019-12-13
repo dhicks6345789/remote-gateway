@@ -41,7 +41,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			in.close();
 		
 			// If wrong username, fail.
-			if (!connectionDetails("username").equals(username))
+			if (!connectionDetails.get("username").equals(username))
 				return null;
 			
 			Map<String, GuacamoleConfiguration> configs = new HashMap<String, GuacamoleConfiguration>();
