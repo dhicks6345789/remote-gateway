@@ -33,11 +33,14 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			con.setRequestMethod("GET");
 			int status = con.getResponseCode();
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String confirmedUsername = in.readLine();
+			HashMap<String, String> connectionDetails = new HashMap<String, String>();
+			while ((connectionDetailLine = in.readLine()) != null) {
+				connectionDetails.put(connectionDetailLine.split(":")[0], connectionDetailLine.split(":")[1]);
+			}
 			in.close();
 		
 			// If wrong username, fail.
-			if (!confirmedUsername.equals(username))
+			if (!connectionDetails("username").equals(username))
 				return null;
 			
 			Map<String, GuacamoleConfiguration> configs = new HashMap<String, GuacamoleConfiguration>();
@@ -46,16 +49,21 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			GuacamoleConfiguration config = new GuacamoleConfiguration();
 			
 			// Set protocol
-			config.setProtocol("rdp");
-			config.setParameter("hostname", "");
-			config.setParameter("port", "3389");
-			config.setParameter("username", "timetabler");
-			config.setParameter("password", "");
-			config.setParameter("domain", "");
-			config.setParameter("security", "nla");
-			config.setParameter("ignore-cert", "true");
-			configs.put("MyStart Connection", config);
-				return configs;
+			for(Map.Entry<String, HashMap> entry : connectionDetails.entrySet()) {
+				String parameter = entry.getKey();
+				HashMap value = entry.getValue();
+				if (parameter.equals("protocol")) {
+					config.setProtocol(value);
+				} else if (parameter.equals("remoteUsername")) {
+					config.setParameter("username", value);
+				} else if (!parameter.equals("username")) {
+					config.setParameter(parameter, value);
+				}
+			}
+			
+			
+			
+			return configs;
 		} catch(IOException ex) {
         		return null;
 		}
