@@ -34,6 +34,7 @@ public class MystartAuthenticationProvider extends SimpleAuthenticationProvider 
 			int status = con.getResponseCode();
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			HashMap<String, String> connectionDetails = new HashMap<String, String>();
+			String connectionDetailLine = null;
 			while ((connectionDetailLine = in.readLine()) != null) {
 				connectionDetails.put(connectionDetailLine.split(":")[0], connectionDetailLine.split(":")[1]);
 			}
