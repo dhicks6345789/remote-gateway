@@ -252,7 +252,7 @@ os.system("cp nginx.conf /etc/nginx/nginx.conf")
 if os.path.isfile("/etc/letsencrypt/live/" + userOptions["-serverName"] + "/fullchain.pem"):
     os.system("cp default /etc/nginx/sites-available/default")
 else:
-    os.system("cp default /etc/nginx/sites-available/default-noSSL")
+    os.system("cp default-noSSL /etc/nginx/sites-available/default")
     print("Starting Nginx...")
     os.system("systemctl start nginx")
     print("Running certbot...")
