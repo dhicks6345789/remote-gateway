@@ -256,6 +256,7 @@ else:
     print("Starting Nginx...")
     os.system("systemctl start nginx")
     print("Running certbot...")
+    os.system("certbot")
     print("STOPPING: Re-run install.py to use new SSL certificates.")
     sys.exit(0)
 replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
