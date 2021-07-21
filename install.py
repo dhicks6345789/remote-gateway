@@ -255,7 +255,7 @@ replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions
 os.system("cp tomcat9 /etc/default/tomcat9")
 os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
 # Copy over the Guacamole client (pre-compiled Java servlet)...
-os.system("cp guacamole-1.0.0.war /etc/guacamole/guacamole.war")
+os.system("cp guacamole-1.3.0.war /etc/guacamole/guacamole.war")
 runIfPathMissing("/var/lib/tomcat9/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/")
 print("Starting Nginx...")
 os.system("systemctl start nginx")
