@@ -123,7 +123,8 @@ runIfPathMissing("/usr/share/doc/libswscale-dev", "apt-get install -y libswscale
 # Note that, hopefully, in a future version of Gaucamole, this dependancy is going to
 # change from libfreerdp-dev to freerdp2-dev. For the moment, we have to include Debian
 # Stretch repositories to be able to install libfreerdp-dev.
-runIfPathMissing("/usr/share/doc/libfreerdp-dev", "apt-get install -y libfreerdp-dev")
+#runIfPathMissing("/usr/share/doc/libfreerdp-dev", "apt-get install -y libfreerdp-dev")
+runIfPathMissing("/usr/share/doc/freerdp2-dev", "apt-get install -y freerdp2-dev")
 
 # Make sure Pango (library used by Guacamole to support SSH and Telnet connections) is installed.
 runIfPathMissing("/usr/share/doc/libpango1.0-dev", "apt-get install -y libpango1.0-dev")
