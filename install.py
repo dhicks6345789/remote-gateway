@@ -251,15 +251,16 @@ os.system("systemctl enable guacd > /dev/null 2>&1")
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 if os.path.isfile("/etc/letsencrypt/live/" + userOptions["-serverName"] + "/fullchain.pem"):
     os.system("cp default /etc/nginx/sites-available/default")
+    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 else:
     os.system("cp default-noSSL /etc/nginx/sites-available/default")
+    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
     print("Starting Nginx...")
     os.system("systemctl start nginx")
     print("Running certbot...")
     os.system("certbot")
     print("STOPPING: Re-run install.py to use new SSL certificates.")
     sys.exit(0)
-replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 # Copy over the Tomcat config files.
 os.system("cp tomcat9 /etc/default/tomcat9")
 os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
