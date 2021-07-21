@@ -6,7 +6,7 @@ Download from Github and run the install.py script:
 ```
 git clone https://github.com/dhicks6345789/remote-gateway.git
 cd remote-gateway
-install.py
+python3 install.py
 ```
 
 ## Notes
