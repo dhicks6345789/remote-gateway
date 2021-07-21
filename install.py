@@ -249,7 +249,15 @@ os.system("systemctl enable guacd > /dev/null 2>&1")
 #os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
-os.system("cp default /etc/nginx/sites-available/default")
+if os.path.isfile("/etc/letsencrypt/live/" + userOptions["-serverName"] + "/fullchain.pem"):
+    os.system("cp default /etc/nginx/sites-available/default")
+else:
+    os.system("cp default /etc/nginx/sites-available/default-noSSL")
+    print("Starting Nginx...")
+    os.system("systemctl start nginx")
+    print("Running certbot...")
+    print("STOPPING: Re-run install.py to use new SSL certificates.")
+    sys.exit(0)
 replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 # Copy over the Tomcat config files.
 os.system("cp tomcat9 /etc/default/tomcat9")
