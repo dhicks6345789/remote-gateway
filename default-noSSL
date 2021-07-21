@@ -1,0 +1,41 @@
+# Nginx configuration file.
+server {
+        root /var/www/html;
+
+        # A list of valid "index" files - add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name <<SERVERNAME>>;
+
+        # Settings for the "/guacamole" namespace - hand over to the Guacamole server.
+	location / {
+                proxy_pass http://localhost:8080/guacamole/;
+                proxy_buffering off;
+                proxy_http_version 1.1;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection $http_connection;
+                proxy_cookie_path / /;
+                access_log off;
+        }
+	
+	# Settings for the "/api" namespace - hand over to uWSGI which runs the Flask-based Python code in api.py.
+	#location /api/ {
+	#	include uwsgi_params;
+	#	uwsgi_pass unix:/tmp/api.sock;
+	#}
+
+	listen 443 ssl; # managed by Certbot
+	ssl_certificate /etc/letsencrypt/live/<<SERVERNAME>>/fullchain.pem; # managed by Certbot
+	ssl_certificate_key /etc/letsencrypt/live/<<SERVERNAME>>/privkey.pem; # managed by Certbot
+	include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+# Virtual Host configuration for <<SERVERNAME>>
+server {
+    listen 80;
+	listen [::]:80;
+	server_name <<SERVERNAME>>;
+	return 301 https://<<SERVERNAME>>$request_uri;
+}
