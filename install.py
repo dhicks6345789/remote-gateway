@@ -233,7 +233,7 @@ os.system("cp target/guacamole-auth-mystart-1.0.0.jar /etc/guacamole/extensions"
 print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
 print("Stopping Tomcat...")
-os.system("systemctl stop tomcat8")
+os.system("systemctl stop tomcat9")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
 # Build and install Guacamole.
@@ -251,15 +251,15 @@ os.system("cp nginx.conf /etc/nginx/nginx.conf")
 os.system("cp default /etc/nginx/sites-available/default")
 replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
 # Copy over the Tomcat config files.
-os.system("cp tomcat8 /etc/default/tomcat8")
-os.system("cp server.xml /usr/share/tomcat8/skel/conf/server.xml")
+os.system("cp tomcat9 /etc/default/tomcat9")
+os.system("cp server.xml /usr/share/tomcat9/skel/conf/server.xml")
 # Copy over the Guacamole client (pre-compiled Java servlet)...
 os.system("cp guacamole-1.0.0.war /etc/guacamole/guacamole.war")
-runIfPathMissing("/var/lib/tomcat8/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat8/webapps/")
+runIfPathMissing("/var/lib/tomcat9/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/")
 print("Starting Nginx...")
 os.system("systemctl start nginx")
 print("Starting Tomcat...")
-os.system("systemctl start tomcat8")
+os.system("systemctl start tomcat9")
 print("Starting Guacamole server...")
 os.system("systemctl start guacd")
 
