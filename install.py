@@ -173,6 +173,11 @@ os.system("ufw allow http > /dev/null 2>&1")
 os.system("ufw allow https > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
 
+# Make sure Guacamole's config folders exist.
+runIfPathMissing("/etc/guacamole", "mkdir /etc/guacamole")
+runIfPathMissing("/etc/guacamole/extensions", "mkdir /etc/guacamole/extensions")
+runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
+
 # Make sure MariaDB (used by Guacamole for user management) is installed.
 # See: https://guacamole.apache.org/doc/gug/jdbc-auth.html#jdbc-auth-installation
 if not os.path.exists("/usr/share/doc/mariadb-server"):
@@ -231,10 +236,6 @@ print("Stopping Tomcat...")
 os.system("systemctl stop tomcat8")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
-# Make sure Guacamole's config folders exist.
-runIfPathMissing("/etc/guacamole", "mkdir /etc/guacamole")
-runIfPathMissing("/etc/guacamole/extensions", "mkdir /etc/guacamole/extensions")
-runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 # Build and install Guacamole.
 runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 runIfPathMissing("guacamole-auth-jdbc-1.0.0", "tar -xzf guacamole-auth-jdbc-1.0.0.tar.gz; cd guacamole-auth-jdbc-1.0.0; cd ..")
