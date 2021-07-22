@@ -8,10 +8,6 @@ import hashlib
 # The Flask web application framework.
 import flask
 
-# Libraries for handling Google OAuth (i.e. user sign-in on the front page) authentication flow.
-import google.oauth2.id_token
-import google.auth.transport.requests
-
 app = flask.Flask(__name__)
 
 # Google client ID, taken from the Google API console - this value is inserted at build time.
