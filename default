@@ -8,7 +8,7 @@ server {
         server_name <<SERVERNAME>>;
 
         # Settings for the "/guacamole" namespace - hand over to the Guacamole server.
-	location / {
+	location /guacamole/ {
                 proxy_pass http://localhost:8080/guacamole/;
                 proxy_buffering off;
                 proxy_http_version 1.1;
@@ -19,11 +19,11 @@ server {
                 access_log off;
         }
 	
-	# Settings for the "/api" namespace - hand over to uWSGI which runs the Flask-based Python code in api.py.
-	#location /api/ {
-	#	include uwsgi_params;
-	#	uwsgi_pass unix:/tmp/api.sock;
-	#}
+	# Settings for the "/" namespace - hand over to uWSGI which runs the Flask-based Python code in api.py.
+	location / {
+		include uwsgi_params;
+		uwsgi_pass unix:/tmp/api.sock;
+	}
 
 	listen 443 ssl; # managed by Certbot
 	ssl_certificate /etc/letsencrypt/live/<<SERVERNAME>>/fullchain.pem; # managed by Certbot
