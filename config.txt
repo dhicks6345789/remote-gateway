@@ -1,0 +1,4 @@
+title: Sync user data to Guacamole server.
+public: N
+progress: Y
+command: bash syncData.sh
