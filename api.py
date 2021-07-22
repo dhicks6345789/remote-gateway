@@ -26,11 +26,20 @@ def runCommand(theCommand):
 
 @app.route("/", methods=["GET", "POST"])
 def api():
+    errorMessage = ""
     emailAddress = flask.request.values.get("email", None)
+    if emailAddress == None:
+        errorMessage = "ERROR: Missing email field."
     pageName = flask.request.values.get("page", None)
+    if pageName == None:
+        errorMessage = "ERROR: Missing page field."
     loginToken = flask.request.values.get("token", None)
-    clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
-    return getFile("index.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
+    if loginToken == None:
+        errorMessage = "ERROR: Missing token field."
+    if errorMessage == "":
+        clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+        return getFile("/var/www/html/index.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
+    return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
 
 if __name__ == "__main__":
     app.run()
