@@ -276,10 +276,10 @@ os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 if os.path.isfile("/etc/letsencrypt/live/" + userOptions["-serverName"] + "/fullchain.pem"):
     os.system("cp default /etc/nginx/sites-available/default")
-    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
+    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"],"TASKID":taskID})
 else:
     os.system("cp default-noSSL /etc/nginx/sites-available/default")
-    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
+    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"],"TASKID":taskID})
     print("Starting Nginx...")
     os.system("systemctl start nginx")
     print("Running certbot...")
