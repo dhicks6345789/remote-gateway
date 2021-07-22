@@ -157,16 +157,16 @@ runIfPathMissing("/usr/share/doc/libwebp-dev", "apt-get install -y libwebp-dev")
 runIfPathMissing("/usr/local/lib/"+pythonVersion+"/dist-packages/flask", "pip3 install flask")
 
 # Make sure XLRD (Python library for handling Excel files, required for Excel support in Pandas) is installed.
-installLib.runIfPathMissing("C:\\Program Files\\"+installLib.pythonVersion+"\\Lib\\site-packages\\xlrd", "py -m pip install xlrd")
+runIfPathMissing("C:\\Program Files\\"+pythonVersion+"\\Lib\\site-packages\\xlrd", "py -m pip install xlrd")
 
 # Make sure OpenPyXL (Python library for handling Excel files, required for Excel support in Pandas) is installed.
-installLib.runIfPathMissing("C:\\Program Files\\"+installLib.pythonVersion+"\\Lib\\site-packages\\openpyxl", "py -m pip install openpyxl")
+runIfPathMissing("C:\\Program Files\\"+pythonVersion+"\\Lib\\site-packages\\openpyxl", "py -m pip install openpyxl")
 
 # Make sure Pandas (Python data-analysis library) is installed.
-installLib.runIfPathMissing("C:\\Program Files\\"+installLib.pythonVersion+"\\Lib\\site-packages\\pandas", "py -m pip install pandas")
+runIfPathMissing("C:\\Program Files\\"+pythonVersion+"\\Lib\\site-packages\\pandas", "py -m pip install pandas")
 
 # Make sure Numpy (Python maths library) is installed.
-installLib.runIfPathMissing("C:\\Program Files\\"+installLib.pythonVersion+"\\Lib\\site-packages\\numpy", "py -m pip install numpy")
+runIfPathMissing("C:\\Program Files\\"+pythonVersion+"\\Lib\\site-packages\\numpy", "py -m pip install numpy")
 
 
 
