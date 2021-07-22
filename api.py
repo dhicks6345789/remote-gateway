@@ -23,9 +23,14 @@ def runCommand(theCommand):
     commandHandle.close()
     return(result)
 
-@app.route("/")
+
+@app.route("/", methods=["GET", "POST"])
 def api():
-    return "Hello world!"
+    emailAddress = flask.request.values.get("email", None)
+    pageName = flask.request.values.get("page", None)
+    loginToken = flask.request.values.get("token", None)
+    clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+    return clientURL
 
 if __name__ == "__main__":
     app.run()
