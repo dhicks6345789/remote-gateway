@@ -187,7 +187,6 @@ else:
     os.system("mkdir /etc/webconsole/tasks/" + taskID)
 copyfile("config.txt", "/etc/webconsole/tasks/" + taskID + "/config.txt", mode="0755")
 copyfile("syncData.sh", "/etc/webconsole/tasks/" + taskID + "/syncData.sh", mode="0755")
-print("Webconsole Task ID: " + taskID)
 
 # Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
@@ -307,3 +306,6 @@ os.system("dos2unix monthlyCronjob.sh > /dev/null 2>&1")
 os.system("cp monthlyCronjob.sh /etc/guacamole")
 os.system("chmod u+x /etc/guacamole/monthlyCronjob.sh")
 os.system("/etc/init.d/cron restart")
+
+# Print out some useful information.
+print("Webconsole Task URL: https://" + userOptions["-serverName"] + "/console/view?taskID=" + taskID)
