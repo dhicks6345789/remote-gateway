@@ -184,9 +184,10 @@ else:
         taskID = taskID + validChars[random.randint(0,len(validChars)-1)]
     # Install Webconsole.
     os.system("curl -s https://www.sansay.co.uk/web-console/install.sh | bash")
-    
     os.system("mkdir /etc/webconsole/tasks/" + taskID)
-print("TaskID: " + taskID)
+copyfile("config.txt", "/etc/webconsole/tasks/" + taskID + "/config.txt", mode="0755")
+copyfile("syncData.sh", "/etc/webconsole/tasks/" + taskID + "/syncData.sh", mode="0755")
+print("Webconsole Task ID: " + taskID)
 
 # Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
