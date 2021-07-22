@@ -42,7 +42,7 @@ def api():
     if errorMessage == "":
         clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
         for item in os.listdir("/etc/guacamole/connections"):
-            itemRead = false
+            itemRead = False
             if item.endswith(".csv"):
                 itemData = pandas.read_csv("/etc/guacamole/connections/" + item, header=0)
                 itemRead = True
