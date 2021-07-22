@@ -172,6 +172,7 @@ runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
 copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
 copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
 copyfile("client.html", "/var/www/html/client.html", mode="0755")
+copyfile("error.html", "/var/www/html/error.html", mode="0755")
 
 # Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
