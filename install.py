@@ -163,8 +163,8 @@ runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
 runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python3-acme python3-certbot-nginx python3-mock python3-openssl python3-pkg-resources python3-pyparsing python3-zope.interface")
 #runIfPathMissing("/usr/share/doc/python3-certbot-nginx", "apt-get install -y python3-certbot-nginx")
 # Make sure uWSGI (WSGI component for Nginx) is installed.
-#runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
-#copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
+runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
+copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
 
 # Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
@@ -181,53 +181,53 @@ runIfPathMissing("/etc/guacamole/lib", "mkdir /etc/guacamole/lib")
 
 # Make sure MariaDB (used by Guacamole for user management) is installed.
 # See: https://guacamole.apache.org/doc/gug/jdbc-auth.html#jdbc-auth-installation
-if not os.path.exists("/usr/share/doc/mariadb-server"):
-    os.system("apt-get install -y mariadb-server")
-    print("Configuring MariaDB...")
-    runExpect([
-        "spawn /usr/bin/mysql_secure_installation",
-        "expect \"(enter for none):\"",
-        "send \"\\r\"",
-        "expect \"\\[Y/n\\]\"",
-        "send \"n\\r\"",
-        "expect \"\\[Y/n\\]\"",
-        "send \"y\\r\"",
-        "expect \"\\[Y/n\\]\"",
-        "send \"y\\r\"",
-        "expect \"\\[Y/n\\]\"",
-        "send \"y\\r\"",
-        "expect \"\\[Y/n\\]\"",
-        "send \"y\\r\"",
-        "interact"
-    ])
-    # Create the mysql Guacamole database (guacamole_db).
-    os.system("echo \"CREATE DATABASE guacamole_db;\" | mysql")
-    # Create the mysql Guacamole user (guacamole_user).
-    os.system("echo \"CREATE USER 'guacamole_user'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "'; FLUSH PRIVILEGES;\" | mysql")
-    os.system("echo \"GRANT CREATE,SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'localhost'; FLUSH PRIVILEGES;\" | mysql")
-    # Set up Guacamole's database using the provided schema.
-    os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u guacamole_user -p" + userOptions["-databasePassword"] + " guacamole_db")
-    
-    # Copy over the Guacamole database authentication extension.
-    os.system("cp guacamole-auth-jdbc-1.0.0/mysql/guacamole-auth-jdbc-mysql-1.0.0.jar /etc/guacamole/extensions")
-    # Obtain, extract and install the MySQL JDBC connector.
-    runIfPathMissing("mysql-connector-java_8.0.18-1debian10_all.deb", "wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.0.18-1debian10_all.deb; mkdir temp; cd temp; ar x ../mysql-connector-java_8.0.18-1debian10_all.deb; tar xf data.tar.xz; cp usr/share/java/mysql-connector-java-8.0.18.jar /etc/guacamole/lib; cd ..; rm -rf temp")
-    # Copy over the Guacamole configuration file.
-    os.system("cp guacamole.properties /etc/guacamole")
-    replaceVariables("/etc/guacamole/guacamole.properties", {"DATABASEPASSWORD":userOptions["-databasePassword"]})
+#if not os.path.exists("/usr/share/doc/mariadb-server"):
+#    os.system("apt-get install -y mariadb-server")
+#    print("Configuring MariaDB...")
+#    runExpect([
+#        "spawn /usr/bin/mysql_secure_installation",
+#        "expect \"(enter for none):\"",
+#        "send \"\\r\"",
+#        "expect \"\\[Y/n\\]\"",
+#        "send \"n\\r\"",
+#        "expect \"\\[Y/n\\]\"",
+#        "send \"y\\r\"",
+#        "expect \"\\[Y/n\\]\"",
+#        "send \"y\\r\"",
+#        "expect \"\\[Y/n\\]\"",
+#        "send \"y\\r\"",
+#        "expect \"\\[Y/n\\]\"",
+#        "send \"y\\r\"",
+#        "interact"
+#    ])
+#    # Create the mysql Guacamole database (guacamole_db).
+#    os.system("echo \"CREATE DATABASE guacamole_db;\" | mysql")
+#    # Create the mysql Guacamole user (guacamole_user).
+#    os.system("echo \"CREATE USER 'guacamole_user'@'localhost' IDENTIFIED BY '" + userOptions["-databasePassword"] + "'; FLUSH PRIVILEGES;\" | mysql")
+#    os.system("echo \"GRANT CREATE,SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'localhost'; FLUSH PRIVILEGES;\" | mysql")
+#    # Set up Guacamole's database using the provided schema.
+#    os.system("cat guacamole-auth-jdbc-1.0.0/mysql/schema/*.sql | mysql -u guacamole_user -p" + userOptions["-databasePassword"] + " guacamole_db")
+#    
+#    # Copy over the Guacamole database authentication extension.
+#    os.system("cp guacamole-auth-jdbc-1.0.0/mysql/guacamole-auth-jdbc-mysql-1.0.0.jar /etc/guacamole/extensions")
+#    # Obtain, extract and install the MySQL JDBC connector.
+#    runIfPathMissing("mysql-connector-java_8.0.18-1debian10_all.deb", "wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.0.18-1debian10_all.deb; mkdir temp; cd temp; ar x ../mysql-connector-java_8.0.18-1debian10_all.deb; tar xf data.tar.xz; cp usr/share/java/mysql-connector-java-8.0.18.jar /etc/guacamole/lib; cd ..; rm -rf temp")
+#    # Copy over the Guacamole configuration file.
+#    os.system("cp guacamole.properties /etc/guacamole")
+#    replaceVariables("/etc/guacamole/guacamole.properties", {"DATABASEPASSWORD":userOptions["-databasePassword"]})
 
-# Make sure Maven is installed (Apche's build tool, used to build the Java-based Guacamole authentication extension).
-runIfPathMissing("/usr/share/doc/maven", "apt-get install -y maven")
+## Make sure Maven is installed (Apche's build tool, used to build the Java-based Guacamole authentication extension).
+#runIfPathMissing("/usr/share/doc/maven", "apt-get install -y maven")
 
-# Set up the Maven project to build the custom Guacamole authentication provider.
-os.makedirs("src/main/java/org/apache/guacamole/auth", exist_ok=True)
-os.system("cp MystartAuthenticationProvider.java src/main/java/org/apache/guacamole/auth")
-os.makedirs("src/main/resources", exist_ok=True)
-os.system("cp guac-manifest.json src/main/resources")
-# Build the extension.
-runIfPathMissing("target/guacamole-auth-mystart-1.0.0.jar", "mvn package")
+## Set up the Maven project to build the custom Guacamole authentication provider.
+#os.makedirs("src/main/java/org/apache/guacamole/auth", exist_ok=True)
+#os.system("cp MystartAuthenticationProvider.java src/main/java/org/apache/guacamole/auth")
+#os.makedirs("src/main/resources", exist_ok=True)
+#os.system("cp guac-manifest.json src/main/resources")
+## Build the extension.
+#runIfPathMissing("target/guacamole-auth-mystart-1.0.0.jar", "mvn package")
 # Install the extension.
-os.system("cp target/guacamole-auth-mystart-1.0.0.jar /etc/guacamole/extensions")
+#os.system("cp target/guacamole-auth-mystart-1.0.0.jar /etc/guacamole/extensions")
 
 
 
@@ -239,14 +239,14 @@ print("Stopping Nginx...")
 os.system("systemctl stop nginx")
 # Build and install Guacamole.
 runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
-runIfPathMissing("guacamole-auth-jdbc-1.0.0", "tar -xzf guacamole-auth-jdbc-1.0.0.tar.gz; cd guacamole-auth-jdbc-1.0.0; cd ..")
+#runIfPathMissing("guacamole-auth-jdbc-1.0.0", "tar -xzf guacamole-auth-jdbc-1.0.0.tar.gz; cd guacamole-auth-jdbc-1.0.0; cd ..")
 # Copy accross Guacamole user mapping file.
-os.system("cp /root/user-mapping.xml /etc/guacamole")
+#os.system("cp /root/user-mapping.xml /etc/guacamole")
 #replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"], "REMOTEPASSWORD":hashlib.md5(userOptions["-remotePassword"].encode('utf-8')).hexdigest()})
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
 # Enable the uWSGI server service.
-#os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
+os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
 # Copy over the Nginx config files.
 os.system("cp nginx.conf /etc/nginx/nginx.conf")
 if os.path.isfile("/etc/letsencrypt/live/" + userOptions["-serverName"] + "/fullchain.pem"):
