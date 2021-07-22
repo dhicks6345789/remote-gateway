@@ -165,7 +165,7 @@ runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y p
 # Make sure uWSGI (WSGI component for Nginx) is installed.
 runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
 copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
-copyfile("api.py", "/var/lib/nginx/uwsgi", mode="0755")
+copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
 
 # Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
