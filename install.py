@@ -7,7 +7,7 @@ import hashlib
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName", "-databasePassword"]
+validValueOptions = ["-serverName"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -69,7 +69,7 @@ def runExpect(inputArray):
 # First, get some needed values from the user, if they haven't already provided them on the command line.
 print("Installing...")
 getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
-getUserOption("-databasePassword", "Please enter the password to set for Guacamole's database")
+#getUserOption("-databasePassword", "Please enter the password to set for Guacamole's database")
 
 
 
@@ -97,7 +97,7 @@ runIfPathMissing("/usr/share/doc/zlib1g-dev", "apt-get install -y zlib1g-dev")
 # Make sure Expect (command-line automation utility) is installed.
 runIfPathMissing("/usr/bin/expect", "apt-get -y install expect")
 
-# Make sure the Java Development Kit (JDK, used fro compiling Java applications) is installed.
+# Make sure the Java Development Kit (JDK, used for compiling Java applications) is installed.
 runIfPathMissing("/usr/share/doc/default-jdk", "apt-get install -y default-jdk")
 
 
@@ -248,7 +248,7 @@ os.system("systemctl stop emperor.uwsgi.service")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
 # Build and install Guacamole.
-runIfPathMissing("guacamole-server-1.0.0", "tar -xzf guacamole-server-1.0.0.tar.gz; cd guacamole-server-1.0.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
+runIfPathMissing("guacamole-server-1.3.0", "tar -xzf guacamole-server-1.3.0.tar.gz; cd guacamole-server-1.3.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 #runIfPathMissing("guacamole-auth-jdbc-1.0.0", "tar -xzf guacamole-auth-jdbc-1.0.0.tar.gz; cd guacamole-auth-jdbc-1.0.0; cd ..")
 # Copy accross Guacamole user mapping file.
 #os.system("cp /root/user-mapping.xml /etc/guacamole")
