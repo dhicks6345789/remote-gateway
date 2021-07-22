@@ -4,6 +4,7 @@ import os
 import sys
 import shutil
 import hashlib
+import random
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
@@ -166,13 +167,25 @@ runIfPathMissing("/usr/share/doc/nginx", "apt-get install -y nginx")
 # https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-10
 # Also, see later section on crontab for monthly certbot renew / backup process.
 runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y python3-acme python3-certbot-nginx python3-mock python3-openssl python3-pkg-resources python3-pyparsing python3-zope.interface")
-#runIfPathMissing("/usr/share/doc/python3-certbot-nginx", "apt-get install -y python3-certbot-nginx")
 # Make sure uWSGI (WSGI component for Nginx) is installed.
 runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
 copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
 copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
 copyfile("client.html", "/var/www/html/client.html", mode="0755")
 copyfile("error.html", "/var/www/html/error.html", mode="0755")
+
+# Make sure the Webconsole task to trigger a data import is set up.
+validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+if os.path.exists("/etc/webconsole/tasks"):
+    taskID = os.listdir("/etc/webconsole/tasks")[0]
+else:
+    taskID = ""
+    for pl in range (0,16):
+        taskID = taskID + validChars[random.randint(0,len(validChars)-1)]
+    # Install Webconsole.
+    
+    os.system("mkdir /etc/webconsole/tasks/" + taskID)
+print("TaskID: " + taskID)
 
 # Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
