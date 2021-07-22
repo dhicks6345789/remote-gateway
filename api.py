@@ -30,7 +30,7 @@ def api():
     pageName = flask.request.values.get("page", None)
     loginToken = flask.request.values.get("token", None)
     clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
-    return clientURL
+    return getFile("index.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
 
 if __name__ == "__main__":
     app.run()
