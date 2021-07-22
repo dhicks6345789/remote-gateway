@@ -19,8 +19,8 @@ server {
                 access_log off;
         }
 	
-	# Settings for the "/TASKID" namespace - hand over to Webconsole.
-	location /<<TASKID>>/ {
+	# Settings for the "/console" namespace - hand over to Webconsole.
+	location /console/ {
                 proxy_pass http://localhost:8090/;
                 proxy_buffering off;
                 proxy_http_version 1.1;
