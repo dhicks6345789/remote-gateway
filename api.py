@@ -38,7 +38,7 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
-        return getFile("/var/www/html/index.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
+        return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
     return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
 
 if __name__ == "__main__":
