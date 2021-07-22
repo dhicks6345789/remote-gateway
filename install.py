@@ -183,6 +183,7 @@ else:
     for pl in range (0,16):
         taskID = taskID + validChars[random.randint(0,len(validChars)-1)]
     # Install Webconsole.
+    os.system("curl -s https://www.sansay.co.uk/web-console/install.sh | bash")
     
     os.system("mkdir /etc/webconsole/tasks/" + taskID)
 print("TaskID: " + taskID)
