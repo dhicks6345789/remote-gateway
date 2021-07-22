@@ -4,6 +4,9 @@ import os
 # The Flask web application framework.
 import flask
 
+# Pandas
+import pandas
+
 app = flask.Flask(__name__)
 
 def getFile(theFilename):
@@ -38,7 +41,17 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
-        return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
+        for item in os.listdir("/etc/guacamole/connections"):
+            itemRead = false
+            if item.endswith(".csv"):
+                itemData = pandas.read_csv("/etc/guacamole/connections/" + item, header=0)
+                itemRead = True
+            if item.endswith(".xlsx"):
+                itemData = pandas.read_excel("/etc/guacamole/connections/" + item, header=0)
+                itemRead = True
+            if itemRead:
+                clientURL = clientURL + "BANANAS"
+            return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
     return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
 
 if __name__ == "__main__":
