@@ -248,7 +248,7 @@ os.system("systemctl stop emperor.uwsgi.service")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
 # Build and install Guacamole.
-runIfPathMissing("guacamole-server-1.3.0", "tar -xzf guacamole-server-1.3.0.tar.gz; cd guacamole-server-1.3.0; ./configure --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
+runIfPathMissing("guacamole-server-1.3.0", "tar -xzf guacamole-server-1.3.0.tar.gz; cd guacamole-server-1.3.0; ./configure --enable-allow-freerdp-snapshots --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 #runIfPathMissing("guacamole-auth-jdbc-1.0.0", "tar -xzf guacamole-auth-jdbc-1.0.0.tar.gz; cd guacamole-auth-jdbc-1.0.0; cd ..")
 # Copy accross Guacamole user mapping file.
 #os.system("cp /root/user-mapping.xml /etc/guacamole")
