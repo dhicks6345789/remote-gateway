@@ -165,6 +165,7 @@ runIfPathMissing("/usr/lib/python3/dist-packages/certbot", "apt-get install -y p
 # Make sure uWSGI (WSGI component for Nginx) is installed.
 runIfPathMissing("/usr/local/bin/uwsgi", "pip3 install uwsgi")
 copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
+copyfile("api.py", "/var/lib/nginx/uwsgi", mode="0755")
 
 # Make sure UFW is installed (Debian firewall).
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
@@ -235,6 +236,8 @@ print("Stopping Guacamole...")
 os.system("systemctl stop guacd")
 print("Stopping Tomcat...")
 os.system("systemctl stop tomcat9")
+print("Stopping uWSGI...")
+os.system("systemctl stop emperor.uwsgi.service")
 print("Stopping Nginx...")
 os.system("systemctl stop nginx")
 # Build and install Guacamole.
@@ -269,6 +272,8 @@ os.system("cp guacamole-1.3.0.war /etc/guacamole/guacamole.war")
 runIfPathMissing("/var/lib/tomcat9/webapps/guacamole.war", "ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/")
 print("Starting Nginx...")
 os.system("systemctl start nginx")
+print("Starting uWSGI...")
+os.system("systemctl start emperor.uwsgi.service")
 print("Starting Tomcat...")
 os.system("systemctl start tomcat9")
 print("Starting Guacamole server...")
