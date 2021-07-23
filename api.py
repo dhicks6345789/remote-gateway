@@ -41,7 +41,7 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
-        connections = {}
+        connections = []
         for item in os.listdir("/etc/guacamole/connections"):
             itemRead = False
             if item.endswith(".csv"):
