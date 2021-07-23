@@ -82,17 +82,17 @@ def api():
         
         
         xmlData = xmlData + "<user-mapping>\n"
-        xmlData = xmlData + "<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
+        xmlData = xmlData + "\t<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
             host = hosts[connection[0].lower()]
             os.system("sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " " + host[3].replace("<<KEY>>",loginToken))
-            xmlData = xmlData + "\t<connection name=\"" + connection[0] + "\">\n"
-            xmlData = xmlData + "\t\t<protocol>" + host[1] + "</protocol>\n"
-            xmlData = xmlData + "\t\t<param name=\"hostname\">" + host[0].split("@")[1] + "</param>\n"
-            xmlData = xmlData + "\t\t<param name=\"port\">5900</param>\n"
-            xmlData = xmlData + "\t\t<param name=\"password\">" + loginToken + "</param>\n"
-            xmlData = xmlData + "\t</connection>\n"
-        xmlData = xmlData + "</authorize>\n"
+            xmlData = xmlData + "\t\t<connection name=\"" + connection[0] + "\">\n"
+            xmlData = xmlData + "\t\t\t<protocol>" + host[1] + "</protocol>\n"
+            xmlData = xmlData + "\t\t\t<param name=\"hostname\">" + host[0].split("@")[1] + "</param>\n"
+            xmlData = xmlData + "\t\t\t<param name=\"port\">5900</param>\n"
+            xmlData = xmlData + "\t\t\t<param name=\"password\">" + loginToken + "</param>\n"
+            xmlData = xmlData + "\t\t</connection>\n"
+        xmlData = xmlData + "\t</authorize>\n"
         xmlData = xmlData + "</user-mapping>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
