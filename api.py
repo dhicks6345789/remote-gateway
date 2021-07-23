@@ -88,7 +88,7 @@ def api():
             os.system("sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " " + host[3].replace("<<KEY>>",loginToken))
             xmlData = xmlData + "\t<connection name=\"" + connection[1] + "\">\n"
             xmlData = xmlData + "\t\t<protocol>" + host[1] + "</protocol>\n"
-            xmlData = xmlData + "\t\t<param name=\"hostname\">" + host[0] + "</param>\n"
+            xmlData = xmlData + "\t\t<param name=\"hostname\">" + host[0].split("@")[1] + "</param>\n"
             xmlData = xmlData + "\t\t<param name=\"port\">5900</param>\n"
             xmlData = xmlData + "\t\t<param name=\"password\">" + loginToken + "</param>\n"
             xmlData = xmlData + "\t</connection>\n"
