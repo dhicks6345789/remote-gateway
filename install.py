@@ -276,9 +276,8 @@ os.system("systemctl stop nginx")
 # Build and install Guacamole.
 runIfPathMissing("guacamole-server-1.3.0", "tar -xzf guacamole-server-1.3.0.tar.gz; cd guacamole-server-1.3.0; ./configure --enable-allow-freerdp-snapshots --with-init-dir=/etc/init.d; make; make install; ldconfig -v; cd ..")
 #runIfPathMissing("guacamole-auth-jdbc-1.0.0", "tar -xzf guacamole-auth-jdbc-1.0.0.tar.gz; cd guacamole-auth-jdbc-1.0.0; cd ..")
-# Copy accross Guacamole user mapping file.
-os.system("cp /root/user-mapping.xml /etc/guacamole")
-#replaceVariables("/etc/guacamole/user-mapping.xml", {"ADMINPASSWORD":userOptions["-adminPassword"], "REMOTEPASSWORD":hashlib.md5(userOptions["-remotePassword"].encode('utf-8')).hexdigest()})
+# Make sure the (blank) Guacamole user-mapping file exists.
+os.system("echo > /etc/guacamole/user-mapping.xml")
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
 # Enable the uWSGI server service.
