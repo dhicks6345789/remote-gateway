@@ -41,6 +41,21 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+        
+        hosts = {}
+        for item in os.listdir("/etc/guacamole/hosts"):
+            itemRead = False
+            if item.endswith(".csv"):
+                itemData = pandas.read_csv("/etc/guacamole/hosts/" + item, header=None)
+                itemRead = True
+            if item.endswith(".xlsx"):
+                itemData = pandas.read_excel("/etc/guacamole/hosts/" + item, header=None)
+                itemRead = True
+            if itemRead:
+                for hostDataIndex, hostData in itemData.iterrows():
+                    if hostData[0].lower() != "host":
+                        hosts[hostData[0].lower()] = [hostData[1],hostData[2],hostData[3]]
+        
         connections = []
         for item in os.listdir("/etc/guacamole/connections"):
             itemRead = False
@@ -52,9 +67,9 @@ def api():
                 itemRead = True
             if itemRead:
                 for connectionDataIndex, connectionData in itemData.iterrows():
-                    if connectionData[0].lower() != "address":
-                        if emailAddress.lower() == connectionData[3].lower():
-                            connections.append([connectionData[0],connectionData[1],connectionData[2],connectionData[3].lower()])
+                    if connectionData[0].lower() != "host":
+                        if emailAddress.lower() == connectionData[1].lower():
+                            connections.append([connectionData[0],connectionData[1].lower()])
         xmlData = ""
         if os.path.exists("/etc/guacamole/user-mapping.xml"):
             xmlData = getFile("/etc/guacamole/user-mapping.xml").strip()
@@ -65,9 +80,10 @@ def api():
         
         xmlData = xmlData + "<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
+            host = hosts[connection[0]]
             xmlData = xmlData + "\t<connection name=\"" + connection[1] + "\">\n"
-            xmlData = xmlData + "\t\t<protocol>vnc</protocol>\n"
-            xmlData = xmlData + "\t\t<param name=\"hostname\">" + connection[0] + "</param>\n"
+            xmlData = xmlData + "\t\t<protocol>" + host[2] + "</protocol>\n"
+            xmlData = xmlData + "\t\t<param name=\"hostname\">" + host[1] + "</param>\n"
             xmlData = xmlData + "\t\t<param name=\"port\">5900</param>\n"
             xmlData = xmlData + "\t\t<param name=\"password\">" + loginToken + "</param>\n"
             xmlData = xmlData + "\t</connection>\n"
