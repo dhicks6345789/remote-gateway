@@ -51,7 +51,7 @@ def api():
                 itemData = pandas.read_excel("/etc/guacamole/connections/" + item, header=None)
                 itemRead = True
             if itemRead:
-                print(itemData)
+                return str(itemData)
                 for connectionDataIndex, connectionData in itemData.iterrows():
                     if itemData.at[connectionDataIndex, 0].lower() != "address":
                         if emailAddress.lower() == itemData.at[connectionDataIndex, 3].lower():
