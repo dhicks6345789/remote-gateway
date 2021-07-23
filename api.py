@@ -58,7 +58,7 @@ def api():
                 xmlData = xmlData + "\t<param name=\"hostname\">localhost</param>\n"
                 xmlData = xmlData + "\t<param name=\"port\">5900</param>\n"
                 xmlData = xmlData + "\t<param name=\"password\">VNCPASS</param>\n"
-                xmlData = xmlData + "\t</authorize>\n"
+                xmlData = xmlData + "</authorize>\n"
                 putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
     return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
