@@ -65,12 +65,12 @@ def api():
         
         xmlData = xmlData + "<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
-            xmlData = xmlData + "\t<connection name=\"" + connection[1] + "\">"
+            xmlData = xmlData + "\t<connection name=\"" + connection[1] + "\">\n"
             xmlData = xmlData + "\t\t<protocol>vnc</protocol>\n"
             xmlData = xmlData + "\t\t<param name=\"hostname\">" + connection[0] + "</param>\n"
             xmlData = xmlData + "\t\t<param name=\"port\">5900</param>\n"
             xmlData = xmlData + "\t\t<param name=\"password\">" + loginToken + "</param>\n"
-            xmlData = xmlData + "\t</connection>"
+            xmlData = xmlData + "\t</connection>\n"
         xmlData = xmlData + "</authorize>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
