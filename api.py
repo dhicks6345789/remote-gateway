@@ -50,8 +50,17 @@ def api():
                 itemData = pandas.read_excel("/etc/guacamole/connections/" + item, header=0)
                 itemRead = True
             if itemRead:
-                clientURL = clientURL + "BANANAS"
-            return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
+                xmlData = ""
+                if os.path.exists("/etc/guacamole/user-mapping.xml"):
+                    xmlData = getFile("/etc/guacamole/user-mapping.xml")
+                xmlData = xmlData + "<authorize username=\"" + emailAddress + "\" password=\"" + loginToken + "\">\n"
+                xmlData = xmlData + "\t<protocol>vnc</protocol>\n"
+                xmlData = xmlData + "\t<param name=\"hostname\">localhost</param>\n"
+                xmlData = xmlData + "\t<param name=\"port\">5900</param>\n"
+                xmlData = xmlData + "\t<param name=\"password\">VNCPASS</param>\n"
+                xmlData = xmlData + "\t</authorize>\n"
+                putFile("/etc/guacamole/user-mapping.xml", xmlData)
+        return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
     return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
 
 if __name__ == "__main__":
