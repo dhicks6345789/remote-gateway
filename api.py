@@ -52,8 +52,8 @@ def api():
                 itemRead = True
             if itemRead:
                 for connectionDataIndex, connectionData in itemData.iterrows():
-                    if connectionData[0].lower() != "address":
-                        if emailAddress.lower() == connectionData[3].lower():
+                    if connectionData.at[connectionDataIndex, 0].lower() != "address":
+                        if emailAddress.lower() == connectionData.at[connectionDataIndex, 3].lower():
                             connections.append([connectionData[0],connectionData[1],connectionData[2],connectionData[3].lower()])
         xmlData = ""
         if os.path.exists("/etc/guacamole/user-mapping.xml"):
