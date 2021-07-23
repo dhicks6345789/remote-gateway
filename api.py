@@ -54,7 +54,7 @@ def api():
             if itemRead:
                 for hostDataIndex, hostData in itemData.iterrows():
                     if hostData[0].lower() != "host":
-                        hosts[hostData[0].lower()] = [hostData[1],hostData[2],hostData[3]]
+                        hosts[hostData[0].lower()] = [hostData[1],hostData[2],hostData[3],hostData[4]]
         
         connections = []
         for item in os.listdir("/etc/guacamole/connections"):
@@ -81,9 +81,10 @@ def api():
         xmlData = xmlData + "<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
             host = hosts[connection[0]]
+            xmlData = xmlData + "sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " " + host[3].replace("<<KEY>>",loginToken) + "\n"
             xmlData = xmlData + "\t<connection name=\"" + connection[1] + "\">\n"
-            xmlData = xmlData + "\t\t<protocol>" + host[2] + "</protocol>\n"
-            xmlData = xmlData + "\t\t<param name=\"hostname\">" + host[1] + "</param>\n"
+            xmlData = xmlData + "\t\t<protocol>" + host[1] + "</protocol>\n"
+            xmlData = xmlData + "\t\t<param name=\"hostname\">" + host[0] + "</param>\n"
             xmlData = xmlData + "\t\t<param name=\"port\">5900</param>\n"
             xmlData = xmlData + "\t\t<param name=\"password\">" + loginToken + "</param>\n"
             xmlData = xmlData + "\t</connection>\n"
