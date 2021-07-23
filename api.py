@@ -51,9 +51,10 @@ def api():
                 itemData = pandas.read_excel("/etc/guacamole/connections/" + item, header=None)
                 itemRead = True
             if itemRead:
+                print(itemData)
                 for connectionDataIndex, connectionData in itemData.iterrows():
-                    if itemData.at[connectionDataIndex, "A"].lower() != "address":
-                        if emailAddress.lower() == itemData.at[connectionDataIndex, "A"].lower():
+                    if itemData.at[connectionDataIndex, 0].lower() != "address":
+                        if emailAddress.lower() == itemData.at[connectionDataIndex, 3].lower():
                             connections.append([connectionData["A"],connectionData["B"],connectionData["C"],connectionData["D"].lower()])
         xmlData = ""
         if os.path.exists("/etc/guacamole/user-mapping.xml"):
