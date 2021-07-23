@@ -52,7 +52,7 @@ def api():
             if itemRead:
                 xmlData = ""
                 if os.path.exists("/etc/guacamole/user-mapping.xml"):
-                    xmlData = getFile("/etc/guacamole/user-mapping.xml")
+                    xmlData = getFile("/etc/guacamole/user-mapping.xml").strip()
                 xmlData = xmlData + "<authorize username=\"" + emailAddress + "\" password=\"" + loginToken + "\">\n"
                 xmlData = xmlData + "\t<protocol>vnc</protocol>\n"
                 xmlData = xmlData + "\t<param name=\"hostname\">localhost</param>\n"
