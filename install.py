@@ -278,6 +278,7 @@ runIfPathMissing("guacamole-server-1.3.0", "tar -xzf guacamole-server-1.3.0.tar.
 #runIfPathMissing("guacamole-auth-jdbc-1.0.0", "tar -xzf guacamole-auth-jdbc-1.0.0.tar.gz; cd guacamole-auth-jdbc-1.0.0; cd ..")
 # Make sure the (blank) Guacamole user-mapping file exists.
 os.system("echo > /etc/guacamole/user-mapping.xml")
+os.system("chmod a+rwx /etc/guacamole/user-mapping.xml")
 # Enable the Guacamole server service.
 os.system("systemctl enable guacd > /dev/null 2>&1")
 # Enable the uWSGI server service.
