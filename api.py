@@ -60,11 +60,17 @@ def api():
             xmlData = getFile("/etc/guacamole/user-mapping.xml").strip()
         if xmlData != "":
             xmlData = xmlData + "\n"
-        xmlData = xmlData + "<authorize username=\"" + emailAddress + "\" password=\"" + loginToken + "\">\n"
-        xmlData = xmlData + "\t<protocol>vnc</protocol>\n"
-        xmlData = xmlData + "\t<param name=\"hostname\">localhost</param>\n"
-        xmlData = xmlData + "\t<param name=\"port\">5900</param>\n"
-        xmlData = xmlData + "\t<param name=\"password\">VNCPASS</param>\n"
+        # To do - properly check if some existing data needs to be kept.
+        xmlData = ""
+        
+        xmlData = xmlData + "<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
+        for connection in connections:
+            xmlData = xmlData + "\t<connection name=\"" + connection[1] + "\">"
+            xmlData = xmlData + "\t\t<protocol>vnc</protocol>\n"
+            xmlData = xmlData + "\t\t<param name=\"hostname\">" + connection[0] + "</param>\n"
+            xmlData = xmlData + "\t\t<param name=\"port\">5900</param>\n"
+            xmlData = xmlData + "\t\t<param name=\"password\">" + loginToken + "</param>\n"
+            xmlData = xmlData + "\t</connection>"
         xmlData = xmlData + "</authorize>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
