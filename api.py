@@ -80,6 +80,8 @@ def api():
         # To do - properly check if some existing data needs to be kept.
         xmlData = ""
         
+        
+        xmlData = xmlData + "<user-mapping>\n"
         xmlData = xmlData + "<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
             host = hosts[connection[0].lower()]
@@ -91,6 +93,7 @@ def api():
             xmlData = xmlData + "\t\t<param name=\"password\">" + loginToken + "</param>\n"
             xmlData = xmlData + "\t</connection>\n"
         xmlData = xmlData + "</authorize>\n"
+        xmlData = xmlData + "</user-mapping>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
     return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
