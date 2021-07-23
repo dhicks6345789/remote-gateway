@@ -101,6 +101,9 @@ runIfPathMissing("/usr/bin/expect", "apt-get -y install expect")
 # Make sure the Java Development Kit (JDK, used for compiling Java applications) is installed.
 runIfPathMissing("/usr/share/doc/default-jdk", "apt-get install -y default-jdk")
 
+# Make sure SSHPass (used to allow passwords to be passed into SSH) is installed.
+runIfPathMissing("/usr/share/doc/sshpass", "apt-get install -y sshpass")
+
 
 
 # Make sure Cairo (library used by Guacamole for rendering graphics) is installed.
