@@ -83,7 +83,7 @@ def api():
         xmlData = xmlData + "<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
             host = hosts[connection[0].lower()]
-            xmlData = xmlData + "sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " " + host[3].replace("<<KEY>>",loginToken) + "\n"
+            os.system("sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " " + host[3].replace("<<KEY>>",loginToken))
             xmlData = xmlData + "\t<connection name=\"" + connection[1] + "\">\n"
             xmlData = xmlData + "\t\t<protocol>" + host[1] + "</protocol>\n"
             xmlData = xmlData + "\t\t<param name=\"hostname\">" + host[0] + "</param>\n"
