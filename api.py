@@ -41,27 +41,32 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+        connections = {}
         for item in os.listdir("/etc/guacamole/connections"):
             itemRead = False
             if item.endswith(".csv"):
-                itemData = pandas.read_csv("/etc/guacamole/connections/" + item, header=0)
+                itemData = pandas.read_csv("/etc/guacamole/connections/" + item, header=None)
                 itemRead = True
             if item.endswith(".xlsx"):
-                itemData = pandas.read_excel("/etc/guacamole/connections/" + item, header=0)
+                itemData = pandas.read_excel("/etc/guacamole/connections/" + item, header=None)
                 itemRead = True
             if itemRead:
-                xmlData = ""
-                if os.path.exists("/etc/guacamole/user-mapping.xml"):
-                    xmlData = getFile("/etc/guacamole/user-mapping.xml").strip()
-                if xmlData != "":
-                    xmlData = xmlData + "\n"
-                xmlData = xmlData + "<authorize username=\"" + emailAddress + "\" password=\"" + loginToken + "\">\n"
-                xmlData = xmlData + "\t<protocol>vnc</protocol>\n"
-                xmlData = xmlData + "\t<param name=\"hostname\">localhost</param>\n"
-                xmlData = xmlData + "\t<param name=\"port\">5900</param>\n"
-                xmlData = xmlData + "\t<param name=\"password\">VNCPASS</param>\n"
-                xmlData = xmlData + "</authorize>\n"
-                putFile("/etc/guacamole/user-mapping.xml", xmlData)
+                for connectionDataIndex, connectionData in itemData.iterrows():
+                    if connectionData[0].lower() != "address":
+                        if emailAddress.lower() == connectionData[3].lower():
+                            connections.append([connectionData[0],connectionData[1],connectionData[2],connectionData[3].lower()])
+        xmlData = ""
+        if os.path.exists("/etc/guacamole/user-mapping.xml"):
+            xmlData = getFile("/etc/guacamole/user-mapping.xml").strip()
+        if xmlData != "":
+            xmlData = xmlData + "\n"
+        xmlData = xmlData + "<authorize username=\"" + emailAddress + "\" password=\"" + loginToken + "\">\n"
+        xmlData = xmlData + "\t<protocol>vnc</protocol>\n"
+        xmlData = xmlData + "\t<param name=\"hostname\">localhost</param>\n"
+        xmlData = xmlData + "\t<param name=\"port\">5900</param>\n"
+        xmlData = xmlData + "\t<param name=\"password\">VNCPASS</param>\n"
+        xmlData = xmlData + "</authorize>\n"
+        putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
     return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
 
