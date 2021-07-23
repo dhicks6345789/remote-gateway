@@ -40,6 +40,7 @@ def api():
     if loginToken == None:
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
+        # To do - check we have a valid login, not just some random values passed by anyone.
         clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
         
         hosts = {}
@@ -75,6 +76,7 @@ def api():
             xmlData = getFile("/etc/guacamole/user-mapping.xml").strip()
         if xmlData != "":
             xmlData = xmlData + "\n"
+            
         # To do - properly check if some existing data needs to be kept.
         xmlData = ""
         
