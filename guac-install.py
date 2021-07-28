@@ -4,7 +4,7 @@ import os
 import sys
 import shutil
 #import hashlib
-#import random
+import random
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
