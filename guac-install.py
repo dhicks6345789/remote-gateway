@@ -62,4 +62,4 @@ getUserOption("-guacPassword", "Please enter the password to set for Guacamole")
     
 os.system("wget https://git.io/fxZq5 -O guac-install.sh")
 os.system("chmod +x guac-install.sh")
-os.system("./guac-install.sh --mysqlpwd " + userOptions["-databasePassword"] + " --guacpwd " + userOptions["-guacPassword"] + " --nomfa --installmysql")
+os.system("cd /; ./guac-install.sh --mysqlpwd " + userOptions["-databasePassword"] + " --guacpwd " + userOptions["-guacPassword"] + " --nomfa --installmysql")
