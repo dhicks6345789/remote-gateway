@@ -2,7 +2,7 @@
 
 import os
 import sys
-#import shutil
+import shutil
 #import hashlib
 #import random
 
