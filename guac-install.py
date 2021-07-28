@@ -8,7 +8,7 @@ import sys
 
 # Parse any options set by the user on the command line.
 validBooleanOptions = []
-validValueOptions = ["-serverName"]
+validValueOptions = ["-serverName","-databasePassword","-guacPassword"]
 userOptions = {}
 optionCount = 1
 while optionCount < len(sys.argv):
@@ -54,6 +54,12 @@ def writeFile(theFilename, theFileData):
         fileDataHandle.write(theFileData)
     fileDataHandle.close()
 
-wget https://git.io/fxZq5 -O guac-install.sh
-chmod +x guac-install.sh
-./guac-install.sh --mysqlpwd password --guacpwd password --nomfa --installmysql
+# First, get some needed values from the user, if they haven't already provided them on the command line.
+print("Installing...")
+getUserOption("-serverName", "Please enter this server's full name (e.g. server.domain.com)")
+getUserOption("-databasePassword", "Please enter the password to set for Guacamole's database")
+getUserOption("-guacPassword", "Please enter the password to set for Guacamole")
+    
+os.system("wget https://git.io/fxZq5 -O guac-install.sh")
+os.system("chmod +x guac-install.sh")
+os.system("./guac-install.sh --mysqlpwd " + userOptions["-databasePassword"] + " --guacpwd " + userOptions["-guacPassword"] + " --nomfa --installmysql")
