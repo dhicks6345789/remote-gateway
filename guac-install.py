@@ -53,6 +53,12 @@ def writeFile(theFilename, theFileData):
     else:
         fileDataHandle.write(theFileData)
     fileDataHandle.close()
+    
+def replaceVariables(theFile, theKeyValues):
+    fileData = readFile(theFile)
+    for keyValue in theKeyValues.keys():
+        fileData = fileData.replace("<<" + keyValue + ">>", theKeyValues[keyValue])
+    writeFile(theFile, fileData)
 
 # First, get some needed values from the user, if they haven't already provided them on the command line.
 print("Installing...")
