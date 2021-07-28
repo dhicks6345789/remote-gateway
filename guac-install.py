@@ -131,9 +131,56 @@ else:
 copyfile("config.txt", "/etc/webconsole/tasks/" + taskID + "/config.txt", mode="0755")
 copyfile("syncData.sh", "/etc/webconsole/tasks/" + taskID + "/syncData.sh", mode="0755")
 
-# Make sure UFW is installed (Debian firewall).
+# Make sure UFW (Debian firewall) is installed.
 runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
 # Set up firewall rules - allow HTTP and HTTPS from external IP addresses, but only allow Tomcat's port 8080 from localhost.
 os.system("ufw allow http > /dev/null 2>&1")
 os.system("ufw allow https > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
+
+print("Stopping Guacamole...")
+os.system("systemctl stop guacd")
+print("Stopping Tomcat...")
+os.system("systemctl stop tomcat9")
+print("Stopping uWSGI...")
+os.system("systemctl stop emperor.uwsgi.service")
+print("Stopping Nginx...")
+os.system("systemctl stop nginx")
+# Make sure the (blank) Guacamole user-mapping file exists.
+os.system("echo > /etc/guacamole/user-mapping.xml")
+os.system("chmod a+rwx /etc/guacamole/user-mapping.xml")
+# Enable the uWSGI server service.
+os.system("systemctl enable emperor.uwsgi.service > /dev/null 2>&1")
+# Copy over the Nginx config files.
+os.system("cp nginx.conf /etc/nginx/nginx.conf")
+# If not already done so, set up an HTTPS certificate using Let's Encrypt.
+if os.path.isfile("/etc/letsencrypt/live/" + userOptions["-serverName"] + "/fullchain.pem"):
+    os.system("cp default /etc/nginx/sites-available/default")
+    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
+else:
+    os.system("cp default-noSSL /etc/nginx/sites-available/default")
+    replaceVariables("/etc/nginx/sites-available/default", {"SERVERNAME":userOptions["-serverName"]})
+    print("Starting Nginx...")
+    os.system("systemctl start nginx")
+    print("Running certbot...")
+    os.system("certbot")
+    print("Re-run install.py to use new SSL certificates...")
+    os.system("python3 guac-install.py -serverName " + userOptions["-serverName"] + " -databasePassword " + userOptions["-databasePassword"] + " -guacPassword " + userOptions["-guacPassword"])
+    sys.exit(0)
+print("Starting Nginx...")
+os.system("systemctl start nginx")
+print("Starting uWSGI...")
+os.system("systemctl start emperor.uwsgi.service")
+print("Starting Tomcat...")
+os.system("systemctl start tomcat9")
+print("Starting Guacamole server...")
+os.system("systemctl start guacd")
+
+# Set up Cron.
+copyfile("crontab", "/var/spool/cron/crontabs/root", mode="0600")
+os.system("cp monthlyCronjob.sh /etc/guacamole")
+os.system("chmod u+x /etc/guacamole/monthlyCronjob.sh")
+os.system("/etc/init.d/cron restart")
+
+# Print out some useful information.
+print("Webconsole Task URL: https://" + userOptions["-serverName"] + "/console/view?taskID=" + taskID)
