@@ -61,7 +61,7 @@ getUserOption("-databasePassword", "Please enter the password to set for Guacamo
 getUserOption("-guacPassword", "Please enter the password to set for Guacamole")
 
 # Use Chase Wright's script to install a Guacamole server - see: https://github.com/MysticRyuujin/guac-install
-if not os.path.exists("~/guac-install.sh"):
+if not os.path.exists(os.getenv("HOME") + os.sep + "guac-install.sh"):
     os.system("cd ~; wget https://git.io/fxZq5 -O guac-install.sh")
     os.system("cd ~; chmod +x guac-install.sh")
     os.system("cd ~; ./guac-install.sh --mysqlpwd " + userOptions["-databasePassword"] + " --guacpwd " + userOptions["-guacPassword"] + " --nomfa --installmysql")
