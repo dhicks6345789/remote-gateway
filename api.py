@@ -41,7 +41,7 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         # To do - check we have a valid login, not just some random values passed by anyone.
-        clientURL = "/guacamole/#/client/" + "TWFuYWdlMDAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+        clientURL = "/guacamole/#/client/" + "S1MtUkFTUElPUzAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
         
         hosts = {}
         for item in os.listdir("/etc/guacamole/hosts"):
