@@ -22,25 +22,10 @@
                 // Attempt to refocus the connection iframe upon click or keydown.
                 document.addEventListener('click', refocusGuacamole);
                 document.addEventListener('keydown', refocusGuacamole);
-                
-                /*
-                var display = document.getElementById("display");
-                var guac = new Guacamole.Client(new Guacamole.HTTPTunnel("/guacamole/tunnel"));
-                display.appendChild(guac.getDisplay().getElement());
-                guac.onerror = function(error) {
-                    alert(error);
-                };
-                guac.connect();
-                window.onunload = function() {
-                    guac.disconnect();
-                }*/
             }
         </script>
     </head>
     <body style="height:100vh; margin:0; padding:0;" onload="setup()">
         <iframe id="guacIframe" style="width:100%; height:100%; border:0" src="<<CONNECTIONURL>>"></iframe>
-        
-        <!-- Display -->
-        <div id="display"></div>
     </body>
 </html>
