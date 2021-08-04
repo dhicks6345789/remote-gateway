@@ -48,7 +48,9 @@ def api():
             responseContent = validationResponse.read().decode("latin-1", "ignore").strip()
             if responseContent.startswith("VALID:"):
                 if responseContent.split(":")[1] != emailAddress:
-                    errorMessage = "ERROR: Invalid login token."
+                    errorMessage = "ERROR: Email address doesn't match login token."
+            else:
+                errorMessage = "ERROR: Invalid login token / page name."
         except urllib.error.HTTPError as err:
             errorMessage = "ERROR: URL " + queryURL + " gives error " + err.reason
             
