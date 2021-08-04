@@ -98,12 +98,19 @@ def api():
         xmlData = xmlData + "\t<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
             host = hosts[connection[0].lower()]
-            os.system("sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " \"" + host[3].replace("<<KEY>>", loginToken) + "\"")
+            #os.system("sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " \"" + host[3].replace("<<KEY>>", loginToken) + "\"")
             xmlData = xmlData + "\t\t<connection name=\"" + connection[0] + "\">\n"
-            xmlData = xmlData + "\t\t\t<protocol>" + host[1].lower() + "</protocol>\n"
+            protocol = host[1].lower()
+            xmlData = xmlData + "\t\t\t<protocol>" + protocol + "</protocol>\n"
             xmlData = xmlData + "\t\t\t<param name=\"hostname\">" + host[0].split("@")[1] + "</param>\n"
-            xmlData = xmlData + "\t\t\t<param name=\"port\">5900</param>\n"
-            xmlData = xmlData + "\t\t\t<param name=\"password\">" + loginToken + "</param>\n"
+            if protocol == "vnc":
+                xmlData = xmlData + "\t\t\t<param name=\"port\">5900</param>\n"
+            elif protocol == "rdp":
+                xmlData = xmlData + "\t\t\t<param name=\"port\">3389</param>\n"
+                xmlData = xmlData + "\t\t\t<param name=\"domain\">" + host[3] + "</domain>\n"
+                xmlData = xmlData + "\t\t\t<param name=\"security\">nla</param>\n"
+                xmlData = xmlData + "\t\t\t<param name=\"ignore-cert\">true</param>\n"
+            xmlData = xmlData + "\t\t\t<param name=\"password\">" + host[2] + "</param>\n"
             xmlData = xmlData + "\t\t</connection>\n"
         xmlData = xmlData + "\t</authorize>\n"
         xmlData = xmlData + "</user-mapping>\n"
