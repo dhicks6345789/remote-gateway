@@ -98,8 +98,8 @@ def api():
         xmlData = xmlData + "\t</authorize>\n"
         xmlData = xmlData + "</user-mapping>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
-        return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL).replace("<<CLIENTUSERNAME>>", emailAddress).replace("<<CLIENTPASSWORD>>", loginToken)
-    return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
+        return getFile("/var/www/html/client.html").replace("<<CONNECTIONURL>>", clientURL).replace("<<CONNECTIONTITLE>>", connection[0])
+    return getFile("/var/www/html/error.html").replace("<<CONNECTIONERROR>>", errorMessage)
 
 if __name__ == "__main__":
     app.run()
