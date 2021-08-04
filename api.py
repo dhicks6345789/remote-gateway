@@ -108,7 +108,7 @@ def api():
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CONNECTIONURL>>", clientURL).replace("<<CONNECTIONTITLE>>", connection[0])
     
-    return getFile("/var/www/html/error.html").replace("<<CONNECTIONERROR>>", errorMessage).replace("<<CONNECTIONTITLE>>", connection[0])
+    return getFile("/var/www/html/error.html").replace("<<CONNECTIONERROR>>", errorMessage).replace("<<CONNECTIONTITLE>>", "Guacamole")
 
 if __name__ == "__main__":
     app.run()
