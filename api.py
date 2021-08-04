@@ -41,7 +41,8 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         # To do - check we have a valid login, not just some random values passed by anyone.
-        clientURL = "/guacamole/#/client/" + "S1MtUkFTUElPUzAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+        #clientURL = "/guacamole/#/client/" + "S1MtUkFTUElPUzAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+        clientURL = "/guacamole/#/client?username=" + emailAddress + "&password=" + loginToken
         
         hosts = {}
         for item in os.listdir("/etc/guacamole/hosts"):
@@ -88,13 +89,12 @@ def api():
             sshString = "sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " \"" + host[3].replace("<<KEY>>", loginToken) + "\""
             #putFile("/tmp/sshString.txt", sshString + "\n")
             os.system(sshString)
-            #xmlData = xmlData + "\t\t<connection name=\"" + connection[0] + "\">\n"
-            #xmlData = xmlData + "\t\t<connection name=\"CONNECTION001\">\n"
+            xmlData = xmlData + "\t\t<connection name=\"" + connection[0] + "\">\n"
             xmlData = xmlData + "\t\t\t<protocol>" + host[1].lower() + "</protocol>\n"
             xmlData = xmlData + "\t\t\t<param name=\"hostname\">" + host[0].split("@")[1] + "</param>\n"
             xmlData = xmlData + "\t\t\t<param name=\"port\">5900</param>\n"
             xmlData = xmlData + "\t\t\t<param name=\"password\">" + loginToken + "</param>\n"
-            #xmlData = xmlData + "\t\t</connection>\n"
+            xmlData = xmlData + "\t\t</connection>\n"
         xmlData = xmlData + "\t</authorize>\n"
         xmlData = xmlData + "</user-mapping>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
