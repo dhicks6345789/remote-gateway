@@ -142,6 +142,7 @@ runIfPathMissing("/usr/share/doc/ufw", "apt-get install -y ufw")
 # Set up firewall rules - allow HTTP and HTTPS from external IP addresses, but only allow Tomcat's port 8080 from localhost.
 os.system("ufw allow http > /dev/null 2>&1")
 os.system("ufw allow https > /dev/null 2>&1")
+os.system("ufw allow ssh > /dev/null 2>&1")
 os.system("echo y | ufw enable > /dev/null 2>&1")
 
 print("Stopping Guacamole...")
