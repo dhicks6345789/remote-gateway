@@ -24,8 +24,8 @@
             }
             
             function seeClient() {
-                // Guacamole.Client.
-                console.log(document.getElementById("guacIframe").contentWindow.Guacamole.Client);
+                console.log(document.getElementById("guacIframe").contentWindow.Guacamole.Client.disconnect());
+                document.getElementById("guacIframe").contentWindow.Guacamole.Client.disconnect();
             }
         </script>
     </head>
