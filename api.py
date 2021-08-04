@@ -42,12 +42,16 @@ def api():
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
         # Check we have a valid login, not just some random values passed in.
-        validationResponse = urllib.request.urlopen("https://dev.mystart.online/api/validateToken?loginToken=" + loginToken + "&pageName=" + pageName)
-        responseContent = validationResponse.read().strip()
-        if responseContent.startswith("VALID:"):
-            if responseContent.split[":"][1] != emailAddress:
-                errorMessage = "ERROR: Invalid login token."
-                
+        queryURL = "https://dev.mystart.online/api/validateToken?loginToken=" + loginToken + "&pageName=" + pageName
+        try:
+            validationResponse = urllib.request.urlopen(queryURL)
+            responseContent = validationResponse.read().strip()
+            if responseContent.startswith("VALID:"):
+                if responseContent.split[":"][1] != emailAddress:
+                    errorMessage = "ERROR: Invalid login token."
+        except urllib.error.HTTPError as err:
+            errorMessage = "ERROR: URL " + queryURL + " gives error " + err.reason
+            
     if errorMessage == "":
         clientURL = "/guacamole/#/client?username=" + emailAddress + "&password=" + loginToken
         
