@@ -98,7 +98,7 @@ def api():
         xmlData = xmlData + "\t</authorize>\n"
         xmlData = xmlData + "</user-mapping>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
-        return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL)
+        return getFile("/var/www/html/client.html").replace("<<CLIENTURLGOESHERE>>", clientURL).replace("<<CLIENTUSERNAME>>", emailAddress).replace("<<CLIENTPASSWORD>>", loginToken)
     return getFile("/var/www/html/error.html").replace("<<ERRORMESSAGEGOESHERE>>", errorMessage)
 
 if __name__ == "__main__":
