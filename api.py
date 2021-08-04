@@ -45,8 +45,8 @@ def api():
         queryURL = "https://dev.mystart.online/api/validateToken?loginToken=" + loginToken + "&pageName=" + pageName
         try:
             validationResponse = urllib.request.urlopen(queryURL)
-            responseContent = validationResponse.read().strip()
-            if responseContent.decode("latin-1", "ignore").startswith("VALID:"):
+            responseContent = validationResponse.read().decode("latin-1", "ignore").strip()
+            if responseContent.startswith("VALID:"):
                 if responseContent.split(":")[1] != emailAddress:
                     errorMessage = "ERROR: Invalid login token."
         except urllib.error.HTTPError as err:
