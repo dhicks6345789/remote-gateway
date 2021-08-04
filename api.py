@@ -102,12 +102,18 @@ def api():
             xmlData = xmlData + "\t\t<connection name=\"" + connection[0] + "\">\n"
             protocol = host[1].lower()
             xmlData = xmlData + "\t\t\t<protocol>" + protocol + "</protocol>\n"
-            xmlData = xmlData + "\t\t\t<param name=\"hostname\">" + host[0].split("@")[1] + "</param>\n"
+            username = ""
+            hostname = host[0]
+            if "@" in host[0]:
+                username = host[0].split("@")[0]
+                hostname = host[0].split("@")[1]
+            xmlData = xmlData + "\t\t\t<param name=\"hostname\">" + hostname + "</param>\n"
             if protocol == "vnc":
                 xmlData = xmlData + "\t\t\t<param name=\"port\">5900</param>\n"
             elif protocol == "rdp":
                 xmlData = xmlData + "\t\t\t<param name=\"port\">3389</param>\n"
-                xmlData = xmlData + "\t\t\t<param name=\"domain\">" + host[3] + "</domain>\n"
+                xmlData = xmlData + "\t\t\t<param name=\"username\">" + username + "</param>\n"
+                xmlData = xmlData + "\t\t\t<param name=\"domain\">" + host[3] + "</param>\n"
                 xmlData = xmlData + "\t\t\t<param name=\"security\">nla</param>\n"
                 xmlData = xmlData + "\t\t\t<param name=\"ignore-cert\">true</param>\n"
             xmlData = xmlData + "\t\t\t<param name=\"password\">" + host[2] + "</param>\n"
