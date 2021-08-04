@@ -1,5 +1,6 @@
 # Standard Python libraries.
 import os
+import urllib.request
 
 # The Flask web application framework.
 import flask
@@ -40,8 +41,14 @@ def api():
     if loginToken == None:
         errorMessage = "ERROR: Missing token field."
     if errorMessage == "":
-        # To do - check we have a valid login, not just some random values passed by anyone.
-        #clientURL = "/guacamole/#/client/" + "S1MtUkFTUElPUzAxAGMAZGVmYXVsdA" + "==?username=" + emailAddress + "&password=" + loginToken
+        # Check we have a valid login, not just some random values passed in.
+        validationResponse = urllib.request.urlopen("https://dev.mystart.online/api/validateToken?loginToken=" + loginToken + "&pageName=" + pageName)
+        responseContent = validationResponse.read().strip()
+        if responseContent.startswith("VALID:"):
+            if responseContent.split[":"][1] != emailAddress:
+                errorMessage = "ERROR: Invalid login token."
+                
+    if errorMessage == "":
         clientURL = "/guacamole/#/client?username=" + emailAddress + "&password=" + loginToken
         
         hosts = {}
@@ -81,14 +88,11 @@ def api():
         # To do - properly check if some existing data needs to be kept.
         xmlData = ""
         
-        
         xmlData = xmlData + "<user-mapping>\n"
         xmlData = xmlData + "\t<authorize username=\"" + emailAddress.lower() + "\" password=\"" + loginToken + "\">\n"
         for connection in connections:
             host = hosts[connection[0].lower()]
-            sshString = "sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " \"" + host[3].replace("<<KEY>>", loginToken) + "\""
-            #putFile("/tmp/sshString.txt", sshString + "\n")
-            os.system(sshString)
+            os.system("sshpass -p " + host[2] + " ssh -o \"StrictHostKeyChecking=no\" " + host[0] + " \"" + host[3].replace("<<KEY>>", loginToken) + "\"")
             xmlData = xmlData + "\t\t<connection name=\"" + connection[0] + "\">\n"
             xmlData = xmlData + "\t\t\t<protocol>" + host[1].lower() + "</protocol>\n"
             xmlData = xmlData + "\t\t\t<param name=\"hostname\">" + host[0].split("@")[1] + "</param>\n"
@@ -99,6 +103,7 @@ def api():
         xmlData = xmlData + "</user-mapping>\n"
         putFile("/etc/guacamole/user-mapping.xml", xmlData)
         return getFile("/var/www/html/client.html").replace("<<CONNECTIONURL>>", clientURL).replace("<<CONNECTIONTITLE>>", connection[0])
+    
     return getFile("/var/www/html/error.html").replace("<<CONNECTIONERROR>>", errorMessage).replace("<<CONNECTIONTITLE>>", connection[0])
 
 if __name__ == "__main__":
