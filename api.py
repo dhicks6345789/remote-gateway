@@ -46,7 +46,7 @@ def api():
         try:
             validationResponse = urllib.request.urlopen(queryURL)
             responseContent = validationResponse.read().strip()
-            if responseContent.startswith("VALID:"):
+            if responseContent.decode("latin-1", "ignore").startswith("VALID:"):
                 if responseContent.split[":"][1] != emailAddress:
                     errorMessage = "ERROR: Invalid login token."
         except urllib.error.HTTPError as err:
