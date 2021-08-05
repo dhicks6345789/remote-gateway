@@ -27,9 +27,12 @@ def runCommand(theCommand):
     commandHandle.close()
     return(result)
 
-
 @app.route("/", methods=["GET", "POST"])
-def api():
+def root():
+    return Flask.redirect("https://dev.mystart.online/page/tT4N3RiwI7JLyIXi", code=302)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
     errorMessage = ""
     emailAddress = flask.request.values.get("email", None)
     if emailAddress == None:
