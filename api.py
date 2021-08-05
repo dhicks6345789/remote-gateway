@@ -110,6 +110,7 @@ def login():
             if "@" in host[0]:
                 username = host[0].split("@")[0]
                 hostname = host[0].split("@")[1]
+            username = username.replace("<<EMAILUSER>>", emailAddress.split("@")[0])
             xmlData = xmlData + "\t\t\t<param name=\"hostname\">" + hostname + "</param>\n"
             if protocol == "vnc":
                 xmlData = xmlData + "\t\t\t<param name=\"port\">5900</param>\n"
