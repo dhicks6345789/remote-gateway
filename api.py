@@ -29,7 +29,7 @@ def runCommand(theCommand):
 
 @app.route("/", methods=["GET", "POST"])
 def root():
-    return flask.redirect("https://dev.mystart.online/page/tT4N3RiwI7JLyIXi", code=302)
+    return flask.redirect("https://dev.mystart.online/page/7mb4XgeY0WtztumL", code=302)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
