@@ -73,6 +73,7 @@ fi
 # Build the proxy server.
 rm server
 /usr/local/go/bin/go build remote-gateway/server.go
+echo "Running server..."
 ./server
 
 
