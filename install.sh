@@ -59,6 +59,7 @@ if [ ! -d "/usr/local/go" ]; then
     tar xvf go1.20.3.linux-amd64.tar.gz
     chown -R root:root ./go
     mv go /usr/local
+    mkdir $HOME/work
 fi
 
 export GOPATH=$HOME/work
