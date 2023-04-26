@@ -24,7 +24,7 @@ done
 
 if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]
     echo Usage: install.sh -servername
-    return 1
+    return 1;
 fi
 
 echo "Servername: $servername";
