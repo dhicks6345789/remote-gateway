@@ -38,8 +38,10 @@ if [ ! -f "guac-install.sh" ]; then
     chmod +x guac-install.sh
     ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
 fi
-# Todo: above script is now out of date, switch to a newer one. For now:
-rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
+# Todo: above script is now (April 2023) out of date, switch to a newer one. For now:
+if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
+    rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
+fi
 
 echo "Stopping Guacamole..."
 systemctl stop guacd
