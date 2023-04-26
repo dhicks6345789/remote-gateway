@@ -17,14 +17,14 @@ while test $# -gt 0; do
             ;;
         *)
             echo "$1 is not a recognized flag!"
-            return 1;
+            exit 1;
             ;;
     esac
 done
 
 if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]; then
-    echo Usage: install.sh -servername
-    return 1;
+    echo "Usage: install.sh -servername"
+    exit 1;
 fi
 
 echo "Servername: $servername";
