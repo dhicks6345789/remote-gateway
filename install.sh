@@ -37,7 +37,7 @@ fi
 #echo "Guacamole password: $guacpw";
 
 # Use Chase Wright's script to install a Guacamole server - see: https://github.com/MysticRyuujin/guac-install
-if test -f "guac-install.sh"; then
+if ![ -f "guac-install.sh" ]; then
     wget https://git.io/fxZq5 -O guac-install.sh
     chmod +x guac-install.sh
     #./guac-install.sh --mysqlpwd " + userOptions["-databasePassword"] + " --guacpwd " + userOptions["-guacPassword"] + " --nomfa --installmysql
