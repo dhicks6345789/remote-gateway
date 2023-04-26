@@ -59,15 +59,6 @@ fi
 if [ ! -f "/usr/local/bin/uwsgi" ]; then
     pip3 install uwsgi
 fi
-# ...and copy over the WSGI-based API configuration and code.
-cp remote-gateway/emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service
-chmod 0755 /etc/systemd/system/emperor.uwsgi.service
-
-#copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
-#copyfile("client.html", "/var/www/html/client.html", mode="0755")
-#copyfile("error.html", "/var/www/html/error.html", mode="0755")
-
-
 
 ## Make sure the Go development environment is installed.
 #
@@ -117,6 +108,15 @@ systemctl stop nginx
 # Make sure the (blank) Guacamole user-mapping file exists.
 # os.system("echo > /etc/guacamole/user-mapping.xml")
 chmod a+rwx /etc/guacamole/user-mapping.xml
+
+# Copy over the WSGI-based API configuration and code.
+cp remote-gateway/emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service
+chmod 0755 /etc/systemd/system/emperor.uwsgi.service
+
+#copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
+#copyfile("client.html", "/var/www/html/client.html", mode="0755")
+#copyfile("error.html", "/var/www/html/error.html", mode="0755")
+
 
 echo "Starting Nginx..."
 systemctl start nginx
