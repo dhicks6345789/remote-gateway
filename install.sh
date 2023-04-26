@@ -106,9 +106,21 @@ systemctl stop guacd
 echo "Stopping Tomcat..."
 systemctl stop tomcat9
 
+echo "Stopping uWSGI..."
+systemctl stop emperor.uwsgi.service
+
+echo "Stopping Nginx..."
+systemctl stop nginx
+
 # Make sure the (blank) Guacamole user-mapping file exists.
 # os.system("echo > /etc/guacamole/user-mapping.xml")
 chmod a+rwx /etc/guacamole/user-mapping.xml
+
+echo "Starting Nginx..."
+systemctl start nginx
+
+echo "Starting uWSGI..."
+systemctl start emperor.uwsgi.service
 
 echo "Starting Tomcat..."
 systemctl start tomcat9
