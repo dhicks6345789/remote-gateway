@@ -54,7 +54,7 @@ systemctl stop tomcat9
 chmod a+rwx /etc/guacamole/user-mapping.xml
 
 echo "Starting Tomcat..."
-systemctl start tomcat9"
+systemctl start tomcat9
 
 echo "Starting Guacamole server..."
 systemctl start guacd
