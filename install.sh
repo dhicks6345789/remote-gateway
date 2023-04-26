@@ -32,16 +32,14 @@ if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]; then
     exit 1;
 fi
 
-#echo "Servername: $servername";
-#echo "Database password: $databasepw";
-#echo "Guacamole password: $guacpw";
-
 # Use Chase Wright's script to install a Guacamole server - see: https://github.com/MysticRyuujin/guac-install
 if [ ! -f "guac-install.sh" ]; then
     wget https://git.io/fxZq5 -O guac-install.sh
     chmod +x guac-install.sh
     ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
 fi
+# Todo: above script is now out of date, switch to a newer one. For now:
+rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
 
 echo "Stopping Guacamole..."
 systemctl stop guacd
