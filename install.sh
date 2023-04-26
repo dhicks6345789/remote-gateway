@@ -45,36 +45,43 @@ fi
 
 
 
-# Make sure the Go development environment is installed.
-
-# Make sure curl (utility to get files from the web) is installed.
-if [ ! -f "/usr/bin/curl" ]; then
-    apt install -y curl
-fi
-
-if [ ! -d "/usr/local/go" ]; then
-    if [ ! -f "go1.20.3.linux-amd64.tar.gz" ]; then
-        curl -O https://dl.google.com/go/go1.20.3.linux-amd64.tar.gz
-    fi
-    tar xvf go1.20.3.linux-amd64.tar.gz
-    chown -R root:root ./go
-    mv go /usr/local
-    mkdir $HOME/work
-fi
-
-if [ -z `which go` ]; then
-    echo "Setting Go path..."
-    GOPATH=$HOME/work
-    PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+# Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL)...
+if [ -f "/usr/share/doc/nginx" ]; then
+    apt install -y nginx
 fi
 
 
 
-# Build the proxy server.
-rm server
-/usr/local/go/bin/go build remote-gateway/server.go
-echo "Running server..."
-./server
+## Make sure the Go development environment is installed.
+#
+## Make sure curl (utility to get files from the web) is installed.
+#if [ ! -f "/usr/bin/curl" ]; then
+#    apt install -y curl
+#fi
+#
+#if [ ! -d "/usr/local/go" ]; then
+#    if [ ! -f "go1.20.3.linux-amd64.tar.gz" ]; then
+#        curl -O https://dl.google.com/go/go1.20.3.linux-amd64.tar.gz
+#    fi
+#    tar xvf go1.20.3.linux-amd64.tar.gz
+#    chown -R root:root ./go
+#    mv go /usr/local
+#    mkdir $HOME/work
+#fi
+#
+#if [ -z `which go` ]; then
+#    echo "Setting Go path..."
+#    GOPATH=$HOME/work
+#    PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+#fi
+#
+#
+#
+## Build the proxy server.
+#rm server
+#/usr/local/go/bin/go build remote-gateway/server.go
+#echo "Running server..."
+#./server
 
 
 
