@@ -112,6 +112,7 @@ chmod a+rwx /etc/guacamole/user-mapping.xml
 # Copy over the WSGI-based API configuration and code.
 cp remote-gateway/emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service
 chmod 0755 /etc/systemd/system/emperor.uwsgi.service
+systemctl daemon-reload
 
 #copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
 #copyfile("client.html", "/var/www/html/client.html", mode="0755")
