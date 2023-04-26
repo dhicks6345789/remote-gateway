@@ -22,6 +22,11 @@ while test $# -gt 0; do
     esac
 done
 
+if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]
+    echo Usage: install.sh -servername
+    return 1
+fi
+
 echo "Servername: $servername";
 echo "Database password: $databasepw";
 echo "Guacamole password: $guacpw";
