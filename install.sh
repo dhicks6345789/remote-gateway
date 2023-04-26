@@ -71,7 +71,7 @@ fi
 
 
 # Build the proxy server.
-/usr/local/go/bin/go build server.go
+/usr/local/go/bin/go build remote-gateway/server.go
 
 
 
