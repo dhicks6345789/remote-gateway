@@ -26,7 +26,7 @@ def runCommand(theCommand):
 
 @app.route("/", methods=["GET", "POST"])
 def root():
-    username = flask.request.headers.get("Cf-Access-Authenticated-User-Email")
+    username = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<CONNECTIONTITLE>>", "Guacamole")
 
 if __name__ == "__main__":
