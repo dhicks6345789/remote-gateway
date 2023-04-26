@@ -123,7 +123,7 @@ chmod a+rwx /etc/guacamole/user-mapping.xml
 cp remote-gateway/emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service
 chmod 0755 /etc/systemd/system/emperor.uwsgi.service
 systemctl daemon-reload
-cp remote-gateway/index.py /var/lib/nginx/uwsgi/api.py
+cp remote-gateway/api.py /var/lib/nginx/uwsgi/api.py
 chmod 0755 /var/lib/nginx/uwsgi/api.py
 cp remote-gateway/client.html /var/www/html/client.html
 chmod 0755 /var/www/html/client.html
