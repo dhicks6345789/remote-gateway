@@ -18,6 +18,12 @@ server {
                 proxy_cookie_path / /;
                 access_log off;
         }
+	
+	# Settings for the "/" namespace - hand over to uWSGI which runs the Flask-based Python code in api.py.
+	location / {
+		include uwsgi_params;
+		uwsgi_pass unix:/tmp/api.sock;
+	}
 }
 
 # Virtual Host configuration for SERVERNAME
