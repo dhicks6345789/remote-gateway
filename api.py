@@ -26,7 +26,7 @@ def runCommand(theCommand):
 
 @app.route("/", methods=["GET", "POST"])
 def root():
-    return getFile(" /var/www/html/client.html")
+    return getFile("/var/www/html/client.html")
     #.replace("<<CONNECTIONERROR>>", errorMessage).replace("<<CONNECTIONTITLE>>", "Guacamole")
 
 if __name__ == "__main__":
