@@ -13,21 +13,11 @@ def getFile(theFilename):
     fileDataHandle.close()
     return(fileData)
 
-def putFile(theFilename, theData):
-    fileDataHandle = open(theFilename, "w", encoding="latin-1")
-    fileDataHandle.write(theData)
-    fileDataHandle.close()
-
-def runCommand(theCommand):
-    commandHandle = os.popen(theCommand)
-    result = commandHandle.read()
-    commandHandle.close()
-    return(result)
-
 @app.route("/", methods=["GET", "POST"])
 def root():
     username = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
-    return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<CONNECTIONTITLE>>", "Guacamole")
+    password = "bananas"
+    return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", "Guacamole")
 
 if __name__ == "__main__":
     app.run()
