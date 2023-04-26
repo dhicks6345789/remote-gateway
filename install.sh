@@ -122,7 +122,7 @@ systemctl daemon-reload
 systemctl enable emperor.uwsgi.service
 
 # Copy over the Nginx config files.
-cp remote-gateway/nginx.conf /etc/nginx/nginx.conf")
+cp remote-gateway/nginx.conf /etc/nginx/nginx.conf
 cp remote-gateway/default-noSSL /etc/nginx/sites-available/default
 sed -i "s/SERVERNAME/$servername/g" /etc/nginx/sites-available/default
 
