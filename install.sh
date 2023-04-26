@@ -109,13 +109,14 @@ systemctl stop nginx
 # os.system("echo > /etc/guacamole/user-mapping.xml")
 chmod a+rwx /etc/guacamole/user-mapping.xml
 
-# Copy over the WSGI-based API configuration and code.
+# Copy over the WSGI configuration and code.
 cp remote-gateway/emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service
 chmod 0755 /etc/systemd/system/emperor.uwsgi.service
 systemctl daemon-reload
-
-#copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
-#copyfile("client.html", "/var/www/html/client.html", mode="0755")
+cp remote-gateway/index.py /var/lib/nginx/uwsgi/api.py
+chmod 0755 /var/lib/nginx/uwsgi/api.py
+cp remote-gateway/client.html /var/www/html/client.html
+chmod 0755 /var/www/html/client.html
 #copyfile("error.html", "/var/www/html/error.html", mode="0755")
 
 # Enable the uWSGI server service.
