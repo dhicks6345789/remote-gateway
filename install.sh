@@ -63,9 +63,9 @@ if [ ! -d "/usr/local/go" ]; then
 fi
 
 if [ -z `which go` ]; then
-    echo "set Go!"
-    #export GOPATH=$HOME/work
-    #export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+    echo "Setting Go path..."
+    set GOPATH=$HOME/work
+    set PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 fi
 
 
