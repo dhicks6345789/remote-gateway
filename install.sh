@@ -50,6 +50,9 @@ if [ ! -d "/etc/nginx" ]; then
     apt install -y nginx
 fi
 
+# Figure out what version of Python3 we have installed.
+pythonVersion = `ls /usr/local/lib | grep python3`
+
 # Make sure Pip (Python package manager) is installed.
 if [ ! -f "/usr/bin/pip3" ]; then
     apt install -y python3-pip
@@ -59,6 +62,13 @@ fi
 if [ ! -f "/usr/local/bin/uwsgi" ]; then
     pip3 install uwsgi
 fi
+
+# Make sure Flask (Python web-publishing framework, used for the "/api" namespace) is installed.
+if [ ! -d "/usr/local/lib/$pythonVersion/dist-packages/flask" ]; then
+    pip3 install flask
+fi
+
+
 
 ## Make sure the Go development environment is installed.
 #
