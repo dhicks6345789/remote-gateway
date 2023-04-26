@@ -64,8 +64,8 @@ fi
 
 if [ -z `which go` ]; then
     echo "Setting Go path..."
-    set GOPATH=$HOME/work
-    set PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+    GOPATH=$HOME/work
+    PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 fi
 
 
