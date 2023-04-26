@@ -42,3 +42,19 @@ if [ ! -f "guac-install.sh" ]; then
     chmod +x guac-install.sh
     ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
 fi
+
+echo "Stopping Guacamole..."
+systemctl stop guacd
+
+echo "Stopping Tomcat..."
+systemctl stop tomcat9
+
+# Make sure the (blank) Guacamole user-mapping file exists.
+# os.system("echo > /etc/guacamole/user-mapping.xml")
+chmod a+rwx /etc/guacamole/user-mapping.xml
+
+echo "Starting Tomcat..."
+systemctl start tomcat9"
+
+echo "Starting Guacamole server..."
+systemctl start guacd
