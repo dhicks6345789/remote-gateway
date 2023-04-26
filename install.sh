@@ -22,7 +22,7 @@ while test $# -gt 0; do
     esac
 done
 
-if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]
+if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]; then
     echo Usage: install.sh -servername
     return 1;
 fi
