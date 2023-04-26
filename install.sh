@@ -62,8 +62,10 @@ if [ ! -d "/usr/local/go" ]; then
     mkdir $HOME/work
 fi
 
-export GOPATH=$HOME/work
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+GOEXISTS=`which go`
+echo $GOEXISTS
+#export GOPATH=$HOME/work
+#export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 
 
