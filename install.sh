@@ -40,5 +40,5 @@ fi
 if [ ! -f "guac-install.sh" ]; then
     wget https://git.io/fxZq5 -O guac-install.sh
     chmod +x guac-install.sh
-    #./guac-install.sh --mysqlpwd " + userOptions["-databasePassword"] + " --guacpwd " + userOptions["-guacPassword"] + " --nomfa --installmysql
+    ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
 fi
