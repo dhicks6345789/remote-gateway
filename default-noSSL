@@ -5,10 +5,10 @@ server {
         # A list of valid "index" files - add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
 
-        server_name <<SERVERNAME>>;
+        server_name SERVERNAME;
 
         # Settings for the "/guacamole" namespace - hand over to the Guacamole server.
-	location / {
+	location /guacamole/ {
                 proxy_pass http://localhost:8080/guacamole/;
                 proxy_buffering off;
                 proxy_http_version 1.1;
@@ -18,18 +18,11 @@ server {
                 proxy_cookie_path / /;
                 access_log off;
         }
-
-	#listen 443 ssl; # managed by Certbot
-	#ssl_certificate /etc/letsencrypt/live/<<SERVERNAME>>/fullchain.pem; # managed by Certbot
-	#ssl_certificate_key /etc/letsencrypt/live/<<SERVERNAME>>/privkey.pem; # managed by Certbot
-	#include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-	#ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
-# Virtual Host configuration for <<SERVERNAME>>
+# Virtual Host configuration for SERVERNAME
 server {
     listen 80;
 	listen [::]:80;
-	server_name <<SERVERNAME>>;
-	#return 301 https://<<SERVERNAME>>$request_uri;
+	server_name SERVERNAME;
 }
