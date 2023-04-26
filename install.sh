@@ -68,11 +68,10 @@ if [ -z `which go` ]; then
     PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 fi
 
-echo "Go?"
-which go
-echo "Or not?"
 
-# /usr/local/go/bin/go remoteGateway.go
+
+# Build the proxy server.
+/usr/local/go/bin/go build server.go
 
 
 
