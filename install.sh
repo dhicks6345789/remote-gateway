@@ -45,10 +45,25 @@ fi
 
 
 
-# Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL)...
+# Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL).
 if [ ! -f "/usr/share/doc/nginx" ]; then
     apt install -y nginx
 fi
+
+# Make sure Pip (Python package manager) is installed.
+if [ ! -f "/usr/bin/pip3" ]; then
+    apt install -y python3-pip
+fi
+
+# Make sure uWSGI (WSGI component for Nginx) is installed...
+if [ ! -f "/usr/local/bin/uwsgi" ]; then
+    pip3 install uwsgi
+fi
+## ...and copy over the WSGI-based API configuration and code.
+#copyfile("emperor.uwsgi.service", "/etc/systemd/system/emperor.uwsgi.service", mode="0755")
+#copyfile("api.py", "/var/lib/nginx/uwsgi/api.py", mode="0755")
+#copyfile("client.html", "/var/www/html/client.html", mode="0755")
+#copyfile("error.html", "/var/www/html/error.html", mode="0755")
 
 
 
