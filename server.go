@@ -1,4 +1,8 @@
 package main
+// A simple proxy server for Guacamole. See original proxy server code at:
+// https://dev.to/b0r/implement-reverse-proxy-in-gogolang-2cp4
+
+
 
 import (
     "io"
@@ -10,6 +14,8 @@ import (
 )
 
 func main() {
+    fmt.Println("Starting proxy server...")
+    
     // Define origin server URL
     originServerURL, err := url.Parse("http://127.0.0.1:8080")
     if err != nil {
