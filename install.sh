@@ -43,6 +43,29 @@ if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
     rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
 fi
 
+
+
+# Make sure the Go development environment is installed.
+
+# Make sure curl (utility to get files from the web) is installed.
+if [ ! -f "/usr/bin/curl" ]; then
+    apt install -y curl
+fi
+
+if [ ! -d "/usr/local/go" ]; then
+    if [ ! -f "go1.20.3.linux-amd64.tar.gz" ]; then
+        curl -O https://dl.google.com/go/go1.20.3.linux-amd64.tar.gz
+    fi
+    tar xvf go1.20.3.linux-amd64.tar.gz
+    chown -R root:root ./go
+    mv go /usr/local
+fi
+
+export GOPATH=$HOME/work
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+
+
 echo "Stopping Guacamole..."
 systemctl stop guacd
 
