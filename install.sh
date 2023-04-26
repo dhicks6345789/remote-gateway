@@ -118,6 +118,15 @@ systemctl daemon-reload
 #copyfile("client.html", "/var/www/html/client.html", mode="0755")
 #copyfile("error.html", "/var/www/html/error.html", mode="0755")
 
+# Enable the uWSGI server service.
+systemctl enable emperor.uwsgi.service
+
+# Copy over the Nginx config files.
+cp remote-gateway/nginx.conf /etc/nginx/nginx.conf")
+cp remote-gateway/default-noSSL /etc/nginx/sites-available/default
+sed -i 's/SERVERNAME/$servername/' /etc/nginx/sites-available/default
+
+
 
 echo "Starting Nginx..."
 systemctl start nginx
