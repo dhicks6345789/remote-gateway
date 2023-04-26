@@ -11,7 +11,6 @@ KillSignal=SIGQUIT
 Type=notify
 StandardError=syslog
 NotifyAccess=all
-buffer-size=8192
 
 [Install]
 WantedBy=multi-user.target
