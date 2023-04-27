@@ -16,11 +16,13 @@ Don't run the install script on your desktop machine, or any machine that you ca
 ## Before You Start
 The setup this script results in relies on Cloudflare's tunneling client ([cloudflared](https://github.com/cloudflare/cloudflared) - link included for completeness, but you probably just want to download a binary to install from Cloudflare's admin console) being present. It assumes all network traffic comes through that tunnel. You will need a Cloudflare account (the free option is fine) and will need to define a Cloudflare tunnel and (self hosted) Zero Trust application on their control panel. To accomplish both of those things you will need to have control of the domain you are using and for that domain to be using Cloudflare's DNS servers. You will want to pick a subdomain to host the Zero Trust application (e.g. "guacamole.yourdomain.com").
 
-Cloudflare's Zero Trust product allows you to authenticate users via various means, including via OAuth for several providers. This is a way to offer users web-based remote desktop access to a Windows desktop, seemlessly authenticated by their coprorate (or education) Google / Microsoft / etc accounts. You'll need to follow Cloudflare's instructions to add the authentication methods you want your users to use to the Zero Trust applications you define - you'll probably need to be the administrator of your organisations Google Workspace / Microsoft 365 Instance / etc.
+Cloudflare's Zero Trust product allows you to authenticate users via various means, including via OAuth for several providers. This is a good way to offer users web-based remote desktop access to a Windows desktop, seemlessly authenticated by their coprorate (or education) Google / Microsoft / etc accounts. You'll need to follow Cloudflare's instructions to add the authentication methods you want your users to use to the Zero Trust applications you define - you'll probably need to be the administrator of your organisations Google Workspace / Microsoft 365 Instance / etc.
 
 You will need a machine / VM running Debian. You probably want a newly-installed, dedicated machine / VM created just for this purpose. Debian can be installed with SSH access only, without a graphical desktop, if you want, no part of this project or Guacamole need you to have a graphical interface.
 
 You will also want a target remote desktop server of some sort. This should probably be a separate machine / VM from the one you're using as a gateway, although you could put everything on one. You can have multiple target machines if you want, and Guacamole supports SSH, VNC and RDP, so your targets can be Linux, Mac or Windows.
+
+Handling setup and licensing for a Windows remote desktop server is beyond the scope of this project. If you want to use a Windows remote desktop, you will need to check you have the appropriate CALs / remote connector licensing in place for your organisation. If you are trying to get an older, legacy Windows application to be able to be run via a web browser but Windows remote desktop licesning is going to be too costly or complex, the [Wine](https://www.winehq.org/) project, which can allow you to run some Windows applications on Linux or similar, might be of use.
 
 ## Installation
 
@@ -54,3 +56,5 @@ Not finished yet - might still be a bit clunky in places, but should mostly work
 ### To do:
 - Possibly add support for services similar to Cloudflare's Zero Trust - ngrok, maybe.
 - Make script runnable via direct download rather than having to clone project.
+- Add support for Raspberry Pi, with user interface for admin user(s) to edit list of devices available.
+- Add support for legacy Windows apps, with file save/load.
