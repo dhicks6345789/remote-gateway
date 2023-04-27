@@ -54,8 +54,9 @@ The Cloudflare tunnel will take care of handling HTTPS traffic, complete with au
 Not finished yet - might still be a bit clunky in places, but should mostly work.
 
 ### To do:
-- Possibly add support for services similar to Cloudflare's Zero Trust - ngrok, maybe.
-- Make script runnable via direct download rather than having to clone project.
-- Add support for Raspberry Pi, with user interface for admin user(s) to edit list of devices available.
-- Add support for legacy Windows apps, with file save/load.
 - Add ability to add new users to Windows machines as new users log in.
+- Make script runnable via direct download rather than having to clone project.
+- Rewrite crontab to auto-update.
+- Possibly add support for services similar to Cloudflare's Zero Trust - ngrok, maybe.
+- Add support for classroom sets of Raspberry Pis, with user interface for admin user(s) to edit list of devices available.
+- Add support for legacy Windows apps, with file save/load.
