@@ -1,6 +1,6 @@
 # remote-gateway
 
-A script to configure a Debian installation as a remote desktop gateway, using Apache Guacamole to provide web-based remote desktop and Cloudflare's Zero Trust product for handling authentication and security.
+A script to configure a Debian installation as a remote desktop gateway, using Apache Guacamole to provide web-based remote desktop and Cloudflare's [Zero Trust product](https://www.cloudflare.com/en-gb/products/zero-trust/) for handling authentication and security.
 
 ## What Does This Project Do?
 This project provides a setup script that is intended for people who want to set up a remote desktop gateway server with authentication and security (HTTPS, DDoS protection, etc) handled by Cloudflare. If you're using this project it's assumed you are probably a system administrator of some sort wanting to set up a remote desktop gateway for your users.
@@ -11,12 +11,12 @@ All the software installed by this projct is free and open source, and (at the t
 
 The installation procedure below is intended to run on a server of some kind - either a physical server or, most probably these days, a virtual machine running as part of a company's internal server complement. It should also work for servers running on remote infrastructure, in a datacentre somewhere.
 
-Don't run the install script on your desktop machine, or any machine that you can't simply re-install or restore to a previous checkpoint. The setup script shouldn't actually do anything destructive, and it should mostly work alongside other applications installed on a server, but to avoid issues it is recommended that you dedicate a machine or VM to this. The setup script, if it works correctly, should result in your machine running instances of nginx, uWSGI, Tomcat and Guacamole. It is also recommended that the target remote desktop server be a separate machine (or VM).
+Don't run the install script on your desktop machine, or any machine that you can't simply re-install or restore to a previous checkpoint. The setup script shouldn't actually do anything destructive, and it should mostly work alongside other applications installed on a server, but to avoid issues it is recommended that you dedicate a machine or VM to this. The setup script, if it works correctly, should result in your machine running instances of [NGINX](https://www.nginx.com/), [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/), Apache [Tomcat](https://tomcat.apache.org/) and Apache [Guacamole](https://guacamole.apache.org/). It is also recommended that the target remote desktop server be a separate machine (or VM).
 
 ## Before You Start
-The setup this script results in relies on Cloudflare's tunneling client being present. It assumes all network traffic comes through that tunnel. You will need a Cloudflare account (the free option is fine) and will need to define a Cloudflare tunnel and (self hosted) Zero Trust application on their control panel. To accomplish both of those things you will need to have control of the domain you are using and for that domain to be using Cloudflare's DNS servers. You will want to pick a subdomain to host the Zero Trust application (e.g. "guacamole.yourdomain.com").
+The setup this script results in relies on Cloudflare's tunneling client ([cloudflared](https://github.com/cloudflare/cloudflared) - link included for completeness, but you probably just want to download a binary to install from Cloudflare's admin console) being present. It assumes all network traffic comes through that tunnel. You will need a Cloudflare account (the free option is fine) and will need to define a Cloudflare tunnel and (self hosted) Zero Trust application on their control panel. To accomplish both of those things you will need to have control of the domain you are using and for that domain to be using Cloudflare's DNS servers. You will want to pick a subdomain to host the Zero Trust application (e.g. "guacamole.yourdomain.com").
 
-Cloudflare's Zero Trust product allows you to authenticate users via various means, including via OAuth for several providers. This is a way to offer users web-based remote desktop access to a Windows desktop, seemlessly authenticated by their coprorate (or education) Google / Microsoft / etc accounts.
+Cloudflare's Zero Trust product allows you to authenticate users via various means, including via OAuth for several providers. This is a way to offer users web-based remote desktop access to a Windows desktop, seemlessly authenticated by their coprorate (or education) Google / Microsoft / etc accounts. You'll need to follow Cloudflare's instructions to add the authentication methods you want your users to use to the Zero Trust applications you define - you'll probably need to be the administrator of your organisations Google Workspace / Microsoft 365 Instance / etc.
 
 You will need a machine / VM running Debian. You probably want a newly-installed, dedicated machine / VM created just for this purpose. Debian can be installed with SSH access only, without a graphical desktop, if you want, no part of this project or Guacamole need you to have a graphical interface.
 
@@ -38,7 +38,8 @@ The script will take a little while to run - it downloads and installs various c
 
 ## After Installation
 
-When finished, 
+When finished, you should (hopefully) have a Debian server running:
+- uswgi
 
 ## Notes
 Not finished yet - might still be a bit clunky in places, but should mostly work.
