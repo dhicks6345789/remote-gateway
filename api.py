@@ -20,7 +20,7 @@ def root():
     guacXML = xml.etree.ElementTree.fromstring(getFile("/etc/guacamole/user-mapping.xml"))
     for childNode in guacXML:
         username = username + childNode.tag + ", "
-        username = username + childNode.attrib + ", "
+        username = username + str(childNode.attrib) + ", "
     #for authorizeNode in guacXML.findall("./user-mapping/authorize"):
         #username = username + authorizeNode.text
     #username = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
