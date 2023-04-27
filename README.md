@@ -14,7 +14,7 @@ The installation procedure below is intended to run on a server of some kind - e
 Don't run the install script on your desktop machine, or any machine that you can't simply re-install or restore to a previous checkpoint. The setup script shouldn't actually do anything destructive, and it should mostly work alongside other applications installed on a server, but to avoid issues it is recommended that you dedicate a machine or VM to this. The setup script, if it works correctly, should result in your machine running instances of nginx, uWSGI, Tomcat and Guacamole. It is also recommended that the target remote desktop server be a separate machine (or VM).
 
 ## Before You Start
-The setup this script results in relies on Cloudflare's tunneling client being present. It assumes all network traffic comes through that tunnel. You will need a Cloudflare account (the free option is fine) and will need to define a Cloudflare tunnel and (self hosted) Zero Trust application on their control panel. To accomplish both of those things you will need to have control of the domain you are using and for that domain to be using Cloudflare's DNS servers.
+The setup this script results in relies on Cloudflare's tunneling client being present. It assumes all network traffic comes through that tunnel. You will need a Cloudflare account (the free option is fine) and will need to define a Cloudflare tunnel and (self hosted) Zero Trust application on their control panel. To accomplish both of those things you will need to have control of the domain you are using and for that domain to be using Cloudflare's DNS servers. You will want to pick a subdomain to host the Zero Trust application (e.g. "guacamole.yourdomain.com").
 
 Cloudflare's Zero Trust product allows you to authenticate users via various means, including via OAuth for several providers. This is a way to offer users web-based remote desktop access to a Windows desktop, seemlessly authenticated by their coprorate (or education) Google / Microsoft / etc accounts.
 
@@ -27,13 +27,22 @@ You will also want a target remote desktop server of some sort. This should prob
 Download from Github and run the install script:
 ```
 git clone https://github.com/dhicks6345789/remote-gateway.git
-bash remote-gateway/install.sh -servername guacamole.your.domain -databasepw SomePassword -guacpw SomePassword
+bash remote-gateway/install.sh -servername guacamole.yourdomain.com -databasepw SomePassword -guacpw SomePassword
 ```
-You'll need to provide three values: the name of the server (should be your server's domain name)
+You'll need to provide three values:
+- The full domain name of the server (should be your server's domain name, where the Cloudflare DNS entry / Zero Trust application is pointing, e.g. "guacamole.yourdomain.com")
+- A password for the MySQL database that will be created by the Guacamole install script.
+- An admin password for Guacamole itself.
+
+The script will take a little while to run - it downloads and installs various components as it goes along, it might take half an hour or so.
+
+## After Installation
+
+When finished, 
 
 ## Notes
 Not finished yet - might still be a bit clunky in places, but should mostly work.
 
-To do:
+### To do:
 - Possibly add support for services similar to Cloudflare's Zero Trust - ngrok, maybe.
 - Make script runnable via direct download rather than having to clone project.
