@@ -19,14 +19,14 @@ def root():
     cloudflareUsername = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
     
     username = ""
+    password = ""
     guacXML = xml.etree.ElementTree.fromstring(getFile("/etc/guacamole/user-mapping.xml"))
     for childNode in guacXML:
         if childNode.tag == "authorize":
-            if "username" in childNode.attrib.keys():
+            if "username" in childNode.attrib.keys() and "password" in childNode.attrib.keys():
                 if cloudflareUsername == childNode.attrib["username"]:
-                    username = cloudflareUsername
-    
-    password = "bananas"
+                    username = childNode.attrib["username"]
+                    password = childNode.attrib["password"]
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", "Guacamole")
 
 if __name__ == "__main__":
