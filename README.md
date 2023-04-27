@@ -26,7 +26,7 @@ You will also want a target remote desktop server of some sort. This should prob
 
 Download from Github and run the install script:
 ```
-git clone https://github.com/dhicks6345789/remote-gateway.git --no-rebase
+git clone https://github.com/dhicks6345789/remote-gateway.git
 bash remote-gateway/install.sh -servername guacamole.your.domain -databasepw SomePassword -guacpw SomePassword
 ```
 You'll need to provide three values: the name of the server (should be your server's domain name)
