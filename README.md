@@ -12,9 +12,7 @@ The installation procedure below is intended to run on a server of some kind - e
 Don't run the install script on your desktop machine, or any machine that you can't simply re-install or restore to a previous checkpoint. This script shouldn't actually do anything destructive, and it should mostly work alongside other applications installed on a server, but to avoid issues it is recommended that you dedicate a machine or VM to this. This script, if it works correctly, should result in your machine running instances of nginx, uWSGI, Tomcat and Guacamole. It is also recommended that the target remote desktop server be a separate machine (or VM).
 
 ## Before You Start
-The setup this script results in relies on Cloudflare's tunneling client
-
-to provide HTTPS, it doesn't provide any configuration
+The setup this script results in relies on Cloudflare's tunneling client being present. It assumes all network traffic comes through that tunnel. You will need a Cloudflare account (the free option is fine) and will need to define a Cloudflare tunnel and (self hosted) Zero Trust application on their control panel. To accomplish both of those things you will need to have control of the domain you are using and for that domain to be using Cloudflare's DNS servers.
 
 ## Installation
 
