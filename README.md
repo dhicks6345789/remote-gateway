@@ -5,9 +5,9 @@ A script to configure a Debian installation as a remote desktop gateway, using A
 ## What Does This Project Do?
 This project provides a setup script that is intended for people who want to set up a remote desktop gateway server with authentication and security (HTTPS, DDoS protection, etc) handled by Cloudflare. If you're using this project it's assumed you are probably a system administrator of some sort wanting to set up a remote desktop gateway for your users.
 
-If you found this project but just wanted a script to help you install Guacamole without using Cloudflare, then you probably want the [Guac Install](https://github.com/MysticRyuujin/guac-install) project. This project currently builds on that project, although at some point it will probably use a different [Guacamole Setup](https://github.com/itiligent/Guacamole-Setup) project.
+If you found this project but just wanted a script to help you install a standard instance of Guacamole, without using Cloudflare, then you probably want the [Guac Install](https://github.com/MysticRyuujin/guac-install) project. This project currently builds on that project, although at some point it will probably use a different [Guacamole Setup](https://github.com/itiligent/Guacamole-Setup) project.
 
-All the software installed by this projct is free and open source, and (at the time of writing, April 2023) Cloudflare's Zero Trust product is free for up to 50 users of a domain, so it is suitible for home users and smaller businesses. If you have over 50 users then Cloudflare's system is still an excellent choice, you'll just need to start paying for usage.
+All the software installed by this project is free and open source, and (at the time of writing, April 2023) Cloudflare's Zero Trust product is free for up to 50 users of a domain, so it is suitible for home users and smaller businesses. If you have over 50 users then Cloudflare's system is still an excellent choice, you'll just need to start paying for usage.
 
 The installation procedure below is intended to run on a server of some kind - either a physical server or, most probably these days, a virtual machine running as part of a company's internal server complement. It should also work for servers running on remote infrastructure, in a datacentre somewhere.
 
