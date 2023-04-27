@@ -22,7 +22,7 @@ def root():
     guacXML = xml.etree.ElementTree.fromstring(getFile("/etc/guacamole/user-mapping.xml"))
     for childNode in guacXML:
         if childNode.tag == "authorize":
-            if username in childNode.attrib.keys():
+            if "username" in childNode.attrib.keys():
                 if cloudflareUsername == childNode.attrib["username"]:
                     username = cloudflareUsername
     
