@@ -18,8 +18,11 @@ def getFile(theFilename):
 def root():
     username = ""
     guacXML = xml.etree.ElementTree.fromstring(getFile("/etc/guacamole/user-mapping.xml"))
-    for authorizeNode in guacXML.findall("./<user-mapping/authorize"):
-        username = username + authorizeNode.text
+    for childNode in guacXML:
+        username = username + childNode.tag + ", "
+        username = username + childNode.attrib + ", "
+    #for authorizeNode in guacXML.findall("./user-mapping/authorize"):
+        #username = username + authorizeNode.text
     #username = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
     password = "bananas"
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", "Guacamole")
