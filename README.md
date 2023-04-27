@@ -39,7 +39,12 @@ The script will take a little while to run - it downloads and installs various c
 ## After Installation
 
 When finished, you should (hopefully) have a Debian server running:
-- uswgi
+ - Guacamole, hosted as an application inside Tomcat, listening (via HTTP only, not HTTPS) on port 8080, i.e. http://localhost:8080/guacamole
+ - NGINX, listening (again via HTTP only) on (HTTP standard) port 80, as a reverse proxy to Guacamole (http://localhost/guacamole) and uWSGI (http://localhost/) running our own simple Python CGI (using the [Flask](https://flask.palletsprojects.com) framework) script.
+
+You will then need to install the Cloudflare tunnel client (cloudflared). Follow Cloudflare's instructions given from their control panel, it's simple enough.
+
+In the setup for the Cloudflare tunnel, when asked for a Public Hostname for the tunnel, you'll want to select "HTTP" and "localhost:80".
 
 ## Notes
 Not finished yet - might still be a bit clunky in places, but should mostly work.
