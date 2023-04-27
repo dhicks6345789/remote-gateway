@@ -1,6 +1,7 @@
 # Standard Python libraries.
 import os
 import urllib.request
+import xml.etree.ElementTree
 
 # The Flask web application framework.
 import flask
@@ -15,7 +16,11 @@ def getFile(theFilename):
 
 @app.route("/", methods=["GET", "POST"])
 def root():
-    username = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
+    username = ""
+    guacXML = xml.etree.ElementTree.fromstring(getFile("/etc/guacamole/user-mapping.xml"))
+    for authorizeNode in guacXML.findall("./<user-mapping/authorize"):
+        username = username + authorizeNode.text
+    #username = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
     password = "bananas"
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", "Guacamole")
 
