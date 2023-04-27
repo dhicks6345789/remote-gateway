@@ -16,14 +16,16 @@ def getFile(theFilename):
 
 @app.route("/", methods=["GET", "POST"])
 def root():
+    cloudflareUsername = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
+    
     username = ""
     guacXML = xml.etree.ElementTree.fromstring(getFile("/etc/guacamole/user-mapping.xml"))
     for childNode in guacXML:
-        username = username + childNode.tag + ", "
-        username = username + str(childNode.attrib) + ", "
-    #for authorizeNode in guacXML.findall("./user-mapping/authorize"):
-        #username = username + authorizeNode.text
-    #username = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
+        if childNode.tag == "authorize":
+            if username in childNode.attrib.keys():
+                if cloudflareUsername == childNode.attrib["username"]:
+                    username = cloudflareUsername
+    
     password = "bananas"
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", "Guacamole")
 
