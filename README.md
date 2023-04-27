@@ -32,4 +32,8 @@ bash remote-gateway/install.sh -servername guacamole.your.domain -databasepw Som
 You'll need to provide three values: the name of the server (should be your server's domain name)
 
 ## Notes
-Not finished yet - not ready for real-world use. Especially don't use on a Debian install you need for anything else.
+Not finished yet - might still be a bit clunky in places, but should mostly work.
+
+To do:
+- Possibly add support for services similar to Cloudflare's Zero Trust - ngrok, maybe.
+- Make script runnable via direct download rather than having to clone project.
