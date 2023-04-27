@@ -46,6 +46,8 @@ You will then need to install the Cloudflare tunnel client (cloudflared). Follow
 
 In the setup for the Cloudflare tunnel, when asked for a Public Hostname for the tunnel, you'll want to select "HTTP" and "localhost:80".
 
+The Cloudflare tunnel will take care of handling HTTPS traffic, complete with automatic handling / refresh of certificates, to ensure your connection is secure. Authentication is also handled by Cloudflare, with the authenticated user's details being passed in via the header from the tunnel client to the NGINX server. The CGI script picks up those details to create an HTML page for each user that logs in that passes login details through to Guacamole.
+
 ## Notes
 Not finished yet - might still be a bit clunky in places, but should mostly work.
 
