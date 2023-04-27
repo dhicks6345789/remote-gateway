@@ -2,7 +2,7 @@
 
 A script to configure a Debian installation as a remote desktop gateway, using Apache Guacamole to provide web-based remote desktop and Cloudflare's Zero Trust product for handling authentication and security.
 
-## What Does This Script Do
+## What Does This Script Do?
 This script is intended for people who want to set up a remote desktop gateway server with authentication and security (HTTPS, DDoS protection, etc) handled by Cloudflare. If you're using this script it's assumed you are probably a system administrator of some sort wanting to set up a remote desktop gateway for your users.
 
 All the software installed by this script is free and open source, and (at the time of writing, April 2023) Cloudflare's Zero Trust product is free for up to 50 users of a domain, so it is suitible for home users and smaller businesses. If you have over 50 users then Cloudflare's system is still an excellent choice, you'll just need to start paying for usage.
