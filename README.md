@@ -25,11 +25,14 @@ You will also want a target remote desktop server of some sort. This should prob
 Handling setup and licensing for a Windows remote desktop server is beyond the scope of this project. If you want to use a Windows remote desktop, you will need to check you have the appropriate CALs / remote connector licensing in place for your organisation. If you are trying to get an older, legacy Windows application to be able to be run via a web browser but Windows remote desktop licesning is going to be too costly or complex, the [Wine](https://www.winehq.org/) project, which can allow you to run some Windows applications on Linux or similar, might be of use.
 
 ## Installation
-
-Download from Github and run the install script:
+On a freshly installed Debian server, as root, run the command:
+```
+wget https://github.com/dhicks6345789/remote-gateway/raw/master/install.sh -q -O - | bash -s -- -servername guacamole.yourdomain.com -databasepw SomePassword01 -guacpw SomePassword02
+```
+Or, download from Github and run the install script:
 ```
 git clone https://github.com/dhicks6345789/remote-gateway.git
-bash remote-gateway/install.sh -servername guacamole.yourdomain.com -databasepw SomePassword -guacpw SomePassword
+bash remote-gateway/install.sh -servername guacamole.yourdomain.com -databasepw SomePassword01 -guacpw SomePassword02
 ```
 You'll need to provide three values:
 - The full domain name of the server (should be your server's domain name, where the Cloudflare DNS entry / Zero Trust application is pointing, e.g. "guacamole.yourdomain.com")
