@@ -50,7 +50,7 @@ def getFavicon16x16():
     return flask.Response(getBinaryFile("/var/www/html/favicon-16x16.png"), mimetype="image/x-png")
 
 @app.route("/site.webmanifest", methods=["GET"])
-def getSite.Webmanifest():
+def getSiteWebmanifest():
     return flask.Response(getBinaryFile("/var/www/html/site.webmanifest"), mimetype="application/manifest+json")
 
 @app.route("/safari-pinned-tab.svg", methods=["GET"])
