@@ -27,17 +27,19 @@ Handling setup and licensing for a Windows remote desktop server is beyond the s
 ## Installation
 On a freshly installed Debian server, as root, run the command:
 ```
-wget https://github.com/dhicks6345789/remote-gateway/raw/master/install.sh -q -O - | bash -s -- -servername guacamole.yourdomain.com -databasepw SomePassword01 -guacpw SomePassword02
+wget https://github.com/dhicks6345789/remote-gateway/raw/master/install.sh -q -O - | bash -s -- -servername guacamole.yourdomain.com -databasepw SomePassword01 -guacpw SomePassword02 -pagetitle Guacamole
 ```
 Or, download from Github and run the install script:
 ```
 git clone https://github.com/dhicks6345789/remote-gateway.git
-bash remote-gateway/install.sh -servername guacamole.yourdomain.com -databasepw SomePassword01 -guacpw SomePassword02
+bash remote-gateway/install.sh -servername guacamole.yourdomain.com -databasepw SomePassword01 -guacpw SomePassword02 -pagetitle Guacamole
 ```
 You'll need to provide three values:
 - The full domain name of the server (should be your server's domain name, where the Cloudflare DNS entry / Zero Trust application is pointing, e.g. "guacamole.yourdomain.com")
 - A password for the MySQL database that will be created by the Guacamole install script.
 - An admin password for Guacamole itself.
+You can also provide an optional value:
+- A page title for the HTML page used to display the remote desktop. This generally gets used by browsers as a tab title, will simply default to "Guacamole" if not defined.
 
 The script will take a little while to run - it downloads and installs various components as it goes along, it might take half an hour or so.
 
@@ -52,8 +54,6 @@ You will then need to install the Cloudflare tunnel client (cloudflared). Follow
 In the setup for the Cloudflare tunnel, when asked for a Public Hostname for the tunnel, you'll want to select "HTTP" and "localhost:80".
 
 The Cloudflare tunnel will take care of handling HTTPS traffic, complete with automatic handling / refresh of certificates, to ensure your connection is secure. Authentication is also handled by Cloudflare, with the authenticated user's details being passed in via the header from the tunnel client to the NGINX server. The CGI script picks up those details to create an HTML page for each user that logs in that passes login details through to Guacamole.
-
-If you want to change the page title from the default "Guacamole", simply edit the file "/var/lib/nginx/uwsgi/api.py" and replace the string on the line that starts "pageTitle =" with your preferred title.
 
 You can change the favicon used for the page (generally used as an identifying icon on open tabs in a web browser). We recommend using [Favicon Generator](https://realfavicongenerator.net/) to turn a single icon into a folder of files that should provide a favicon for most browsers. Place your generated files in on your server in /var/www/html/favicon, they will be served as static files from there.
 
