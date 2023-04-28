@@ -10,6 +10,7 @@ copyOrDownload () {
     chmod $3 $2
 }
 
+pagetitle="Guacamole"
 # Read user-defined command-line flags.
 while test $# -gt 0; do
     case "$1" in
@@ -28,6 +29,11 @@ while test $# -gt 0; do
             guacpw=$1
             shift
             ;;
+        -pagetitle)
+            shift
+            pagetitle=$1
+            shift
+            ;;
         *)
             echo "$1 is not a recognized flag!"
             exit 1;
@@ -37,10 +43,11 @@ done
 
 # Check all required flags are set, print a usage message if not.
 if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]; then
-    echo "Usage: install.sh -servername SERVERNAME -databasepw DATABASEPASSWORD -guacpw GACAMOLEPASSWORD"
+    echo "Usage: install.sh -servername SERVERNAME -databasepw DATABASEPASSWORD -guacpw GACAMOLEPASSWORD [-pagetitle PAGETITLE]"
     echo "SERVERNAME: The full domain name of the Guacamole server (e.g. guacamole.example.com)"
     echo "DATABASEPASSWORD: The password to set for Guacamole's database."
     echo "GUACAMOLEPASSWORD: The password to set for Guacamole itself."
+    echo "Optional: PAGETITLE: A title for the HTML page (tab title) displayed."
     exit 1;
 fi
 
@@ -106,6 +113,7 @@ fi
 copyOrDownload emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service 0755
 systemctl daemon-reload
 copyOrDownload api.py /var/lib/nginx/uwsgi/api.py 0755
+sed -i "s/Guacamole/$pagetitle/g" /var/lib/nginx/uwsgi/api.py
 copyOrDownload client.html /var/www/html/client.html 0755
 
 if [ ! -d /var/www/html/favicon ]; then
