@@ -107,11 +107,23 @@ copyOrDownload emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service 0
 systemctl daemon-reload
 copyOrDownload api.py /var/lib/nginx/uwsgi/api.py 0755
 copyOrDownload client.html /var/www/html/client.html 0755
-copyOrDownload favicon/apple-touch-icon.png /var/www/html/apple-touch-icon.png 0755
-copyOrDownload favicon/favicon-32x32.png /var/www/html/favicon-32x32.png 0755
-copyOrDownload favicon/favicon-16x16.png /var/www/html/favicon-16x16.png 0755
-copyOrDownload favicon/site.webmanifest /var/www/html/site.webmanifest 0755
-copyOrDownload favicon/safari-pinned-tab.svg /var/www/html/safari-pinned-tab.svg 0755
+
+if [ ! -d /var/www/html/favicon ]; then
+    copyOrDownload favicon/android-chrome-192x192.png /var/www/html/favicon/android-chrome-192x192.png 0755
+    copyOrDownload favicon/android-chrome-512x512.png /var/www/html/favicon/android-chrome-512x512.png 0755
+    copyOrDownload favicon/apple-touch-icon.png /var/www/html/favicon/apple-touch-icon.png 0755
+    copyOrDownload favicon/browserconfig.xml /var/www/html/favicon/browserconfig.xml 0755
+    copyOrDownload favicon/favicon-16x16.png /var/www/html/favicon/favicon-16x16.png 0755
+    copyOrDownload favicon/favicon-32x32.png /var/www/html/favicon/favicon-32x32.png 0755
+    copyOrDownload favicon/favicon.ico /var/www/html/favicon/favicon.ico 0755
+    copyOrDownload favicon/mstile-144x144.png /var/www/html/favicon/mstile-144x144.png 0755
+    copyOrDownload favicon/mstile-150x150.png /var/www/html/favicon/mstile-150x150.png 0755
+    copyOrDownload favicon/mstile-310x150.png /var/www/html/favicon/mstile-310x150.png 0755
+    copyOrDownload favicon/mstile-310x310.png /var/www/html/favicon/mstile-310x310.png 0755
+    copyOrDownload favicon/mstile-70x70.png /var/www/html/favicon/mstile-70x70.png 0755
+    copyOrDownload favicon/safari-pinned-tab.svg /var/www/html/favicon/safari-pinned-tab.svg 0755
+    copyOrDownload favicon/site.webmanifest /var/www/html/favicon/site.webmanifest 0755
+fi
 
 # Enable the uWSGI server service.
 systemctl enable emperor.uwsgi.service
