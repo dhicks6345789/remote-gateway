@@ -56,7 +56,7 @@ In the setup for the Cloudflare tunnel, when asked for a Public Hostname for the
 
 The Cloudflare tunnel will take care of handling HTTPS traffic, complete with automatic handling / refresh of certificates, to ensure your connection is secure. Authentication is also handled by Cloudflare, with the authenticated user's details being passed in via the header from the tunnel client to the NGINX server. The CGI script picks up those details to create an HTML page for each user that logs in that passes login details through to Guacamole.
 
-You can change the favicon used for the page (generally used as an identifying icon on open tabs in a web browser). We recommend using [Favicon Generator](https://realfavicongenerator.net/) to turn a single icon into a folder of files that should provide a favicon for most browsers. Place your generated files in on your server in /var/www/html/favicon, they will be served as static files from there.
+You can change the favicon used for the page (generally used as an identifying icon on open tabs in a web browser). We recommend using [Favicon Generator](https://realfavicongenerator.net/) to turn a single icon into a folder of files that should provide a favicon for most browsers. Place your generated files on your server in /var/www/html/favicon, they will be served as static files from there.
 
 ### Adding Connections / Users
 
