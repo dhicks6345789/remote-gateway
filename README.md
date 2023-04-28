@@ -53,6 +53,8 @@ In the setup for the Cloudflare tunnel, when asked for a Public Hostname for the
 
 The Cloudflare tunnel will take care of handling HTTPS traffic, complete with automatic handling / refresh of certificates, to ensure your connection is secure. Authentication is also handled by Cloudflare, with the authenticated user's details being passed in via the header from the tunnel client to the NGINX server. The CGI script picks up those details to create an HTML page for each user that logs in that passes login details through to Guacamole.
 
+If you want to change the page title from the default "Guacamole", simply edit the file "/var/lib/nginx/uwsgi/api.py" and replace the string on the line that starts "pageTitle =" with your preferred title.
+
 ### Adding Connections / Users
 
 The CGI script that picks up the authenticated username provided by cloudflared reads Guacamole's user-mapping.xml file (/etc/guacamole/user-mapping.xml) to try and find any matching users listed. Authenticated users' usernames will generally be in the form of an email address, the domain part is removed by the CGI script. So, a user logging in with the email address "f.bloggs@example.com" will be seen as user "f.bloggs" in user-mapping.xml.
