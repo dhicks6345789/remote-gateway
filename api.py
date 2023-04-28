@@ -42,19 +42,19 @@ def getAppleTouchIcon():
     return flask.Response(getBinaryFile("/var/www/html/apple-touch-icon.png"), mimetype="image/x-png")
 
 @app.route("/favicon-32x32.png", methods=["GET"])
-def getAppleTouchIcon():
+def getFavicon32x32():
     return flask.Response(getBinaryFile("/var/www/html/favicon-32x32.png"), mimetype="image/x-png")
 
 @app.route("/favicon-16x16.png", methods=["GET"])
-def getAppleTouchIcon():
+def getFavicon16x16():
     return flask.Response(getBinaryFile("/var/www/html/favicon-16x16.png"), mimetype="image/x-png")
 
 @app.route("/site.webmanifest", methods=["GET"])
-def getAppleTouchIcon():
+def getSite.Webmanifest():
     return flask.Response(getBinaryFile("/var/www/html/site.webmanifest"), mimetype="application/manifest+json")
 
 @app.route("/safari-pinned-tab.svg", methods=["GET"])
-def getAppleTouchIcon():
+def getSafariPinnedTab():
     return flask.Response(getBinaryFile("/var/www/html/safari-pinned-tab.svg"), mimetype="image/svg+xml")
 
 if __name__ == "__main__":
