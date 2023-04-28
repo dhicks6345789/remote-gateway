@@ -16,6 +16,12 @@ def getFile(theFilename):
     fileDataHandle.close()
     return(fileData)
 
+def getBinaryFile(theFilename):
+    fileDataHandle = open(theFilename)
+    fileData = fileDataHandle.read()
+    fileDataHandle.close()
+    return(fileData)
+
 @app.route("/", methods=["GET", "POST"])
 def root():
     cloudflareUsername = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
@@ -30,6 +36,10 @@ def root():
                     username = childNode.attrib["username"]
                     password = childNode.attrib["password"]
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
+
+@app.route("/apple-touch-icon.png", methods=["GET"])
+def getAppleTouchIcon():
+    return getBinaryFile("/var/www/html/apple-touch-icon.png")
 
 if __name__ == "__main__":
     app.run()
