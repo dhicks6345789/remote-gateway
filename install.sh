@@ -1,8 +1,8 @@
 copyOrDownload () {
     echo Copying $1 to $2, mode $3...
-    if [ -f $1 ]
+    if [ -f $1 ]; then
         cp $1 $2
-    elif [ -f remote-gateway/$1 ]
+    elif [ -f remote-gateway/$1 ]; then
         cp remote-gateway/$1 $2
     else
         echo download cp $1 to $2
