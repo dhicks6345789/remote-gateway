@@ -38,6 +38,7 @@ You'll need to provide three values:
 - The full domain name of the server (should be your server's domain name, where the Cloudflare DNS entry / Zero Trust application is pointing, e.g. "guacamole.yourdomain.com")
 - A password for the MySQL database that will be created by the Guacamole install script.
 - An admin password for Guacamole itself.
+
 You can also provide an optional value:
 - A page title for the HTML page used to display the remote desktop. This generally gets used by browsers as a tab title, will simply default to "Guacamole" if not defined.
 
