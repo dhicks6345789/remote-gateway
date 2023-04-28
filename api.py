@@ -8,7 +8,7 @@ import flask
 
 pageTitle = "Guacamole"
 
-app = flask.Flask(__name__, static_url_path="", static_folder="/var/www/html")
+app = flask.Flask(__name__, static_url_path="", static_folder="/var/www/html/favicon")
 
 def getFile(theFilename):
     fileDataHandle = open(theFilename, encoding="latin-1")
