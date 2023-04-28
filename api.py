@@ -6,6 +6,8 @@ import xml.etree.ElementTree
 # The Flask web application framework.
 import flask
 
+pageTitle = "Guacamole"
+
 app = flask.Flask(__name__)
 
 def getFile(theFilename):
@@ -27,7 +29,7 @@ def root():
                 if cloudflareUsername == childNode.attrib["username"]:
                     username = childNode.attrib["username"]
                     password = childNode.attrib["password"]
-    return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", "Guacamole")
+    return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
 
 if __name__ == "__main__":
     app.run()
