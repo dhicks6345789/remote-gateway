@@ -7,7 +7,7 @@ copyOrDownload () {
     else
         echo download cp $1 to $2
     fi
-    chmod $2 $3
+    chmod $3 $2
 }
 
 # Read user-defined command-line flags.
