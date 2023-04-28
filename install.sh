@@ -45,7 +45,7 @@ if [ -z "$servername" ] || [ -z "$databasepw" ] || [ -z "$guacpw" ]; then
 fi
 
 # Use Chase Wright's script to install a Guacamole server - see: https://github.com/MysticRyuujin/guac-install
-if [ ! -f "guac-install.sh" ]; then
+if [ ! -d "/etc/guacamole" ]; then
     wget https://git.io/fxZq5 -O guac-install.sh
     chmod +x guac-install.sh
     ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
