@@ -8,7 +8,7 @@ import flask
 
 pageTitle = "Guacamole"
 
-app = flask.Flask(__name__)
+app = flask.Flask(__name__, static_url_path="", static_folder="/var/www/html")
 
 def getFile(theFilename):
     fileDataHandle = open(theFilename, encoding="latin-1")
@@ -37,25 +37,25 @@ def root():
                     password = childNode.attrib["password"]
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
 
-@app.route("/apple-touch-icon.png", methods=["GET"])
-def getAppleTouchIcon():
-    return flask.Response(getBinaryFile("/var/www/html/apple-touch-icon.png"), mimetype="image/x-png")
+#@app.route("/apple-touch-icon.png", methods=["GET"])
+#def getAppleTouchIcon():
+#    return flask.Response(getBinaryFile("/var/www/html/apple-touch-icon.png"), mimetype="image/x-png")
 
-@app.route("/favicon-32x32.png", methods=["GET"])
-def getFavicon32x32():
-    return flask.Response(getBinaryFile("/var/www/html/favicon-32x32.png"), mimetype="image/x-png")
+#@app.route("/favicon-32x32.png", methods=["GET"])
+#def getFavicon32x32():
+#    return flask.Response(getBinaryFile("/var/www/html/favicon-32x32.png"), mimetype="image/x-png")
 
-@app.route("/favicon-16x16.png", methods=["GET"])
-def getFavicon16x16():
-    return flask.Response(getBinaryFile("/var/www/html/favicon-16x16.png"), mimetype="image/x-png")
+#@app.route("/favicon-16x16.png", methods=["GET"])
+#def getFavicon16x16():
+#    return flask.Response(getBinaryFile("/var/www/html/favicon-16x16.png"), mimetype="image/x-png")
 
-@app.route("/site.webmanifest", methods=["GET"])
-def getSiteWebmanifest():
-    return flask.Response(getBinaryFile("/var/www/html/site.webmanifest"), mimetype="application/manifest+json")
+#@app.route("/site.webmanifest", methods=["GET"])
+#def getSiteWebmanifest():
+#    return flask.Response(getBinaryFile("/var/www/html/site.webmanifest"), mimetype="application/manifest+json")
 
-@app.route("/safari-pinned-tab.svg", methods=["GET"])
-def getSafariPinnedTab():
-    return flask.Response(getBinaryFile("/var/www/html/safari-pinned-tab.svg"), mimetype="image/svg+xml")
+#@app.route("/safari-pinned-tab.svg", methods=["GET"])
+#def getSafariPinnedTab():
+#    return flask.Response(getBinaryFile("/var/www/html/safari-pinned-tab.svg"), mimetype="image/svg+xml")
 
 if __name__ == "__main__":
     app.run()
