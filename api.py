@@ -39,8 +39,23 @@ def root():
 
 @app.route("/apple-touch-icon.png", methods=["GET"])
 def getAppleTouchIcon():
-    # return getBinaryFile("/var/www/html/apple-touch-icon.png")
     return flask.Response(getBinaryFile("/var/www/html/apple-touch-icon.png"), mimetype="image/x-png")
+
+@app.route("/favicon-32x32.png", methods=["GET"])
+def getAppleTouchIcon():
+    return flask.Response(getBinaryFile("/var/www/html/favicon-32x32.png"), mimetype="image/x-png")
+
+@app.route("/favicon-16x16.png", methods=["GET"])
+def getAppleTouchIcon():
+    return flask.Response(getBinaryFile("/var/www/html/favicon-16x16.png"), mimetype="image/x-png")
+
+@app.route("/site.webmanifest", methods=["GET"])
+def getAppleTouchIcon():
+    return flask.Response(getBinaryFile("/var/www/html/site.webmanifest"), mimetype="application/manifest+json")
+
+@app.route("/safari-pinned-tab.svg", methods=["GET"])
+def getAppleTouchIcon():
+    return flask.Response(getBinaryFile("/var/www/html/safari-pinned-tab.svg"), mimetype="image/svg+xml")
 
 if __name__ == "__main__":
     app.run()
