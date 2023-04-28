@@ -17,7 +17,7 @@ def getFile(theFilename):
     return(fileData)
 
 def getBinaryFile(theFilename):
-    fileDataHandle = open(theFilename)
+    fileDataHandle = open(theFilename, mode="rb")
     fileData = fileDataHandle.read()
     fileDataHandle.close()
     return(fileData)
