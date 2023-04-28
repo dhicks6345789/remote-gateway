@@ -43,9 +43,9 @@ The script will take a little while to run - it downloads and installs various c
 
 ## After Installation
 
-When finished, you should (hopefully) have a Debian server running:
+When the above script has finished, you should (hopefully) have a Debian server running:
  - Guacamole, hosted as an application inside Tomcat, listening (via HTTP only, not HTTPS) on port 8080, i.e. http://localhost:8080/guacamole
- - NGINX, listening (again via HTTP only) on (HTTP standard) port 80, as a reverse proxy to Guacamole (http://localhost/guacamole) and uWSGI (http://localhost/) running our own simple Python CGI (using the [Flask](https://flask.palletsprojects.com) framework) script.
+ - NGINX, listening (again via HTTP only) on (HTTP standard) port 80, as a reverse proxy to both Guacamole (http://localhost/guacamole) and uWSGI (http://localhost/) running our own simple Python CGI (using the [Flask](https://flask.palletsprojects.com) framework) script.
 
 You will then need to install the Cloudflare tunnel client (cloudflared). Follow Cloudflare's instructions given from their control panel, it's simple enough.
 
@@ -57,10 +57,12 @@ The Cloudflare tunnel will take care of handling HTTPS traffic, complete with au
 
 The CGI script that picks up the authenticated username provided by cloudflared reads Guacamole's user-mapping.xml file (/etc/guacamole/user-mapping.xml) to try and find any matching users listed. Authenticated users' usernames will generally be in the form of an email address, the domain part is removed by the CGI script. So, a user logging in with the email address "f.bloggs@example.com" will be seen as user "f.bloggs" in user-mapping.xml.
 
+An example user-mapping.xml file is provided to get you started. You can read Guacmaole's own [documentation](https://guacamole.apache.org/doc/gug/configuring-guacamole.html) for more details.
+
 The CGI script will simply pass any connection password for a found user out to the page that displays the remote desktop interface. This page hides the URL (which includes the username and password) by using a 100% height and width iframe element.
 
 ## Notes
-Not finished yet - might still be a bit clunky in places, but should mostly work.
+This script is, hopefully, mostly complete and has been tested with a couple of real-life installations. There might still be issues in places, do please report any issues you find.
 
 ### To do:
 - Add ability to add new users to Windows machines as new users log in.
