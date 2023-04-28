@@ -1,7 +1,13 @@
 copyOrDownload () {
-    echo $1
-    echo $2
-    echo $3
+    echo Copying $1 to $2, mode $3...
+    if [ -f $1 ]
+        cp $1 $2
+    elif [ -f remote-gateway/$1 ]
+        cp remote-gateway/$1 $2
+    else
+        echo download cp $1 to $2
+    fi
+    chmod $2 $3
 }
 
 # Read user-defined command-line flags.
@@ -93,9 +99,7 @@ systemctl stop nginx
 chmod a+rwx /etc/guacamole/user-mapping.xml
 
 # Copy over the WSGI configuration and code.
-#cp remote-gateway/emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service
-#chmod 0755 /etc/systemd/system/emperor.uwsgi.service
-copyOrDownload remote-gateway/emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service 0755
+copyOrDownload emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service 0755
 systemctl daemon-reload
 cp remote-gateway/api.py /var/lib/nginx/uwsgi/api.py
 chmod 0755 /var/lib/nginx/uwsgi/api.py
