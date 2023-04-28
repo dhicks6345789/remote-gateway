@@ -5,7 +5,7 @@ copyOrDownload () {
     elif [ -f remote-gateway/$1 ]; then
         cp remote-gateway/$1 $2
     else
-        echo download cp $1 to $2
+        wget https://github.com/dhicks6345789/remote-gateway/raw/master/$1 -O $2
     fi
     chmod $3 $2
 }
@@ -49,6 +49,7 @@ if [ ! -f "guac-install.sh" ]; then
     wget https://git.io/fxZq5 -O guac-install.sh
     chmod +x guac-install.sh
     ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
+    rm guac-install.sh
 fi
 # Todo: above script is now (April 2023) out of date, switch to a newer one. For now:
 if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
@@ -94,25 +95,25 @@ systemctl stop emperor.uwsgi.service
 echo "Stopping Nginx..."
 systemctl stop nginx
 
-# Make sure the (blank) Guacamole user-mapping file exists.
-# os.system("echo > /etc/guacamole/user-mapping.xml")
-chmod a+rwx /etc/guacamole/user-mapping.xml
+# Make sure the Guacamole user-mapping file exists - download our example file if there's no file there already.
+if [ ! -f /etc/guacamole/user-mapping.xml ]; then
+    copyOrDownload user-mapping.xml /etc/guacamole/user-mapping.xml 0755
+fi
+
+
 
 # Copy over the WSGI configuration and code.
 copyOrDownload emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service 0755
 systemctl daemon-reload
-cp remote-gateway/api.py /var/lib/nginx/uwsgi/api.py
-chmod 0755 /var/lib/nginx/uwsgi/api.py
-cp remote-gateway/client.html /var/www/html/client.html
-chmod 0755 /var/www/html/client.html
-#copyfile("error.html", "/var/www/html/error.html", mode="0755")
+copyOrDownload api.py /var/lib/nginx/uwsgi/api.py 0755
+copyOrDownload client.html /var/www/html/client.html 0755
 
 # Enable the uWSGI server service.
 systemctl enable emperor.uwsgi.service
 
 # Copy over the Nginx config files.
-cp remote-gateway/nginx.conf /etc/nginx/nginx.conf
-cp remote-gateway/default /etc/nginx/sites-available/default
+copyOrDownload nginx.conf /etc/nginx/nginx.conf 0644
+copyOrDownload default /etc/nginx/sites-available/default 0644
 sed -i "s/SERVERNAME/$servername/g" /etc/nginx/sites-available/default
 
 
