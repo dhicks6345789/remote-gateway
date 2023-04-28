@@ -109,6 +109,7 @@ copyOrDownload api.py /var/lib/nginx/uwsgi/api.py 0755
 copyOrDownload client.html /var/www/html/client.html 0755
 
 if [ ! -d /var/www/html/favicon ]; then
+    mkdir /var/www/html/favicon
     copyOrDownload favicon/android-chrome-192x192.png /var/www/html/favicon/android-chrome-192x192.png 0755
     copyOrDownload favicon/android-chrome-512x512.png /var/www/html/favicon/android-chrome-512x512.png 0755
     copyOrDownload favicon/apple-touch-icon.png /var/www/html/favicon/apple-touch-icon.png 0755
