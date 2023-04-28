@@ -39,7 +39,8 @@ def root():
 
 @app.route("/apple-touch-icon.png", methods=["GET"])
 def getAppleTouchIcon():
-    return getBinaryFile("/var/www/html/apple-touch-icon.png")
+    # return getBinaryFile("/var/www/html/apple-touch-icon.png")
+    return flask.Response(getBinaryFile("/var/www/html/apple-touch-icon.png"), mimetype="image/x-png")
 
 if __name__ == "__main__":
     app.run()
