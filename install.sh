@@ -107,6 +107,11 @@ copyOrDownload emperor.uwsgi.service /etc/systemd/system/emperor.uwsgi.service 0
 systemctl daemon-reload
 copyOrDownload api.py /var/lib/nginx/uwsgi/api.py 0755
 copyOrDownload client.html /var/www/html/client.html 0755
+copyOrDownload favicon/apple-touch-icon.png /var/www/html/apple-touch-icon.png 0755
+copyOrDownload favicon/favicon-32x32.png /var/www/html/favicon-32x32.png 0755
+copyOrDownload favicon/favicon-16x16.png /var/www/html/favicon-16x16.png 0755
+copyOrDownload favicon/site.webmanifest /var/www/html/site.webmanifest 0755
+copyOrDownload favicon/safari-pinned-tab.svg /var/www/html/safari-pinned-tab.svg 0755
 
 # Enable the uWSGI server service.
 systemctl enable emperor.uwsgi.service
