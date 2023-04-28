@@ -55,7 +55,7 @@ The Cloudflare tunnel will take care of handling HTTPS traffic, complete with au
 
 If you want to change the page title from the default "Guacamole", simply edit the file "/var/lib/nginx/uwsgi/api.py" and replace the string on the line that starts "pageTitle =" with your preferred title.
 
-You can change the favicon used for the page (generally used as an icon on open tabs in a web browser). Generate with [Favicon Generator](https://realfavicongenerator.net/).
+You can change the favicon used for the page (generally used as an identifying icon on open tabs in a web browser). We recommend using [Favicon Generator](https://realfavicongenerator.net/) to turn a single icon into a folder of files that should provide a favicon for most browsers. Place your generated files in on your server in /var/www/html/favicon, they will be served as static files from there.
 
 ### Adding Connections / Users
 
