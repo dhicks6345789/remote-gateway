@@ -90,6 +90,21 @@ fi
 
 
 
+# Make sure the remote-desktop folder and files exist.
+if [ ! -d /etc/remote-desktop ]; then
+    mkdir /etc/remote-desktop
+fi
+
+if [ ! -f /etc/remote-desktop/newUser.xml ]; then
+    copyOrDownload newUser.xml /etc/remote-desktop/newUser.xml 0755
+fi
+
+if [ ! -f /etc/remote-desktop/newUser.py ]; then
+    copyOrDownload newUser.py /etc/remote-desktop/newUser.py 0755
+fi
+
+
+
 echo "Stopping Guacamole..."
 systemctl stop guacd
 
