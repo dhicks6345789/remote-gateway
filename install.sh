@@ -91,15 +91,15 @@ fi
 
 
 # Make sure the remote-gateway folder and files exist.
-if [ ! -d /etc/remote-gateway ]; then
+if [ ! -d /etc/remote-gateway ] then
     mkdir /etc/remote-gateway
 fi
 
-if [ ! -f /etc/remote-gateway/newUser.xml ]; then
+if [ ! -f /etc/remote-gateway/newUser.xml ] then
     copyOrDownload newUser.xml /etc/remote-gateway/newUser.xml 0755
 fi
 
-if [ ! -f /etc/remote-gateway/newUser.py ]; then
+if [ ! -f /etc/remote-gateway/newUser.py ] then
     echo "Replacing newUser..."
     copyOrDownload newUser.py /etc/remote-gateway/newUser.py 0755
 fi
