@@ -1,5 +1,6 @@
 # Standard Python libraries.
 import os
+import random
 import subprocess
 import urllib.request
 import xml.etree.ElementTree
@@ -23,6 +24,13 @@ def getBinaryFile(theFilename):
     fileDataHandle.close()
     return(fileData)
 
+passChars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+def generatePassword():
+    result = ""
+    for pl in range(0, 32):
+        result = result + passChars[random.randint(0, len(passChars))]
+    return result
+
 @app.route("/", methods=["GET", "POST"])
 def root():
     cloudflareUsername = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
@@ -38,7 +46,7 @@ def root():
                     password = childNode.attrib["password"]
     if username == "":
         if os.path.isfile("/etc/remote-gateway/newUser.py"):
-            newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py " + cloudflareUsername], stdout=subprocess.PIPE)
+            newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py " + cloudflareUsername + " " + generatePassword()], stdout=subprocess.PIPE)
             newUserResult = newUserProcess.decode("utf-8").split(",")
             if len(newUserResult) == 2:
                 username = newUserResult[0]
