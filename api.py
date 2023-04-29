@@ -1,5 +1,6 @@
 # Standard Python libraries.
 import os
+import subprocess
 import urllib.request
 import xml.etree.ElementTree
 
@@ -35,6 +36,14 @@ def root():
                 if cloudflareUsername == childNode.attrib["username"]:
                     username = childNode.attrib["username"]
                     password = childNode.attrib["password"]
+    if username == "":
+        if os.path.isfile("/etc/remote-gateway/newUser.py"):
+            newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py " + cloudflareUsername], stdout=subprocess.PIPE)
+            newUserResult = newUserProcess.decode("utf-8").split(",")
+            if len(newUserResult) == 2:
+                username = newUserResult[0]
+                password = newUserResult[1]
+                
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
 
 if __name__ == "__main__":
