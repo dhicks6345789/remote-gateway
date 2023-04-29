@@ -90,17 +90,17 @@ fi
 
 
 
-# Make sure the remote-desktop folder and files exist.
-if [ ! -d /etc/remote-desktop ]; then
-    mkdir /etc/remote-desktop
+# Make sure the remote-gateway folder and files exist.
+if [ ! -d /etc/remote-gateway ]; then
+    mkdir /etc/remote-gateway
 fi
 
-if [ ! -f /etc/remote-desktop/newUser.xml ]; then
-    copyOrDownload newUser.xml /etc/remote-desktop/newUser.xml 0755
+if [ ! -f /etc/remote-gateway/newUser.xml ]; then
+    copyOrDownload newUser.xml /etc/remote-gateway/newUser.xml 0755
 fi
 
-if [ ! -f /etc/remote-desktop/newUser.py ]; then
-    copyOrDownload newUser.py /etc/remote-desktop/newUser.py 0755
+if [ ! -f /etc/remote-gateway/newUser.py ]; then
+    copyOrDownload newUser.py /etc/remote-gateway/newUser.py 0755
 fi
 
 
