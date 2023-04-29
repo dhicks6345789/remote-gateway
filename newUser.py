@@ -1,1 +1,2 @@
-print("Setting up new user: ")
+# Default - return an empty string.
+print("")
