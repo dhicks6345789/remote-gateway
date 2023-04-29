@@ -1,0 +1,12 @@
+    <authorize username="<<USERNAME>>" password="<<PASSWORD>>">
+        <connection name="REMOTEDESKTOP">
+            <protocol>rdp</protocol>
+            <param name="hostname">192.168.1.1</param>
+            <param name="port">3389</param>
+            <param name="username"><<USERNAME>></param>
+            <param name="password"><<PASSWORD>></param>
+            <param name="domain">WINDOWSDOMAIN</param>
+            <param name="security">nla</param>
+            <param name="ignore-cert">true</param>
+        </connection>
+    </authorize>
