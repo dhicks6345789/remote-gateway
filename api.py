@@ -47,7 +47,7 @@ def root():
     if username == "":
         if os.path.isfile("/etc/remote-gateway/newUser.py"):
             newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py " + cloudflareUsername + " " + generatePassword()], stdout=subprocess.PIPE)
-            newUserResult = newUserProcess.decode("utf-8").split(",")
+            newUserResult = newUserProcess.stdout.decode("utf-8").split(",")
             if len(newUserResult) == 2:
                 username = newUserResult[0]
                 password = newUserResult[1]
