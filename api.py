@@ -28,7 +28,7 @@ passChars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 def generatePassword():
     result = ""
     for pl in range(0, 32):
-        result = result + passChars[random.randint(0, len(passChars))]
+        result = result + passChars[random.randint(0, len(passChars)-1)]
     return result
 
 @app.route("/", methods=["GET", "POST"])
