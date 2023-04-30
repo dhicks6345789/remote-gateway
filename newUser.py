@@ -23,11 +23,11 @@ logging.basicConfig(filename="/var/log/remote-gateway/remote-gateway.log", encod
 
 # Run the "create user" command remotely via SSH on a Windows server. You'll need to set up SSH Server on your Windows server (now included as a standard
 # component of Windows) and set up a private key for authorisation. Replace the IP address in the line below with the address / name of your server.
-runLine = "ssh -i /etc/remote-gateway/id_rsa administrator@192.168.1.112 -t \"net user " + username + " " + password + " /ADD /Y\""
+runLine = "ssh -i /var/www/id_rsa administrator@192.168.1.112 -t \"net user " + username + " " + password + " /ADD /Y\""
 logging.info(runLine)
 os.system(runLine)
 
-runLine = "ssh -i /etc/remote-gateway/id_rsa administrator@192.168.1.112 -t \"net localgroup 'Remote Desktop Users' " + username + " /add\""
+runLine = "ssh -i /var/www/id_rsa administrator@192.168.1.112 -t \"net localgroup 'Remote Desktop Users' " + username + " /add\""
 logging.info(runLine)
 os.system(runLine)
 
