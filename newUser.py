@@ -5,6 +5,7 @@
 import os
 import sys
 import logging
+import subprocess
 
 # Get parameters passed from the CGI script.
 username = sys.argv[1]
@@ -13,8 +14,13 @@ password = sys.argv[2]
 # Set up logging.
 logging.basicConfig(filename="/var/log/remote-gateway/remote-gateway.log", encoding="utf-8", format="%(asctime)s - %(message)s", level=logging.INFO)
 
-
-
+# Run the given command, with the given parameters, capature and log the result.
+def runAndLog(theCommand, theParameters):
+  logging.info("Running command: " + theCommand + " " + theParameters)
+  commandProcess = subprocess.run([theCommand, theParameters], stdout=subprocess.PIPE)
+  for resultLine in commandProcess.stdout.decode("utf-8").split("\n"):
+    logging.info("   " + resultLine)
+  
 ## Default behaviour - log the login attempt, return a blank value.
 #logging.info("User denined access: " + username)
 #print("")
@@ -23,15 +29,7 @@ logging.basicConfig(filename="/var/log/remote-gateway/remote-gateway.log", encod
 
 # Run the "create user" command remotely via SSH on a Windows server. You'll need to set up SSH Server on your Windows server (now included as a standard
 # component of Windows) and set up a private key for authorisation. Replace the IP address in the line below with the address / name of your server.
-runLine = "ssh -i /var/www/id_rsa administrator@192.168.1.112 -t \"net user " + username + " " + password + " /ADD /Y\""
-logging.info(runLine)
-os.system(runLine)
-
-runLine = "ssh -i /var/www/id_rsa administrator@192.168.1.112 -t \"net localgroup 'Remote Desktop Users' " + username + " /add\""
-logging.info(runLine)
-os.system(runLine)
-
-# Log what we've done.
-logging.info("Added new user: " + username)
+runAndLog("ssh", "-i /var/www/id_rsa administrator@192.168.1.112 -t \"net user " + username + " " + password + " /ADD /Y\"")
+#runAndLog("ssh", "-i /var/www/id_rsa administrator@192.168.1.112 -t \"net localgroup 'Remote Desktop Users' " + username + " /add\"")
 # Return the new username and password to the calling CGI script.
 print(username + "," + password)
