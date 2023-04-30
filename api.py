@@ -19,7 +19,7 @@ def getFile(theFilename):
     return(fileData)
 
 def putFile(theFilename, theData):
-    fileDataHandle = open(theFilename, "wb")
+    fileDataHandle = open(theFilename, "w")
     fileDataHandle.write(theData)
     fileDataHandle.close()
 
