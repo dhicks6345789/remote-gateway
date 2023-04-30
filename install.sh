@@ -103,6 +103,12 @@ if [ ! -f "/etc/remote-gateway/newUser.py" ]; then
     copyOrDownload newUser.py /etc/remote-gateway/newUser.py 0755
 fi
 
+# Make sure a folder with the correct permissions exists for remote-gateway to write log files.
+if [ ! -d "/var/log/remote-gateway" ]; then
+    mkdir /var/log/remote-gateway
+    chown www-data:www-data /var/log/remote-gateway
+fi
+
 
 
 echo "Stopping Guacamole..."
