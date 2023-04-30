@@ -61,6 +61,8 @@ def root():
                 if guacXMLText != "":
                     guacXMLText = guacXMLText + "\n"
                 putFile("/etc/guacamole/user-mapping.xml",  "<user-mapping>\n" + guacXMLText + "    " + newUserXML + "\n</user-mapping>\n")
+            else:
+                return getFile("/var/www/html/error.html").replace("<<USERNAME>>", cloudflareUsername).replace("<<CONNECTIONTITLE>>", pageTitle)
                 
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
 
