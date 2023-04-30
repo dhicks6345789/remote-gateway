@@ -138,6 +138,7 @@ systemctl daemon-reload
 copyOrDownload api.py /var/lib/nginx/uwsgi/api.py 0755
 sed -i "s/Guacamole/$pagetitle/g" /var/lib/nginx/uwsgi/api.py
 copyOrDownload client.html /var/www/html/client.html 0755
+copyOrDownload error.html /var/www/html/error.html 0755
 
 if [ ! -d /var/www/html/favicon ]; then
     mkdir /var/www/html/favicon
