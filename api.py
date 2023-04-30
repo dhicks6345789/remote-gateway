@@ -20,7 +20,7 @@ def getFile(theFilename):
 
 def putFile(theFilename, theData):
     fileDataHandle = open(theFilename, "wb")
-    fileDataHandle.write(theData.encode("latin-1"))
+    fileDataHandle.write(theData)
     fileDataHandle.close()
 
 def getBinaryFile(theFilename):
