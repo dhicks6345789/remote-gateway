@@ -46,7 +46,7 @@ def root():
                     password = childNode.attrib["password"]
     if username == "":
         if os.path.isfile("/etc/remote-gateway/newUser.py"):
-            newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py " + cloudflareUsername + " " + generatePassword()], stdout=subprocess.PIPE)
+            newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py", cloudflareUsername, generatePassword()], stdout=subprocess.PIPE)
             newUserResult = newUserProcess.stdout.decode("utf-8").split(",")
             return("Result: " + ",".join(newUserResult))
             if len(newUserResult) == 2:
