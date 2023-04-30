@@ -30,8 +30,9 @@ def runAndLog(theParameters):
 
 
 
-# Run the "create user" command remotely via SSH on a Windows server. You'll need to set up SSH Server on your Windows server (now included as a standard
-# component of Windows) and set up a private key for authorisation. Replace the IP address in the line below with the address / name of your server.
+# Create a user on a remote Windows server via SSH. You'll need to set up SSH Server on your Windows server (now included as a standard
+# component of Windows) and set up a private key for authorisation. Place that private key at /etc/remote-gateway/id_rsa.
+# Replace the IP address in the line below with the address / name of your server.
 runAndLog(["ssh", "-i", "/etc/remote-gateway/id_rsa", "-o", "StrictHostKeyChecking=no", "administrator@192.168.1.112", "-t", "net user " + username + " " + password + " /ADD /Y"])
 runAndLog(["ssh", "-i", "/etc/remote-gateway/id_rsa", "-o", "StrictHostKeyChecking=no", "administrator@192.168.1.112", "-t", "net localgroup \"Remote Desktop Users\" " + username + " /ADD"])
 # Return the new username and password to the calling CGI script.
