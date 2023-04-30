@@ -109,6 +109,8 @@ if [ ! -d "/var/log/remote-gateway" ]; then
     chown www-data:www-data /var/log/remote-gateway
 fi
 
+chown www-data /etc/guacamole/user-mapping.xml
+
 
 
 echo "Stopping Guacamole..."
