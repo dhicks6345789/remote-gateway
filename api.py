@@ -58,7 +58,7 @@ def root():
                 password = newUserResult[1]
                 newUserXML = xml.etree.ElementTree.fromstring(getFile("/etc/remote-gateway/newUser.xml").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password))
                 guacXML.append(newUserXML)
-                putFile("/etc/guacamole/user-mapping.xml",  ElementTree.tostring(guacXML, encoding="utf8", method="xml"))
+                putFile("/etc/guacamole/user-mapping.xml",  xml.etree.ElementTree.tostring(guacXML, encoding="utf8", method="xml"))
                 
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
 
