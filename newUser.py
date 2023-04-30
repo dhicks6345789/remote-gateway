@@ -15,11 +15,12 @@ password = sys.argv[2]
 logging.basicConfig(filename="/var/log/remote-gateway/remote-gateway.log", encoding="utf-8", format="%(asctime)s - %(message)s", level=logging.INFO)
 
 # Run the given command, with the given parameters, capature and log the result.
-def runAndLog(theCommand, theParameters):
-  logging.info("Running command: " + theCommand + " " + theParameters)
-  commandProcess = subprocess.run([theCommand, theParameters], stdout=subprocess.PIPE)
+def runAndLog(theParameters):
+  logging.info("Running: " + " ".join(theParameters))
+  commandProcess = subprocess.run(theParameters, stdout=subprocess.PIPE)
   for resultLine in commandProcess.stdout.decode("utf-8").split("\n"):
-    logging.info("   " + resultLine)
+    if resultLine.strip() != "":
+      logging.info("   " + resultLine.strip())
   
 ## Default behaviour - log the login attempt, return a blank value.
 #logging.info("User denined access: " + username)
@@ -29,7 +30,7 @@ def runAndLog(theCommand, theParameters):
 
 # Run the "create user" command remotely via SSH on a Windows server. You'll need to set up SSH Server on your Windows server (now included as a standard
 # component of Windows) and set up a private key for authorisation. Replace the IP address in the line below with the address / name of your server.
-runAndLog("ssh", "-i /var/www/id_rsa administrator@192.168.1.112 -t \"net user " + username + " " + password + " /ADD /Y\" 2>&1")
+runAndLog(["ssh", "-i, "/var/www/id_rsa", "administrator@192.168.1.112", "-t", "\"net user " + username + " " + password + " /ADD /Y\"", "2>&1")
 #runAndLog("ssh", "-i /var/www/id_rsa administrator@192.168.1.112 -t \"net localgroup 'Remote Desktop Users' " + username + " /add\" 2>&1")
 # Return the new username and password to the calling CGI script.
 print(username + "," + password)
