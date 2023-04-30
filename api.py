@@ -18,6 +18,11 @@ def getFile(theFilename):
     fileDataHandle.close()
     return(fileData)
 
+def putFile(theFilename, theData):
+    fileDataHandle = open(theFilename, "wb")
+    fileDataHandle.write(theData.encode("latin-1"))
+    fileDataHandle.close()
+
 def getBinaryFile(theFilename):
     fileDataHandle = open(theFilename, mode="rb")
     fileData = fileDataHandle.read()
