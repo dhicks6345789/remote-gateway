@@ -114,6 +114,7 @@ chown www-data /etc/guacamole/user-mapping.xml
 if [ ! -d "/var/www/.ssh" ]; then
     mkdir /var/www/.ssh
     chown www-data:www-data /var/www/.ssh
+    chmod 700 /var/www/.ssh
 fi
 
 
