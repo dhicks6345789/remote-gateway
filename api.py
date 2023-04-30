@@ -57,8 +57,8 @@ def root():
                 username = newUserResult[0].strip()
                 password = newUserResult[1].strip()
                 newUserXML = getFile("/etc/remote-gateway/newUser.xml").strip().replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password)
-                guacXMLText = getFile("/etc/guacamole/user-mapping.xml").replace("<user-mapping>\n", "").replace("\n<user-mapping>", "")
-                putFile("/etc/guacamole/user-mapping.xml",  "<user-mapping>\n" + guacXMLText + "\n" + newUserXML + "\n<user-mapping>")
+                guacXMLText = getFile("/etc/guacamole/user-mapping.xml").replace("<user-mapping>\n", "").replace("\n</user-mapping>", "")
+                putFile("/etc/guacamole/user-mapping.xml",  "<user-mapping>\n" + guacXMLText + "\n" + newUserXML + "\n</user-mapping>")
                 
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
 
