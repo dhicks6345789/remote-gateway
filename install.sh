@@ -100,7 +100,6 @@ if [ ! -f "/etc/remote-gateway/newUser.xml" ]; then
 fi
 
 if [ ! -f "/etc/remote-gateway/newUser.py" ]; then
-    echo "Replacing newUser..."
     copyOrDownload newUser.py /etc/remote-gateway/newUser.py 0755
 fi
 
