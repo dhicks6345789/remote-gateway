@@ -109,8 +109,6 @@ if [ ! -d "/var/log/remote-gateway" ]; then
     chown www-data:www-data /var/log/remote-gateway
 fi
 
-chown www-data /etc/guacamole/user-mapping.xml
-
 if [ ! -d "/var/www/.ssh" ]; then
     mkdir /var/www/.ssh
     chown www-data:www-data /var/www/.ssh
@@ -135,6 +133,7 @@ systemctl stop nginx
 if [ ! -f /etc/guacamole/user-mapping.xml ]; then
     copyOrDownload user-mapping.xml /etc/guacamole/user-mapping.xml 0755
 fi
+chown www-data /etc/guacamole/user-mapping.xml
 
 
 
