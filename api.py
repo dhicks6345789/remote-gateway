@@ -60,7 +60,7 @@ def root():
                 guacXMLText = getFile("/etc/guacamole/user-mapping.xml").replace("<user-mapping>", "").replace("</user-mapping>", "").strip()
                 if guacXMLText != "":
                     guacXMLText = guacXMLText + "\n"
-                putFile("/etc/guacamole/user-mapping.xml",  "<user-mapping>\n" + guacXMLText + newUserXML + "\n</user-mapping>\n")
+                putFile("/etc/guacamole/user-mapping.xml",  "<user-mapping>\n" + guacXMLText + "    " + newUserXML + "\n</user-mapping>\n")
                 
     return getFile("/var/www/html/client.html").replace("<<USERNAME>>", username).replace("<<PASSWORD>>", password).replace("<<CONNECTIONTITLE>>", pageTitle)
 
