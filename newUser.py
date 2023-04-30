@@ -2,6 +2,7 @@
 # set up to allow all users in your domain to log in but you don't want to have to pre-create accounts for every user onyour domain, you can have this script
 # create accounts as needed. Uncomment the section you want to use.
 
+import os
 import sys
 import logging
 
