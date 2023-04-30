@@ -14,16 +14,16 @@ logging.basicConfig(filename="/var/log/remote-gateway/remote-gateway.log", encod
 
 
 
-# Default behaviour - log the login attempt, return a blank value.
-logging.info("User denined access: " + username)
-print("")
+## Default behaviour - log the login attempt, return a blank value.
+#logging.info("User denined access: " + username)
+#print("")
 
 
 
-## Run the "create user" command remotely via SSH on a Windows server. You'll need to set up SSH Server on your Windows server (now included as a standard
-## component of Windows) and set up a private key for authorisation. Replace the IP address in the line below with the address / name of your server.
-#os.system("ssh -i /root/.ssh/id_rsa administrator@192.168.1.112 -t \"net user " + username + " " + password " /add\"")
-## Log what we've done.
-#logging.info("Added new user: " + username)
-## Return the new username and password to the calling CGI script.
-#print(username + "," + password)
+# Run the "create user" command remotely via SSH on a Windows server. You'll need to set up SSH Server on your Windows server (now included as a standard
+# component of Windows) and set up a private key for authorisation. Replace the IP address in the line below with the address / name of your server.
+os.system("ssh -i /root/.ssh/id_rsa administrator@192.168.1.112 -t \"net user " + username + " " + password " /add\"")
+# Log what we've done.
+logging.info("Added new user: " + username)
+# Return the new username and password to the calling CGI script.
+print(username + "," + password)
