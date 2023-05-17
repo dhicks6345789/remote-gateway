@@ -45,7 +45,6 @@ You can also provide an optional value:
 The script will take a little while to run - it downloads and installs various components as it goes along, it might take half an hour or so.
 
 ## After Installation
-
 When the above script has finished, you should (hopefully) have a Debian server running:
  - Guacamole, hosted as an application inside Tomcat, listening (via HTTP only, not HTTPS) on port 8080, i.e. http://localhost:8080/guacamole
  - NGINX, listening (again via HTTP only) on (HTTP standard) port 80, as a reverse proxy to both Guacamole (http://localhost/guacamole) and uWSGI (http://localhost/) running our own simple Python CGI (using the [Flask](https://flask.palletsprojects.com) framework) script.
@@ -59,19 +58,19 @@ The Cloudflare tunnel will take care of handling HTTPS traffic, complete with au
 You can change the favicon used for the page (generally used as an identifying icon on open tabs in a web browser). We recommend using [Favicon Generator](https://realfavicongenerator.net/) to turn a single icon into a folder of files that should provide a favicon for most browsers. Place your generated files on your server in /var/www/html/favicon, they will be served as static files from there.
 
 ### Adding Connections / Users
-
 The CGI script that picks up the authenticated username provided by cloudflared reads Guacamole's user-mapping.xml file (/etc/guacamole/user-mapping.xml) to try and find any matching users listed. Authenticated users' usernames will generally be in the form of an email address, the domain part is removed by the CGI script. So, a user logging in with the email address "f.bloggs@example.com" will be seen as user "f.bloggs" in user-mapping.xml.
 
 An example user-mapping.xml file is provided to get you started. You can read Guacmaole's own [documentation](https://guacamole.apache.org/doc/gug/configuring-guacamole.html) for more details.
 
 The CGI script will simply pass any connection password for a found user out to the page that displays the remote desktop interface. This page hides the URL (which includes the username and password) by using a 100% height and width iframe element.
 
+### newUser.py
+Cloudflare's Zero Trust application settings let you define valid users for your application. Rather than have to re-create taht list of valid users server-side and set up an account for each of them, you can trust that Cloudlfare is passing you only valid users and have a script run that sets up new users to your system as needed. Simply edit the "newUsers.py" file, which is run every time a new user logs in to set that user up. Hopefully, the file itself is pretty self-explanatory, containing an example of how you might set up new users (via an SSH connection) on a Windows remote desktop server.
+
 ## Notes
 This script is, hopefully, mostly complete and has been tested with a couple of real-life installations. There might still be issues in places, do please report any issues you find.
 
 ### To do:
-- Add ability to add new users to Windows machines as new users log in.
-- Add support for favicon / custom window title.
 - Rewrite crontab to auto-update?
 - Possibly add support for services similar to Cloudflare's Zero Trust - ngrok, maybe.
 - Add support for classroom sets of Raspberry Pis, with user interface for admin user(s) to edit list of devices available.
