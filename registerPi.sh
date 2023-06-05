@@ -3,7 +3,7 @@ while test $# -gt 0; do
     case "$1" in
         -piname)
             shift
-            servername=$1
+            piname=$1
             shift
             ;;
         *)
