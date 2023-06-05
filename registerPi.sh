@@ -22,7 +22,7 @@ fi
 
 ipaddress=`hostname -I`
 # macaddress=`ifconfig | sed -e ':a;N;$!ba;s/\n   / /g' | grep "$ipaddress" | grep -o '..:..:..:..:..:..:..:..'`
-macaddress=`ifconfig | sed -e ':a;N;$!ba;s/\n   / /g' | grep 192`
+macaddress=`ifconfig | sed -e ':a;N;$!ba;s/\n   / /g' | grep "$ipaddress"`
 
 echo Register Pi
 echo ===========
