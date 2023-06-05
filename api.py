@@ -36,6 +36,13 @@ def generatePassword():
         result = result + passChars[random.randint(0, len(passChars)-1)]
     return result
 
+@app.route("/registerPi", methods=["GET", "POST"])
+def registerPi():
+    if flask.request.method == "GET":
+        return getFile("/var/www/html/registerPi.sh")
+    else:
+        print("registerPi called...")
+
 @app.route("/", methods=["GET", "POST"])
 def root():
     cloudflareUsername = flask.request.headers.get("Cf-Access-Authenticated-User-Email").split("@")[0]
