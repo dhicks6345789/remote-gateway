@@ -65,7 +65,13 @@ An example user-mapping.xml file is provided to get you started. You can read Gu
 The CGI script will simply pass any connection password for a found user out to the page that displays the remote desktop interface. This page hides the URL (which includes the username and password) by using a 100% height and width iframe element.
 
 ### newUser.py
-Cloudflare's Zero Trust application settings let you define valid users for your application. Rather than have to re-create taht list of valid users server-side and set up an account for each of them, you can trust that Cloudlfare is passing you only valid users and have a script run that sets up new users to your system as needed. Simply edit the "newUsers.py" file, which is run every time a new user logs in to set that user up. Hopefully, the file itself is pretty self-explanatory, containing an example of how you might set up new users (via an SSH connection) on a Windows remote desktop server.
+Cloudflare's Zero Trust application settings let you define valid users for your application. Rather than have to re-create that list of valid users server-side and set up an account for each of them, you can trust that Cloudlfare is passing you only valid users and have a script run that sets up new users to your system as needed. Simply edit the "newUsers.py" file, which is run every time a new user logs in to set that user up. Hopefully, the file itself is pretty self-explanatory, containing an example of how you might set up new users (via an SSH connection) on a Windows remote desktop server.
+
+### registerPi
+The CGI server has a "registerPi" endpoint that returns a script that lets you configure and register a Raspberry Pi ready to be connected to from the gateway.
+```
+wget http://SERVERIPADDRESS/registerPi -q -O - | bash -s -- -piName PINAME
+```
 
 ## Notes
 This script is, hopefully, mostly complete and has been tested with a couple of real-life installations. There might still be issues in places, do please report any issues you find.
