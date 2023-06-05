@@ -20,8 +20,10 @@ if [ -z "$piname" ]; then
     exit 1;
 fi
 
+ipaddress=`hostname -I`
+
 echo Register Pi
 echo ===========
 echo Name: "$piname"
 echo MAC Address:
-echo IP Address:
+echo IP Address: "$ipaddress"
