@@ -43,5 +43,6 @@ registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data
 if [ "$registerPiResult" == "OK" ]; then
     echo RegisterPi - operation completed OK.
 else
-    echo RegisterPi - operation failed. Message returned: "$registerPiResult"
+    echo RegisterPi - operation failed. Message returned:
+    echo "$registerPiResult"
 fi
