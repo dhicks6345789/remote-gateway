@@ -65,7 +65,7 @@ def registerPi():
             userMappings[clientIPAddress] = [clientMACAddress, piName, ""]
             csvString = ""
             for clientIPAddress in userMappings.keys():
-                csvString = csvString + clientIPAddress + "," + ",".join(userMappings[clientIPAddress])
+                csvString = csvString + clientIPAddress + "," + ",".join(userMappings[clientIPAddress]) + "\n"
             putFile("/etc/remote-gateway/user-mapping.csv", csvString)
         return "OK"
 
