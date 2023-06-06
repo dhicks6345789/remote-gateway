@@ -54,8 +54,8 @@ def registerPi():
     else:
         piName = flask.request.form.get("piName")
         clientIPAddress = flask.request.remote_addr
-        pingCommandOutput = getCommandOutput("ping", clientIPAddress + " -c 1")
-        arpCommandOutput = getCommandOutput("arp", "-a | grep " + clientIPAddress + " | grep -o '..:..:..:..:..:..'")
+        pingCommandOutput = getCommandOutput(["ping", clientIPAddress + " -c 1"])
+        arpCommandOutput = getCommandOutput(["arp", "-a | grep " + clientIPAddress + " | grep -o '..:..:..:..:..:..'"])
         clientMACAddress = arpCommandOutput[-1]
         return "OK" + clientMACAddress
 
