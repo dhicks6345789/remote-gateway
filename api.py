@@ -1,6 +1,7 @@
 # Standard Python libraries.
 import os
 import random
+import socket
 import subprocess
 import urllib.request
 import xml.etree.ElementTree
@@ -36,10 +37,16 @@ def generatePassword():
         result = result + passChars[random.randint(0, len(passChars)-1)]
     return result
 
+# Find the server's local IP address.
+ipSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+ipSocket.connect(("8.8.8.8", 80))
+serverIPAddress = ipSocket.getsockname()[0]
+ipSocket.close()
+
 @app.route("/registerPi", methods=["GET", "POST"])
 def registerPi():
     if flask.request.method == "GET":
-        return getFile("/var/www/html/registerPi.sh")
+        return getFile("/var/www/html/registerPi.sh").replace("{{SERVERIPADDRESS}}",serverIPAddress)
     else:
         piName = request.form.get("piName")
         print("registerPi called..." + piName)
