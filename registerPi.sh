@@ -39,4 +39,4 @@ if [ "$carryOn" -eq "0" ]; then
     exit 1;
 fi
 
-echo Continuing...
+wget http://{{SERVERIPADDRESS}}/registerPi -O - --post-data "piName=$piname"
