@@ -39,4 +39,9 @@ if [ "$carryOn" -eq "0" ]; then
     exit 1;
 fi
 
-wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data "piName=$piname"
+registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data "piName=$piname"`
+if [ "$registerPiResult" -eq "OK" ]; then
+    echo RegisterPi - operation completed OK.
+else
+    echo RegisterPi - operation failed.
+fi
