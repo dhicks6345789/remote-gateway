@@ -138,12 +138,13 @@ systemctl stop nginx
 if [ ! -f /etc/guacamole/user-mapping.xml ]; then
     copyOrDownload user-mapping.xml /etc/guacamole/user-mapping.xml 0755
 fi
-chown www-data /etc/guacamole/user-mapping.xml
+chown www-data:www-data /etc/guacamole/user-mapping.xml
 
 # Make sure the Remote Gateway user mapping file exists - create a new blank file if not already.
 if [ ! -f /etc/remote-gateway/user-mapping.csv ]; then
     echo "" > /etc/remote-gateway/user-mapping.csv
 fi
+chown www-data:www-data /etc/remote-gateway/user-mapping.csv
 
 if [ -f /etc/remote-gateway/id_rsa ]; then
     chown www-data:www-data /etc/remote-gateway/id_rsa
