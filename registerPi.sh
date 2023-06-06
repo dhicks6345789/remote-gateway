@@ -40,7 +40,7 @@ if [ "$carryOn" -eq "0" ]; then
 fi
 
 registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data "piName=$piname"`
-if [ "$registerPiResult" -eq "OK" ]; then
+if [ "$registerPiResult" == "OK" ]; then
     echo RegisterPi - operation completed OK.
 else
     echo RegisterPi - operation failed.
