@@ -55,7 +55,11 @@ def registerPi():
         clientIPAddress = flask.request.remote_addr
         arpCommandOutput = getCommandOutput("ping " + clientIPAddress + "-c 1; arp -a | grep " + clientIPAddress + " | grep -o '..:..:..:..:..:..'")
         clientMACAddress = arpCommandOutput[-1]
-        return "OK"
+        users = {}
+        for csvRow in getFile("/etc/guacamole/user-mapping.csv").rstrip().split("\n"):
+            csvRowSplit = csvRow.split(",")
+            users[csvRowSplit[0]] = csvRowSplit[1:]
+        return "OK" + users.toString()
 
 @app.route("/", methods=["GET", "POST"])
 def root():
