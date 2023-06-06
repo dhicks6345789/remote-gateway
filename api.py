@@ -60,7 +60,7 @@ def registerPi():
             csvRowSplit = csvRow.split(",")
             if not csvRowSplit[0] == "":
                 userMappings[csvRowSplit[0]] = csvRowSplit[1:]
-        return "OK" + str(users)
+        return "OK" + str(userMappings)
 
 @app.route("/", methods=["GET", "POST"])
 def root():
