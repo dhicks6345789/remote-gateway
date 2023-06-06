@@ -49,7 +49,7 @@ def registerPi():
         return getFile("/var/www/html/registerPi.sh").replace("{{SERVERIPADDRESS}}",serverIPAddress)
     else:
         piName = flask.request.form.get("piName")
-        print("registerPi called..." + piName)
+        return "registerPi called..." + piName
 
 @app.route("/", methods=["GET", "POST"])
 def root():
