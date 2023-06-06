@@ -62,7 +62,7 @@ def registerPi():
             if not csvRowSplit[0] == "":
                 userMappings[csvRowSplit[0]] = csvRowSplit[1:]
         if clientIPAddress in userMappings:
-            return "Device already registered: IP:" + clientIPAddress + ", MAC:" + clientMACAddress + ", Name:" + piName + ", User:" + userMappings[clientIPAddress][3]
+            return "Device already registered: IP:" + clientIPAddress + ", MAC:" + clientMACAddress + ", Name:" + piName + ", User:" + userMappings[clientIPAddress][2]
         userMappings[clientIPAddress] = [clientMACAddress, piName, ""]
         csvString = ""
         for clientIPAddress in userMappings.keys():
