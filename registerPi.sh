@@ -28,3 +28,12 @@ echo ===========
 echo Name: "$piname"
 echo MAC Address: "$macaddress"
 echo IP Address: "$ipaddress"
+
+echo Continue? Y/N
+select yn in "Yes" "No"; do
+    case $yn in
+        No ) exit;;
+        esac
+done
+
+echo Continuing...
