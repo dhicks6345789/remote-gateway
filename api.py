@@ -61,12 +61,13 @@ def registerPi():
             csvRowSplit = csvRow.split(",")
             if not csvRowSplit[0] == "":
                 userMappings[csvRowSplit[0]] = csvRowSplit[1:]
-        if not clientIPAddress in userMappings:
-            userMappings[clientIPAddress] = [clientMACAddress, piName, ""]
-            csvString = ""
-            for clientIPAddress in userMappings.keys():
-                csvString = csvString + clientIPAddress + "," + ",".join(userMappings[clientIPAddress]) + "\n"
-            putFile("/etc/remote-gateway/user-mapping.csv", csvString)
+        if clientIPAddress in userMappings:
+            return "Device already registered: IP:" + clientIPAddress + ", MAC:" + clientMACAddress + ", Name:" + piName + ", User:" + userMappings[clientIPAddress][3]
+        userMappings[clientIPAddress] = [clientMACAddress, piName, ""]
+        csvString = ""
+        for clientIPAddress in userMappings.keys():
+            csvString = csvString + clientIPAddress + "," + ",".join(userMappings[clientIPAddress]) + "\n"
+        putFile("/etc/remote-gateway/user-mapping.csv", csvString)
         return "OK"
 
 @app.route("/", methods=["GET", "POST"])
