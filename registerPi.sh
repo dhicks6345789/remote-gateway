@@ -32,7 +32,8 @@ echo IP Address: "$ipaddress"
 while true; do
     read -p "Continue? Y/N" yn
     case $yn in
-        [Nn]* ) exit;;
+        [Yy]* ) break;;
+        * ) exit;;
     esac
 done
 echo Continuing...
