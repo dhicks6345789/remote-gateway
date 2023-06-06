@@ -29,11 +29,10 @@ echo Name: "$piname"
 echo MAC Address: "$macaddress"
 echo IP Address: "$ipaddress"
 
-echo Continue? Y/N
-select yn in "Yes" "No"; do
+while true; do
+    read -p "Continue? Y/N" yn
     case $yn in
-        No ) exit;;
-        esac
+        [Nn]* ) exit;;
+    esac
 done
-
 echo Continuing...
