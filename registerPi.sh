@@ -1,4 +1,5 @@
 # Read user-defined command-line flags.
+carryOn=0
 while test $# -gt 0; do
     case "$1" in
         -piname)
@@ -6,6 +7,9 @@ while test $# -gt 0; do
             piname=$1
             shift
             ;;
+        -y)
+            shift
+            carryOn=1
         *)
             echo "$1 is not a recognized flag!"
             exit 1;
@@ -29,11 +33,9 @@ echo Name: "$piname"
 echo MAC Address: "$macaddress"
 echo IP Address: "$ipaddress"
 
-while true; do
-    read -p "Continue? Y/N" yn
-    case $yn in
-        [Yy]* ) break;;
-        * ) exit;;
-    esac
-done
+if [ "$carryOn" -eq "0" ]; then
+    echo Stopping - add -y option to continue past this point.
+    exit 1;
+fi
+
 echo Continuing...
