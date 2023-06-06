@@ -70,6 +70,11 @@ if [ ! -d "/etc/nginx" ]; then
     apt install -y nginx
 fi
 
+# Make sure the net-tools package is installed (we use the arp command).
+if [ ! -d "/etc/arp" ]; then
+    apt install -y net-tools
+fi
+
 # Figure out what version of Python3 we have installed.
 pythonVersion=`ls /usr/local/lib | grep python3`
 
