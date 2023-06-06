@@ -59,7 +59,7 @@ def registerPi():
         for csvRow in getFile("/etc/guacamole/user-mapping.csv").rstrip().split("\n"):
             csvRowSplit = csvRow.split(",")
             users[csvRowSplit[0]] = csvRowSplit[1:]
-        return "OK" + users.toString()
+        return "OK" + str(users)
 
 @app.route("/", methods=["GET", "POST"])
 def root():
