@@ -31,8 +31,7 @@ def getBinaryFile(theFilename):
     return(fileData)
 
 def getCommandOutput(theCommand):
-    result = subprocess.run(theCommand, stdout=subprocess.PIPE)
-    return(result.stdout.split("\n"))
+    return(subprocess.check_output(theCommand).split("\n"))
 
 passChars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 def generatePassword():
