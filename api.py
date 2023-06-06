@@ -41,7 +41,8 @@ def registerPi():
     if flask.request.method == "GET":
         return getFile("/var/www/html/registerPi.sh")
     else:
-        print("registerPi called...")
+        piName = request.form.get("piName")
+        print("registerPi called..." + piName)
 
 @app.route("/", methods=["GET", "POST"])
 def root():
