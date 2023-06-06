@@ -48,7 +48,7 @@ def registerPi():
     if flask.request.method == "GET":
         return getFile("/var/www/html/registerPi.sh").replace("{{SERVERIPADDRESS}}",serverIPAddress)
     else:
-        piName = request.form.get("piName")
+        piName = flask.request.form.get("piName")
         print("registerPi called..." + piName)
 
 @app.route("/", methods=["GET", "POST"])
