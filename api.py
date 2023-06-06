@@ -31,7 +31,7 @@ def getBinaryFile(theFilename):
     return(fileData)
 
 def getCommandOutput(theCommand):
-    return(subprocess.check_output(theCommand).split("\n"))
+    return(subprocess.check_output(theCommand, shell=True, text=True).split("\n"))
 
 passChars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 def generatePassword():
@@ -53,8 +53,7 @@ def registerPi():
     else:
         piName = flask.request.form.get("piName")
         clientIPAddress = flask.request.remote_addr
-        pingCommandOutput = getCommandOutput(["ping", clientIPAddress + " -c 1"])
-        arpCommandOutput = getCommandOutput(["arp", "-a | grep " + clientIPAddress + " | grep -o '..:..:..:..:..:..'"])
+        arpCommandOutput = getCommandOutput("ping " + clientIPAddress + "-c 1; arp -a | grep " + clientIPAddress + " | grep -o '..:..:..:..:..:..'")
         clientMACAddress = arpCommandOutput[-1]
         return "OK" + clientMACAddress
 
