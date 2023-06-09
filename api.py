@@ -46,6 +46,10 @@ ipSocket.connect(("8.8.8.8", 80))
 serverIPAddress = ipSocket.getsockname()[0]
 ipSocket.close()
 
+@app.route("/getPublicKey", methods=["GET"])
+def getPublicKey():
+    return getFile("/etc/remote-gateway/id_rsa.pub")
+
 @app.route("/registerPi", methods=["GET", "POST"])
 def registerPi():
     if flask.request.method == "GET":
