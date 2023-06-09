@@ -34,9 +34,9 @@ def getCommandOutput(theCommand):
     return(subprocess.check_output(theCommand, shell=True, text=True).rstrip().split("\n"))
 
 passChars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-def generatePassword():
+def generatePassword(theLength):
     result = ""
-    for pl in range(0, 32):
+    for pl in range(0, theLength):
         result = result + passChars[random.randint(0, len(passChars)-1)]
     return result
 
@@ -60,19 +60,20 @@ def registerPi():
         arpCommandOutput = getCommandOutput("ping " + clientIPAddress + "-c 1; arp -a | grep " + clientIPAddress + " | grep -o '..:..:..:..:..:..'")
         clientMACAddress = arpCommandOutput[-1]
         userMappings = {}
-        # CSV column format is: Client IP Address, Client MAC Address, Client Name, User Name
+        # CSV column format is: Client IP Address, Client MAC Address, Client Name, Client VNC Password, User Name
         for csvRow in getFile("/etc/remote-gateway/raspberryPis.csv").rstrip().split("\n"):
             csvRowSplit = csvRow.split(",")
             if not csvRowSplit[0] == "":
                 userMappings[csvRowSplit[0]] = csvRowSplit[1:]
         if clientIPAddress in userMappings:
-            return "Device already registered: IP:" + clientIPAddress + ", MAC:" + clientMACAddress + ", Name:" + piName + ", User:" + userMappings[clientIPAddress][2]
-        userMappings[clientIPAddress] = [clientMACAddress, piName, ""]
+            return "Device already registered: IP:" + clientIPAddress + ", MAC:" + clientMACAddress + ", Name:" + piName + ", VNCPass:" + userMappings[clientIPAddress][2] + ", User:" + userMappings[clientIPAddress][3]
+        vncPassword = generatePassword(8)
+        userMappings[clientIPAddress] = [clientMACAddress, piName, vncPassword, ""]
         csvString = ""
         for clientIPAddress in userMappings.keys():
             csvString = csvString + clientIPAddress + "," + ",".join(userMappings[clientIPAddress]) + "\n"
         putFile("/etc/remote-gateway/raspberryPis.csv", csvString)
-        return "OK"
+        return "OK-"+vncPassword
 
 @app.route("/", methods=["GET", "POST"])
 def root():
@@ -89,7 +90,7 @@ def root():
                     password = childNode.attrib["password"]
     if username == "":
         if os.path.isfile("/etc/remote-gateway/newUser.py"):
-            newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py", cloudflareUsername, generatePassword()], stdout=subprocess.PIPE)
+            newUserProcess = subprocess.run(["python3", "/etc/remote-gateway/newUser.py", cloudflareUsername, generatePassword(32)], stdout=subprocess.PIPE)
             newUserResult = newUserProcess.stdout.decode("utf-8").split(",")
             if len(newUserResult) == 2:
                 username = newUserResult[0].strip()
