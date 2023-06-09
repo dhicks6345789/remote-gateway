@@ -61,7 +61,7 @@ def registerPi():
         clientMACAddress = arpCommandOutput[-1]
         userMappings = {}
         # CSV column format is: Client IP Address, Client MAC Address, Client Name, User Name
-        for csvRow in getFile("/etc/remote-gateway/user-mapping.csv").rstrip().split("\n"):
+        for csvRow in getFile("/etc/remote-gateway/raspberryPis.csv").rstrip().split("\n"):
             csvRowSplit = csvRow.split(",")
             if not csvRowSplit[0] == "":
                 userMappings[csvRowSplit[0]] = csvRowSplit[1:]
@@ -71,7 +71,7 @@ def registerPi():
         csvString = ""
         for clientIPAddress in userMappings.keys():
             csvString = csvString + clientIPAddress + "," + ",".join(userMappings[clientIPAddress]) + "\n"
-        putFile("/etc/remote-gateway/user-mapping.csv", csvString)
+        putFile("/etc/remote-gateway/raspberryPis", csvString)
         return "OK"
 
 @app.route("/", methods=["GET", "POST"])
