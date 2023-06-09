@@ -43,7 +43,8 @@ registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data
 if [ "$registerPiResult" == "OK" ]; then
     echo RegisterPi - operation completed OK.
     serverPublicKey=`wget http://{{SERVERIPADDRESS}}/getPublicKey -q -O -`
-    echo "$serverPublicKey"
+    mkdir -p ~/.ssh
+    echo "$serverPublicKey" >> ~/.ssh/authorized_keys
 else
     echo RegisterPi - operation failed. Message returned:
     echo "$registerPiResult"
