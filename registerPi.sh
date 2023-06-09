@@ -42,7 +42,7 @@ fi
 registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data "piName=$piname"`
 okPiResult=`echo "$registerPiResult" | grep -o "OK-"`
 if [ "$okPiResult" == "OK-" ]; then
-    vncPassword=`echo "$registerPiResult" | grep -o "-........"`
+    vncPassword=`echo "$registerPiResult" | grep -o '-........'`
     echo RegisterPi - operation completed OK.
     echo "$registerPiResult"
     echo "$vncPassword"
