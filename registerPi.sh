@@ -61,9 +61,9 @@ if [ "$okPiResult" == "OK-" ]; then
     if [ "$authenticationGrep" == "" ]; then
         sudo bash -c "echo Authentication=VncAuth >> /root/.vnc/config.d/vncserver-x11"
         sudo bash -c "echo Encryption=AlwaysOff >> /root/.vnc/config.d/vncserver-x11"
-        sudo bash -c "echo ProtocolVersion=4.1 >> /root/.vnc/config.d/vncserver-x11"
+        # sudo bash -c "echo ProtocolVersion=4.1 >> /root/.vnc/config.d/vncserver-x11"
     fi
-    echo "$vncPassword" | sudo vncpasswd -service
+    echo "$vncPassword" | sudo vncpasswd -service -legacy
 else
     echo RegisterPi - operation failed. Message returned:
     echo "$registerPiResult"
