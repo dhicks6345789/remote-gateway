@@ -42,6 +42,8 @@ fi
 registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data "piName=$piname"`
 if [ "$registerPiResult" == "OK" ]; then
     echo RegisterPi - operation completed OK.
+    sudo systemctl enable ssh
+    sudo systemctl start ssh
     serverPublicKey=`wget http://{{SERVERIPADDRESS}}/getPublicKey -q -O -`
     mkdir -p ~/.ssh
     echo "$serverPublicKey" >> ~/.ssh/authorized_keys
