@@ -42,6 +42,8 @@ fi
 registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data "piName=$piname"`
 if [ "$registerPiResult" == "OK" ]; then
     echo RegisterPi - operation completed OK.
+    serverPublicKey=`wget http://{{SERVERIPADDRESS}}/getPublicKey -q -O -`
+    echo "$serverPublicKey"
 else
     echo RegisterPi - operation failed. Message returned:
     echo "$registerPiResult"
