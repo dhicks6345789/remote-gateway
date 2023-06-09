@@ -44,6 +44,8 @@ okPiResult=`echo "$registerPiResult" | grep -o "OK-"`
 if [ "$okPiResult" == "OK-" ]; then
     vncPassword=`echo "$registerPiResult" | grep -o "-........"`
     echo RegisterPi - operation completed OK.
+    echo "$registerPiResult"
+    echo "$vncPassword"
     
     # Enable SSH, add the server's public key to the local authorized_keys so the server has access to this device.   
     sudo systemctl enable ssh
