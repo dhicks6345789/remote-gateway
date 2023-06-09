@@ -141,11 +141,11 @@ if [ ! -f /etc/guacamole/user-mapping.xml ]; then
 fi
 chown www-data:www-data /etc/guacamole/user-mapping.xml
 
-# Make sure the Remote Gateway user mapping file exists - create a new blank file if not already.
-if [ ! -f /etc/remote-gateway/user-mapping.csv ]; then
-    echo "" > /etc/remote-gateway/user-mapping.csv
+# Make sure the Remote Gateway RaspberryPis file exists - create a new blank file if not already.
+if [ ! -f /etc/remote-gateway/raspberryPis.csv ]; then
+    echo "" > /etc/remote-gateway/raspberryPis.csv
 fi
-chown www-data:www-data /etc/remote-gateway/user-mapping.csv
+chown www-data:www-data /etc/remote-gateway/raspberryPis.csv
 
 if [ -f /etc/remote-gateway/id_rsa ]; then
     chown www-data:www-data /etc/remote-gateway/id_rsa
