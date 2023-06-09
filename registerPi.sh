@@ -53,7 +53,7 @@ if [ "$registerPiResult" == "OK" ]; then
     # Enable VNC.
     sudo systemctl enable vncserver-x11-serviced.service
     sudo systemctl start vncserver-x11-serviced.service
-    sudo "echo Authentication=VncAuth >> /root/.vnc/config.d/vncserver-x11"
+    sudo bash -c "echo Authentication=VncAuth >> /root/.vnc/config.d/vncserver-x11"
 else
     echo RegisterPi - operation failed. Message returned:
     echo "$registerPiResult"
