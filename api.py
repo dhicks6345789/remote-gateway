@@ -71,7 +71,7 @@ def registerPi():
         csvString = ""
         for clientIPAddress in userMappings.keys():
             csvString = csvString + clientIPAddress + "," + ",".join(userMappings[clientIPAddress]) + "\n"
-        putFile("/etc/remote-gateway/raspberryPis", csvString)
+        putFile("/etc/remote-gateway/raspberryPis.csv", csvString)
         return "OK"
 
 @app.route("/", methods=["GET", "POST"])
