@@ -40,7 +40,9 @@ if [ "$carryOn" -eq "0" ]; then
 fi
 
 registerPiResult=`wget http://{{SERVERIPADDRESS}}/registerPi -q -O - --post-data "piName=$piname"`
-if [ "$registerPiResult" == "OK" ]; then
+okPiResult=`echo "$registerPiResult" | grep -o "OK-"`
+if [ "$okPiResult" == "OK-" ]; then
+    vncPassword=`echo "$registerPiResult" | grep -o "-........"`
     echo RegisterPi - operation completed OK.
     
     # Enable SSH, add the server's public key to the local authorized_keys so the server has access to this device.   
@@ -53,7 +55,11 @@ if [ "$registerPiResult" == "OK" ]; then
     # Enable VNC.
     sudo systemctl enable vncserver-x11-serviced.service
     sudo systemctl start vncserver-x11-serviced.service
-    sudo bash -c "echo Authentication=VncAuth >> /root/.vnc/config.d/vncserver-x11"
+    authenticationGrep=`sudo cat /root/.vnc/config.d/vncserver-x11 | grep Authentication=VncAuth`
+    if [ "$authenticationGrep" == "" ]; then
+        sudo bash -c "echo Authentication=VncAuth >> /root/.vnc/config.d/vncserver-x11"
+    fi
+    echo "$vncPassword" | sudo vncpasswd -service
 else
     echo RegisterPi - operation failed. Message returned:
     echo "$registerPiResult"
