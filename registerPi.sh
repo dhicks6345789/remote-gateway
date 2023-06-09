@@ -60,6 +60,7 @@ if [ "$okPiResult" == "OK-" ]; then
     authenticationGrep=`sudo cat /root/.vnc/config.d/vncserver-x11 | grep Authentication=VncAuth`
     if [ "$authenticationGrep" == "" ]; then
         sudo bash -c "echo Authentication=VncAuth >> /root/.vnc/config.d/vncserver-x11"
+        sudo bash -c "echo Encryption=AlwaysOff >> /root/.vnc/config.d/vncserver-x11"
     fi
     echo "$vncPassword" | sudo vncpasswd -service
 else
