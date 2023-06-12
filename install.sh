@@ -77,6 +77,7 @@ fi
 
 # Figure out what version of Python3 we have installed.
 pythonVersion=`ls /usr/local/lib | grep python3`
+echo "Python version: $pythonVersion"
 
 # Make sure Pip (Python package manager) is installed.
 if [ ! -f "/usr/bin/pip3" ]; then
