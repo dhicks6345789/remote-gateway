@@ -104,7 +104,7 @@ if [ ! -f "/usr/local/bin/uwsgi" ]; then
 fi
 
 # Make sure Flask (Python web-publishing framework, used for the Python CGI script) is installed.
-if [ ! -d "/usr/local/lib/$pythonVersion/dist-packages/flask" ]; then
+if [ ! -d "/var/lib/nginx/uwsgi/venv/lib/python$pythonVersion/site-packages/flask" ]; then
     pip3 install flask
 fi
 
