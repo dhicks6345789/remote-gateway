@@ -297,6 +297,7 @@ fi
 
 # Install features
 echo -e "${BLUE}Installing packages. This might take a few minutes...${NC}"
+echo "${MYSQL}"
 
 # Don't prompt during install
 export DEBIAN_FRONTEND=noninteractive
