@@ -56,8 +56,8 @@ if [ ! -d "/etc/guacamole" ]; then
     # wget https://git.io/fxZq5 -O guac-install.sh
     # chmod +x guac-install.sh
     copyOrDownload guac-install.sh guac-install.sh 0755
-    # ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
-    bash -c "./guac-install.sh -r $guacpw -gp $guacpw -o -i"
+    ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
+    # bash -c "./guac-install.sh -r $guacpw -gp $guacpw -o -i"
     rm guac-install.sh
 fi
 # Todo: above script is now (April 2023) out of date, switch to a newer one. For now:
