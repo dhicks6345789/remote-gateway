@@ -83,21 +83,23 @@ if [ ! -f "/usr/bin/pip3" ]; then
     apt install -y python3-pip
 fi
 
-echo EEEE
+# Make sure the Python venv is set up and activated.
+if [ ! -f "/var/lib/nginx/uwsgi/venv" ]; then
+    python -m python3 -m venv /var/lib/nginx/uwsgi/venv
+fi
+source /var/lib/nginx/uwsgi/bin/activate
+
+
 
 # Make sure uWSGI (WSGI component for Nginx) is installed...
 if [ ! -f "/usr/local/bin/uwsgi" ]; then
     pip3 install uwsgi
 fi
 
-echo AAA
-
 # Make sure Flask (Python web-publishing framework, used for the Python CGI script) is installed.
 if [ ! -d "/usr/local/lib/$pythonVersion/dist-packages/flask" ]; then
     pip3 install flask
 fi
-
-echo FFFF
 
 
 
