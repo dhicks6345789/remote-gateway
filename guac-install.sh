@@ -598,7 +598,7 @@ SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='${guacDb}
 
 # Execute SQL code
 MYSQL_RESULT=$( echo ${SQLCODE} | mysql -u root -D information_schema -h ${mysqlHost} -P ${mysqlPort} )
-echo "$MYSQL_RESULT"
+echo "MYSQL_RESULT: $MYSQL_RESULT"
 if [[ $MYSQL_RESULT != "" ]]; then
     echo -e "${RED}It appears there is already a MySQL database (${guacDb}) on ${mysqlHost}${NC}" 1>&2
     echo -e "${RED}Try:    mysql -e 'DROP DATABASE ${guacDb}'${NC}" 1>&2
