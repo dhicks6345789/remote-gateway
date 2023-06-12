@@ -63,6 +63,8 @@ if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
     rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
 fi
 
+echo BBB
+
 
 
 # Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL).
@@ -92,6 +94,8 @@ fi
 if [ ! -d "/usr/local/lib/$pythonVersion/dist-packages/flask" ]; then
     pip3 install flask
 fi
+
+echo CCC
 
 
 
