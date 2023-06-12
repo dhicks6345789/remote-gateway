@@ -63,8 +63,6 @@ if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
     rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
 fi
 
-echo BBB
-
 
 
 # Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL).
@@ -72,14 +70,10 @@ if [ ! -d "/etc/nginx" ]; then
     apt install -y nginx
 fi
 
-echo CCCC
-
 # Make sure the net-tools package is installed (we use the arp command).
 if [ ! -f "/usr/sbin/arp" ]; then
     apt install -y net-tools
 fi
-
-echo DDDD
 
 # Figure out what version of Python3 we have installed.
 pythonVersion=`ls /usr/local/lib | grep python3`
@@ -95,6 +89,8 @@ echo EEEE
 if [ ! -f "/usr/local/bin/uwsgi" ]; then
     pip3 install uwsgi
 fi
+
+echo AAA
 
 # Make sure Flask (Python web-publishing framework, used for the Python CGI script) is installed.
 if [ ! -d "/usr/local/lib/$pythonVersion/dist-packages/flask" ]; then
