@@ -85,7 +85,8 @@ if [ ! -f "/usr/bin/pip3" ]; then
 fi
 
 # Make sure the python3-venv package is installed.
-if [ ! -f "/usr/bin/venv" ]; then
+# /usr/share/doc/python3.11-venv
+if [ ! -f "usr/share/doc/python3.11-venv" ]; then
     apt install -y python3.11-venv
 fi
 
