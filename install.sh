@@ -70,6 +70,12 @@ if [ ! -d "/etc/nginx" ]; then
     apt install -y nginx
 fi
 
+# Make sure uWSGI (WSGI component for Nginx) is installed...
+if [ ! -f "/usr/bin/uwsgi" ]; then
+    apt install uwsgi-core
+    apt install uwsgi-plugin-python3
+fi
+
 # Make sure the net-tools package is installed (we use the arp command).
 if [ ! -f "/usr/sbin/arp" ]; then
     apt install -y net-tools
@@ -99,9 +105,9 @@ source /var/lib/nginx/uwsgi/venv/bin/activate
 
 
 # Make sure uWSGI (WSGI component for Nginx) is installed...
-if [ ! -f "/usr/local/bin/uwsgi" ]; then
-    pip3 install uwsgi
-fi
+# if [ ! -f "/usr/local/bin/uwsgi" ]; then
+#    pip3 install uwsgi
+# fi
 
 # Make sure Flask (Python web-publishing framework, used for the Python CGI script) is installed.
 if [ ! -d "/var/lib/nginx/uwsgi/venv/lib/python$pythonVersion/site-packages/flask" ]; then
