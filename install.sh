@@ -71,7 +71,7 @@ if [ ! -d "/etc/nginx" ]; then
 fi
 
 # Make sure the net-tools package is installed (we use the arp command).
-if [ ! -d "/usr/sbin/arp" ]; then
+if [ ! -f "/usr/sbin/arp" ]; then
     apt install -y net-tools
 fi
 
