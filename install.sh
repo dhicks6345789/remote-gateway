@@ -94,7 +94,7 @@ fi
 if [ ! -f "/var/lib/nginx/uwsgi/venv" ]; then
     python3 -m venv /var/lib/nginx/uwsgi/venv
 fi
-source /var/lib/nginx/uwsgi/bin/activate
+source /var/lib/nginx/uwsgi/venv/bin/activate
 
 
 
