@@ -612,8 +612,9 @@ SQLCODE="
 SELECT COUNT(*) FROM mysql.user WHERE user = '${guacUser}';"
 
 # Execute SQL code
+echo $( echo ${SQLCODE} | mysql -u root -D mysql -h ${mysqlHost} -P ${mysqlPort} | grep '0' )
 MYSQL_RESULT=$( echo ${SQLCODE} | mysql -u root -D mysql -h ${mysqlHost} -P ${mysqlPort} | grep '0' )
-echo "MYSQL_RESULT: $MYSQL_RESULT"
+echo "MYSQL_RESULT: $MYSQL_RESULT ---"
 if [[ $MYSQL_RESULT == "" ]]; then
     echo -e "${RED}It appears there is already a MySQL user (${guacUser}) on ${mysqlHost}${NC}" 1>&2
     echo -e "${RED}Try:    mysql -e \"DROP USER '${guacUser}'@'${guacUserHost}'; FLUSH PRIVILEGES;\"${NC}" 1>&2
