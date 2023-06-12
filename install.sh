@@ -76,7 +76,8 @@ if [ ! -f "/usr/sbin/arp" ]; then
 fi
 
 # Figure out what version of Python3 we have installed.
-pythonVersion=`ls /usr/local/lib | grep python3`
+# pythonVersion=`ls /usr/local/lib | grep python3`
+pythonVersion=`python3 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))'`
 echo "Python version: $pythonVersion"
 
 # Make sure Pip (Python package manager) is installed.
