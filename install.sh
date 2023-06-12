@@ -83,6 +83,11 @@ if [ ! -f "/usr/bin/pip3" ]; then
     apt install -y python3-pip
 fi
 
+# Make sure the python3-venv package is installed.
+if [ ! -f "/usr/bin/venv" ]; then
+    apt install -y python3.11-venv
+fi
+
 # Make sure the Python venv is set up and activated.
 if [ ! -f "/var/lib/nginx/uwsgi/venv" ]; then
     python3 -m venv /var/lib/nginx/uwsgi/venv
