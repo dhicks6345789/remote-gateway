@@ -72,10 +72,14 @@ if [ ! -d "/etc/nginx" ]; then
     apt install -y nginx
 fi
 
+echo CCCC
+
 # Make sure the net-tools package is installed (we use the arp command).
 if [ ! -f "/usr/sbin/arp" ]; then
     apt install -y net-tools
 fi
+
+echo DDDD
 
 # Figure out what version of Python3 we have installed.
 pythonVersion=`ls /usr/local/lib | grep python3`
@@ -84,6 +88,8 @@ pythonVersion=`ls /usr/local/lib | grep python3`
 if [ ! -f "/usr/bin/pip3" ]; then
     apt install -y python3-pip
 fi
+
+echo EEEE
 
 # Make sure uWSGI (WSGI component for Nginx) is installed...
 if [ ! -f "/usr/local/bin/uwsgi" ]; then
@@ -95,7 +101,7 @@ if [ ! -d "/usr/local/lib/$pythonVersion/dist-packages/flask" ]; then
     pip3 install flask
 fi
 
-echo CCC
+echo FFFF
 
 
 
@@ -154,8 +160,6 @@ chown www-data:www-data /etc/remote-gateway/raspberryPis.csv
 if [ -f /etc/remote-gateway/id_rsa ]; then
     chown www-data:www-data /etc/remote-gateway/id_rsa
 fi
-
-echo AAA
 
 
 
