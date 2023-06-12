@@ -151,6 +151,8 @@ if [ -f /etc/remote-gateway/id_rsa ]; then
     chown www-data:www-data /etc/remote-gateway/id_rsa
 fi
 
+echo AAA
+
 
 
 # Copy over the WSGI configuration and code.
