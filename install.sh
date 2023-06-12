@@ -85,7 +85,7 @@ fi
 
 # Make sure the Python venv is set up and activated.
 if [ ! -f "/var/lib/nginx/uwsgi/venv" ]; then
-    python -m python3 -m venv /var/lib/nginx/uwsgi/venv
+    python3 -m venv /var/lib/nginx/uwsgi/venv
 fi
 source /var/lib/nginx/uwsgi/bin/activate
 
