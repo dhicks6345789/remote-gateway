@@ -53,9 +53,11 @@ fi
 
 # Use Chase Wright's script to install a Guacamole server - see: https://github.com/MysticRyuujin/guac-install
 if [ ! -d "/etc/guacamole" ]; then
-    wget https://git.io/fxZq5 -O guac-install.sh
-    chmod +x guac-install.sh
-    ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
+    # wget https://git.io/fxZq5 -O guac-install.sh
+    # chmod +x guac-install.sh
+    copyOrDownload guac-install.sh guac-install.sh 0755
+    # ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
+    bash -c "./guac-install.sh -r $guacpw -gp $guacpw -o -i"
     rm guac-install.sh
 fi
 # Todo: above script is now (April 2023) out of date, switch to a newer one. For now:
@@ -93,7 +95,7 @@ fi
 
 # Make sure the python3-venv package is installed.
 if [ ! -f "/usr/share/doc/python$pythonVersion-venv" ]; then
-    sudo bash -c "apt install -y python$pythonVersion-venv"
+    bash -c "apt install -y python$pythonVersion-venv"
 fi
 
 # Make sure the Python venv is set up and activated.
