@@ -63,6 +63,7 @@ if [ ! -d "/etc/guacamole" ]; then
     # ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
     ./1-setup.sh
     rm 1-setup.sh
+    rm -rf guac-setup
 fi
 # Todo: above script is now (April 2023) out of date, switch to a newer one. For now:
 if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
