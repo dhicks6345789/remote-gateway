@@ -55,9 +55,13 @@ fi
 if [ ! -d "/etc/guacamole" ]; then
     # wget https://git.io/fxZq5 -O guac-install.sh
     # chmod +x guac-install.sh
-    copyOrDownload guac-install.sh guac-install.sh 0755
-    ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
-    rm guac-install.sh
+    
+    # copyOrDownload guac-install.sh guac-install.sh 0755
+    copyOrDownload 1-setup.sh 1-setup.sh 0755
+    
+    # ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
+    ./1-setup.sh
+    rm 1-setup.sh
 fi
 # Todo: above script is now (April 2023) out of date, switch to a newer one. For now:
 if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
