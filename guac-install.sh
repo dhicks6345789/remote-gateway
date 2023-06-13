@@ -595,7 +595,8 @@ fi
 echo -e "${BLUE}Checking MySQL for existing database (${guacDb})${NC}"
 SQLCODE="
 SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='${guacDb}';"
-
+echo "SQLCODE: $SQLCODE"
+    
 # Execute SQL code
 MYSQL_RESULT=$( echo ${SQLCODE} | mysql -u root -D information_schema -h ${mysqlHost} -P ${mysqlPort} )
 if [[ $MYSQL_RESULT != "" ]]; then
