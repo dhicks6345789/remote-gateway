@@ -108,13 +108,13 @@ DOMAIN_SEARCH_SUFFIX=$(grep search /etc/resolv.conf | grep -v "#" | sed  's/'sea
 #######################################################################################################################
 SERVER_NAME=""						# Preferred server hostname
 LOCAL_DOMAIN=""						# Local DNS space in use
-INSTALL_MYSQL=""					# Install locally (true/false)
-SECURE_MYSQL=""						# Apply mysql secure configuration tool (true/false)
+INSTALL_MYSQL="true"					# Install locally (true/false)
+SECURE_MYSQL="false"					# Apply mysql secure configuration tool (true/false)
 MYSQL_HOST=""						# leave blank for localhost default, only specify for remote servers
 MYSQL_PORT=""						# If blank default is 3306
-GUAC_DB=""							# If blank default is guacamole_db
+GUAC_DB=""						# If blank default is guacamole_db
 GUAC_USER=""						# if blank default is guacamole_user
-GUAC_PWD=""							# Should not be blank as this may break some aspects of install
+GUAC_PWD=""						# Should not be blank as this may break some aspects of install
 MYSQL_ROOT_PWD=""					# Should not be blank as this may break some aspects of install
 INSTALL_TOTP=""						# TOTP MFA extension (true/false)
 INSTALL_DUO=""						# DUO MFA extension (cant be installed simultaneously with TOTP, true/false)
@@ -122,17 +122,17 @@ INSTALL_LDAP=""						# Active Directory extension (true/false)
 INSTALL_NGINX=""					# Install and configure Guacamole behind Nginx reverse proxy (http port 80 only, true/false)
 PROXY_SITE=""						# Local DNS name for reverse proxy and self signed ssl certificates
 SELF_SIGN=""						# Add self signed SSL support to Nginx (Let's Encrypt not available with this, true/false)
-CERT_COUNTRY="AU"					# 2 country character code only, must not be blank
-CERT_STATE="Victoria"				# Optional to change, must not be blank
-CERT_LOCATION="Melbourne"			# Optional to change, must not be blank
-CERT_ORG="Itiligent"				# Optional to change, must not be blank
+CERT_COUNTRY="UK"					# 2 country character code only, must not be blank
+CERT_STATE="London"					# Optional to change, must not be blank
+CERT_LOCATION="London"					# Optional to change, must not be blank
+CERT_ORG="SanSay.Co.Uk"					# Optional to change, must not be blank
 CERT_OU="I.T."						# Optional to change, must not be blank
 CERT_DAYS="3650"					# Number of days until self signed certificate expiry
 LETS_ENCRYPT=""						# Add Lets Encrypt public SSL support for Nginx (self signed SSL certs not available with this, true/false)
 LE_DNS_NAME=""						# Public DNS name to bind with Lets Encrypt certificates
-LE_EMAIL=""							# Webmaster/admin email for Lets Encrypt
+LE_EMAIL=""						# Webmaster/admin email for Lets Encrypt
 BACKUP_EMAIL=""						# Email address for backup notifications
-BACKUP_RETENTION="30"				# How many days to keep backups for
+BACKUP_RETENTION="30"					# How many days to keep backups for
 
 # Script branding header
 echo
