@@ -215,6 +215,8 @@ systemctl enable emperor.uwsgi.service
 copyOrDownload nginx.conf /etc/nginx/nginx.conf 0644
 copyOrDownload default /etc/nginx/sites-available/default 0644
 sed -i "s/SERVERNAME/$servername/g" /etc/nginx/sites-available/default
+rm /etc/nginx/sites-enabled/*
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 
 
