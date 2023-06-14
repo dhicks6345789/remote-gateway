@@ -45,8 +45,8 @@ if [ ! -d "/etc/guacamole" ]; then
     #./1-setup.sh
     #rm 1-setup.sh
     #rm -rf guac-setup
-    apt-get install guacamole-tomcat
-    apt-get install libguac-client-ssh0 libguac-client-rdp0
+    apt install -y guacamole-tomcat
+    apt install -y libguac-client-ssh0 libguac-client-rdp0
 fi
 ## For now:
 #if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
@@ -62,8 +62,8 @@ fi
 
 # Make sure uWSGI (WSGI component for Nginx) is installed...
 if [ ! -f "/usr/bin/uwsgi" ]; then
-    apt install uwsgi-core
-    apt install uwsgi-plugin-python3
+    apt install -y uwsgi-core
+    apt install -y uwsgi-plugin-python3
 fi
 
 # Make sure the net-tools package is installed (we use the arp command).
