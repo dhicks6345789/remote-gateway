@@ -60,7 +60,7 @@ echo
 echo -e "${GREY}Installing dependencies required for building Guacamole, this might take a few minutes..."
 apt-get -qq -y install ${JPEGTURBO} ${LIBPNG} ufw htop pwgen wget crudini build-essential libcairo2-dev libtool-bin uuid-dev libavcodec-dev libavformat-dev libavutil-dev \
 libswscale-dev freerdp2-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev libpulse-dev libssl-dev \
-libvorbis-dev libwebp-dev ghostscript ${MYSQL} ${TOMCAT_VERSION} &>> ${LOG_LOCATION}
+libvorbis-dev libwebp-dev ghostscript ${MYSQL} &>> ${LOG_LOCATION}
 if [ $? -ne 0 ]; then
 	echo -e "${LRED}Failed. See ${LOG_LOCATION}${GREY}" 1>&2
 	exit 1
@@ -234,7 +234,7 @@ mv -f guacamole-${GUAC_VERSION}.war /etc/guacamole/guacamole.war
 mv -f guacamole-auth-jdbc-${GUAC_VERSION}/mysql/guacamole-auth-jdbc-mysql-${GUAC_VERSION}.jar /etc/guacamole/extensions/
 
 # Create a symbolic link for Tomcat
-ln -sf /etc/guacamole/guacamole.war /var/lib/${TOMCAT_VERSION}/webapps/
+ln -sf /etc/guacamole/guacamole.war /opt/tomcat/webapps/
 
 # Move MySQL connector/j files
 echo -e "${GREY}Moving mysql-connector-java-${MYSQLJCON}.jar (/etc/guacamole/lib/mysql-connector-java.jar)..."
@@ -321,7 +321,7 @@ fi
 
 # Restart Tomcat
 echo -e "${GREY}Restarting Tomcat service & enable at boot..."
-service ${TOMCAT_VERSION} restart
+service tomcat restart
 if [ $? -ne 0 ]; then
 	echo -e "${LRED}Failed${GREY}" 1>&2
 	exit 1
@@ -329,7 +329,7 @@ if [ $? -ne 0 ]; then
 	echo -e "${LGREEN}OK${GREY}"
 fi
 # Set Tomcat to start at boot
-systemctl enable ${TOMCAT_VERSION}
+systemctl enable tomcat
 echo
 
 # Set MySQL password
