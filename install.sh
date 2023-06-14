@@ -39,6 +39,23 @@ if [ -z "$servername" ]; then
     exit 1;
 fi
 
+# 14th June 2023: Debian 12 (Bookworm): The packaged version of Tomcat is v10, which Guacamole doesn't yet support.
+# Install Tomcat 9 (from distributed binaries) instead. We modify 1-setup.sh to explicitly set the Tomcat version.
+if [ ! -f "/usr/bin/java" ]; then
+    apt install -y default-jre
+fi
+if [ ! -d "/usr/local/tomcat9" ]; then
+    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.gz
+    tar xzf apache-tomcat-9.0.76.tar.gz
+    mv apache-tomcat-9.0.76 /usr/local/tomcat9
+    rm apache-tomcat-9.0.76.tar.gz
+    echo 'export CATALINA_HOME="/usr/local/tomcat9"' > /etc/profile.d/tomcat9.sh
+    echo 'export JAVA_HOME="/usr/lib/jvm/java-8-oracle"' >> /etc/profile.d/tomcat9.sh
+    echo 'export JRE_HOME="/usr/lib/jvm/java-8-oracle/jre"' >> /etc/profile.d/tomcat9.sh
+    copyOrDownload tomcat-users.xml /usr/local/tomcat9/conf/tomcat-users.xml 0600
+    # /usr/local/tomcat9/bin/startup.sh
+fi
+
 # Use Itiligent's script to install a Guacamole server - see: https://github.com/itiligent/Guacamole-Setup
 if [ ! -d "/etc/guacamole" ]; then
     copyOrDownload 1-setup.sh 1-setup.sh 0755
