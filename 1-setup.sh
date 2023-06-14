@@ -153,7 +153,8 @@ mkdir -p $TMP_DIR
 cd $DOWNLOAD_DIR
 echo
 echo -e "${GREY}Downloading setup files...${DGREY}"
-wget -q --show-progress ${GITHUB}2-install-guacamole.sh -O 2-install-guacamole.sh
+#wget -q --show-progress ${GITHUB}2-install-guacamole.sh -O 2-install-guacamole.sh
+cp /root/remote-gateway/2-install-guacamole.sh 2-install-guacamole.sh
 wget -q --show-progress ${GITHUB}3-install-nginx.sh -O 3-install-nginx.sh
 wget -q --show-progress ${GITHUB}4a-install-ssl-self-signed-nginx.sh -O 4a-install-ssl-self-signed-nginx.sh
 wget -q --show-progress ${GITHUB}4b-install-ssl-letsencrypt-nginx.sh -O 4b-install-ssl-letsencrypt-nginx.sh
