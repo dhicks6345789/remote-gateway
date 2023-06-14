@@ -7,7 +7,7 @@ server {
 
         server_name SERVERNAME;
 
-        # Settings for the "/guacamole" namespace - hand over to the Guacamole server.
+        # Settings for the "/guacamole" namespace - hand over to the Tomcat (Guacamole) server.
 	location /guacamole/ {
                 proxy_pass http://localhost:8080/guacamole/;
                 proxy_buffering off;
