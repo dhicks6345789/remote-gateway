@@ -39,7 +39,7 @@ if [ -z "$servername" ]; then
     exit 1;
 fi
 
-# User Itiligent's script to install a Guacamole server - see: https://github.com/itiligent/Guacamole-Setup
+# Use Itiligent's script to install a Guacamole server - see: https://github.com/itiligent/Guacamole-Setup
 # # Use Chase Wright's script to install a Guacamole server - see: https://github.com/MysticRyuujin/guac-install
 if [ ! -d "/etc/guacamole" ]; then
     # wget https://git.io/fxZq5 -O guac-install.sh
@@ -61,9 +61,9 @@ fi
 
 
 # Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL).
-if [ ! -d "/etc/nginx" ]; then
-    apt install -y nginx
-fi
+# if [ ! -d "/etc/nginx" ]; then
+#    apt install -y nginx
+# fi
 
 # Make sure uWSGI (WSGI component for Nginx) is installed...
 if [ ! -f "/usr/bin/uwsgi" ]; then
