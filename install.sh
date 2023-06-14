@@ -40,41 +40,38 @@ if [ -z "$servername" ]; then
 fi
 
 # 14th June 2023: Debian 12 (Bookworm): The packaged version of Tomcat is v10, which Guacamole doesn't yet support.
-# Install Tomcat 9 (from distributed binaries) instead. We modify 1-setup.sh to explicitly set the Tomcat version.
+# Therefore, we'll install Tomcat v9 (from distributed binaries) instead. We modify 1-setup.sh to explicitly set the Tomcat version.
+# First, install Java...
 if [ ! -f "/usr/bin/java" ]; then
     apt install -y default-jre
 fi
-if [ ! -d "/usr/local/tomcat9" ]; then
+# ...then download and set up Tomcat v9. Following: https://www.tecmint.com/install-apache-tomcat-on-debian-10/
+if [ ! -d "/opt/tomcat" ]; then
     mkdir /opt/tomcat
     groupadd tomcat
     useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
     
-
     # Install Tomcat 9.
-    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.g
-    tar xzvf apache-tomcat-9.0.76.tar.gz -C /opt/tomcat --strip-components=1
+    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.gz
+    tar xzf apache-tomcat-9.0.76.tar.gz -C /opt/tomcat --strip-components=1
     rm apache-tomcat-9.0.76.tar.gz
     
-    cd /opt/tomcat
     chgrp -R tomcat /opt/tomcat
     chmod -R g+r /opt/tomcat/conf
     chmod g+x /opt/tomcat/conf
     chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/
 
-
+    # Set up systemd to run Tomcat 9.
+    copyOrDownload tomcat.service /etc/systemd/system/tomcat.service 0644
+    systemctl daemon-reload
+    systemctl start tomcat
+    systemctl enable tomcat
     
     #echo 'export CATALINA_HOME="/usr/local/tomcat9"' > /etc/profile.d/tomcat9.sh
     #echo 'export JAVA_HOME="/usr/lib/jvm/java-8-oracle"' >> /etc/profile.d/tomcat9.sh
     #echo 'export JRE_HOME="/usr/lib/jvm/java-8-oracle/jre"' >> /etc/profile.d/tomcat9.sh
     #copyOrDownload tomcat-users.xml /usr/local/tomcat9/conf/tomcat-users.xml 0600
-    
-    # Set up systemd to run Tomcat 9.
-    #copyOrDownload tomcat9.service /etc/systemd/system/tomcat9.service 0644
-    #systemctl start tomcat9
-    #systemctl enable tomcat9
 fi
-
-exit 1
 
 # Use Itiligent's script to install a Guacamole server - see: https://github.com/itiligent/Guacamole-Setup
 if [ ! -d "/etc/guacamole" ]; then
