@@ -76,8 +76,8 @@ if [ ! -d "/etc/guacamole" ]; then
     # rm -rf guac-setup
 fi
 # For now:
-if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
-    rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
+if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.1.jar" ]; then
+    rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.1.jar
 fi
 
 
