@@ -58,9 +58,9 @@ if [ ! -d "/usr/local/tomcat9" ]; then
     #copyOrDownload tomcat-users.xml /usr/local/tomcat9/conf/tomcat-users.xml 0600
     
     # Set up systemd to run Tomcat 9.
-    copyOrDownload tomcat.service /etc/systemd/system/tomcat.service 0644
-    systemctl start tomcat
-    systemctl enable tomcat
+    copyOrDownload tomcat9.service /etc/systemd/system/tomcat9.service 0644
+    systemctl start tomcat9
+    systemctl enable tomcat9
 fi
 
 # Use Itiligent's script to install a Guacamole server - see: https://github.com/itiligent/Guacamole-Setup
@@ -154,7 +154,7 @@ echo "Stopping Guacamole..."
 systemctl stop guacd
 
 echo "Stopping Tomcat..."
-systemctl stop tomcat10
+systemctl stop tomcat9
 
 echo "Stopping uWSGI..."
 systemctl stop emperor.uwsgi.service
@@ -226,7 +226,7 @@ echo "Starting uWSGI..."
 systemctl start emperor.uwsgi.service
 
 echo "Starting Tomcat..."
-systemctl start tomcat10
+systemctl start tomcat9
 
 echo "Starting Guacamole server..."
 systemctl start guacd
