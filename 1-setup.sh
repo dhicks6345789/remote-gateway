@@ -81,7 +81,7 @@ else
 	TOMCAT_VERSION="tomcat9"
 fi
 # Override Apache Tomcat version here.
-# TOMCAT_VERSION="tomcat9"
+TOMCAT_VERSION="tomcat9"
 
 # Install log Location
 LOG_LOCATION="${DOWNLOAD_DIR}/guacamole_${GUAC_VERSION}_setup.log"
