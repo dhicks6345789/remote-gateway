@@ -40,23 +40,16 @@ if [ -z "$servername" ]; then
 fi
 
 # Use Itiligent's script to install a Guacamole server - see: https://github.com/itiligent/Guacamole-Setup
-# # Use Chase Wright's script to install a Guacamole server - see: https://github.com/MysticRyuujin/guac-install
 if [ ! -d "/etc/guacamole" ]; then
-    # wget https://git.io/fxZq5 -O guac-install.sh
-    # chmod +x guac-install.sh
-    
-    # copyOrDownload guac-install.sh guac-install.sh 0755
     copyOrDownload 1-setup.sh 1-setup.sh 0755
-    
-    # ./guac-install.sh --mysqlpwd " + $databasepw + " --guacpwd " + $guacpw + " --nomfa --installmysql
     ./1-setup.sh
     rm 1-setup.sh
     rm -rf guac-setup
 fi
-# Todo: above script is now (April 2023) out of date, switch to a newer one. For now:
-if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
-    rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
-fi
+## For now:
+#if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
+#    rm /etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar
+#fi
 
 
 
