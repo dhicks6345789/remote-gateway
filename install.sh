@@ -40,7 +40,7 @@ if [ -z "$servername" ]; then
 fi
 
 # 14th June 2023: Debian 12 (Bookworm): The packaged version of Tomcat is v10, which Guacamole doesn't yet support.
-# Therefore, we'll install Tomcat v9 (from distributed binaries) instead. We modify 1-setup.sh to explicitly set the Tomcat version.
+# Therefore, we'll install Tomcat v9 (from distributed binaries) instead. We modify 1-setup.sh and 2-install-guacamole.sh to explicitly set the Tomcat version.
 # First, install Java...
 if [ ! -f "/usr/bin/java" ]; then
     apt install -y default-jre
@@ -66,11 +66,6 @@ if [ ! -d "/opt/tomcat" ]; then
     systemctl daemon-reload
     systemctl start tomcat
     systemctl enable tomcat
-    
-    #echo 'export CATALINA_HOME="/usr/local/tomcat9"' > /etc/profile.d/tomcat9.sh
-    #echo 'export JAVA_HOME="/usr/lib/jvm/java-8-oracle"' >> /etc/profile.d/tomcat9.sh
-    #echo 'export JRE_HOME="/usr/lib/jvm/java-8-oracle/jre"' >> /etc/profile.d/tomcat9.sh
-    #copyOrDownload tomcat-users.xml /usr/local/tomcat9/conf/tomcat-users.xml 0600
 fi
 
 # Use Itiligent's script to install a Guacamole server - see: https://github.com/itiligent/Guacamole-Setup
@@ -164,7 +159,7 @@ echo "Stopping Guacamole..."
 systemctl stop guacd
 
 echo "Stopping Tomcat..."
-systemctl stop tomcat9
+systemctl stop tomcat
 
 echo "Stopping uWSGI..."
 systemctl stop emperor.uwsgi.service
@@ -236,7 +231,7 @@ echo "Starting uWSGI..."
 systemctl start emperor.uwsgi.service
 
 echo "Starting Tomcat..."
-systemctl start tomcat9
+systemctl start tomcat
 
 echo "Starting Guacamole server..."
 systemctl start guacd
