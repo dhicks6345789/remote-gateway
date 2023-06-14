@@ -143,7 +143,7 @@ echo "Stopping Guacamole..."
 systemctl stop guacd
 
 echo "Stopping Tomcat..."
-systemctl stop tomcat9
+systemctl stop tomcat10
 
 echo "Stopping uWSGI..."
 systemctl stop emperor.uwsgi.service
@@ -215,7 +215,7 @@ echo "Starting uWSGI..."
 systemctl start emperor.uwsgi.service
 
 echo "Starting Tomcat..."
-systemctl start tomcat9
+systemctl start tomcat10
 
 echo "Starting Guacamole server..."
 systemctl start guacd
