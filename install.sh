@@ -60,7 +60,7 @@ fi
 
 
 
-# Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL).
+# Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat (Guacamole) and uWSGI servers into one namespace).
 if [ ! -d "/etc/nginx" ]; then
     apt install -y nginx
 fi
@@ -77,7 +77,6 @@ if [ ! -f "/usr/sbin/arp" ]; then
 fi
 
 # Figure out what version of Python3 we have installed.
-# pythonVersion=`ls /usr/local/lib | grep python3`
 pythonVersion=`python3 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))'`
 echo "Python version: $pythonVersion"
 
@@ -98,11 +97,6 @@ fi
 source /var/lib/nginx/uwsgi/venv/bin/activate
 
 
-
-# Make sure uWSGI (WSGI component for Nginx) is installed...
-# if [ ! -f "/usr/local/bin/uwsgi" ]; then
-#    pip3 install uwsgi
-# fi
 
 # Make sure Flask (Python web-publishing framework, used for the Python CGI script) is installed.
 if [ ! -d "/var/lib/nginx/uwsgi/venv/lib/python$pythonVersion/site-packages/flask" ]; then
