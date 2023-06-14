@@ -61,9 +61,9 @@ fi
 
 
 # Make sure the Nginx web/proxy server is installed (used to proxy the Tomcat server and provide SSL).
-# if [ ! -d "/etc/nginx" ]; then
-#    apt install -y nginx
-# fi
+if [ ! -d "/etc/nginx" ]; then
+    apt install -y nginx
+fi
 
 # Make sure uWSGI (WSGI component for Nginx) is installed...
 if [ ! -f "/usr/bin/uwsgi" ]; then
