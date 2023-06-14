@@ -68,7 +68,7 @@ if [ ! -d "/etc/guacamole" ]; then
     copyOrDownload 1-setup.sh 1-setup.sh 0755
     ./1-setup.sh
     rm 1-setup.sh
-    rm -rf guac-setup
+    # rm -rf guac-setup
 fi
 ## For now:
 #if [ -f "/etc/guacamole/extensions/guacamole-auth-jdbc-mysql-1.5.0.jar" ]; then
