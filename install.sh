@@ -167,11 +167,17 @@ systemctl stop emperor.uwsgi.service
 echo "Stopping Nginx..."
 systemctl stop nginx
 
+# Make sure the Guacamole configuration file exists - download our file if there's no file there already.
+if [ ! -f /etc/guacamole/guacd.conf ]; then
+    copyOrDownload guacd.conf /etc/guacamole/guacd.conf 0755
+fi
+
 # Make sure the Guacamole user-mapping file exists - download our example file if there's no file there already.
 if [ ! -f /etc/guacamole/user-mapping.xml ]; then
     copyOrDownload user-mapping.xml /etc/guacamole/user-mapping.xml 0755
 fi
 chown www-data:www-data /etc/guacamole/user-mapping.xml
+
 
 # Make sure the Remote Gateway RaspberryPis file exists - create a new blank file if not already.
 if [ ! -f /etc/remote-gateway/raspberryPis.csv ]; then
