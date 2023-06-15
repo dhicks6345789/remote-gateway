@@ -173,7 +173,7 @@ if [ ! -f /etc/guacamole/guacd.conf ]; then
 fi
 
 # Make sure there's a folder available where Guacamole can write its PID file.
-if [ ! -d /run/guacd ; then
+if [ ! -d /run/guacd ]; then
     mkdir /run/guacd
     chown daemon:daemon /run/guacd
 fi
