@@ -22,12 +22,12 @@ Cloudflare's Zero Trust product allows you to authenticate users via various mea
 
 You will need a machine / VM running Debian. You probably want a newly-installed, dedicated machine / VM created just for this purpose. Debian can be installed with SSH access only, without a graphical desktop, if you want, no part of this project or Guacamole need you to have a graphical interface.
 
-You will also want a target remote desktop server of some sort. This should probably be a separate machine / VM from the one you're using as a gateway, although you could put everything on one. You can have multiple target machines if you want, and Guacamole supports SSH, VNC and RDP, so your targets can be Linux, Mac or Windows.
+You will also want a target remote desktop server of some sort. This should probably be a separate machine / VM from the one you're using as a gateway, although you could put everything on one (maybe on a Raspberry Pi as an all-in-one Guacamole server and VNC-accesible desktop). You can have multiple target machines if you want, and Guacamole supports SSH, VNC and RDP, so your targets can be Linux, Mac or Windows.
 
 Handling setup and licensing for a Windows remote desktop server is beyond the scope of this project. If you want to use a Windows remote desktop, you will need to check you have the appropriate CALs / remote connector licensing in place for your organisation. If you are trying to get an older, legacy Windows application to be able to be run via a web browser but Windows remote desktop licesning is going to be too costly or complex, the [Wine](https://www.winehq.org/) project, which can allow you to run some Windows applications on Linux or similar, might be of use.
 
 ## Installation
-On a freshly installed Debian server, as root, run:
+On a freshly installed Debian 12 (Bookworm) server, as root, run:
 ```
 wget https://github.com/dhicks6345789/remote-gateway/raw/master/install.sh
 bash install.sh -servername guacamole.yourdomain.com -pagetitle Guacamole
