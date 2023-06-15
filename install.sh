@@ -173,9 +173,9 @@ if [ ! -f /etc/guacamole/guacd.conf ]; then
 fi
 
 # Make sure there's a folder available where Guacamole can write its PID file.
-if [ ! -d /var/run/guacd ; then
-    mkdir /var/run/guacd
-    chown daemon:daemon /var/run/guacd
+if [ ! -d /run/guacd ; then
+    mkdir /run/guacd
+    chown daemon:daemon /run/guacd
 fi
 
 # Make sure the Guacamole user-mapping file exists - download our example file if there's no file there already.
