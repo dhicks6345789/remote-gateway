@@ -77,6 +77,10 @@ wget http://SERVERIPADDRESS/registerPi -q -O - | bash -s -- -piName PINAME
 ```
 
 ## Notes
+June 2023: This script has been written for and run on a fresh installation of Debian v12 (Bookworm). Guacamole doesn't currently work with the packaged version (v10) of Tomcat for that release of Debian, so we install v9 instead. I've modified Itiligent's 1-setup.sh and 2-install-guacamole.sh to reflect this.
+
+1-setup.sh has options to install various MFA extensions, which I modify here to be false as that will be handled by Cloudflare's gateway. I also skip the Nginx installation provided by 1-setup.sh and install it myself instead.
+
 This script is, hopefully, mostly complete and has been tested with a couple of real-life installations. There might still be issues in places, do please report any issues you find.
 
 ### To do:
