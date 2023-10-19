@@ -52,9 +52,9 @@ if [ ! -d "/opt/tomcat" ]; then
     useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
     
     # Install Tomcat 9.
-    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.gz
-    tar xzf apache-tomcat-9.0.76.tar.gz -C /opt/tomcat --strip-components=1
-    rm apache-tomcat-9.0.76.tar.gz
+    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.82/bin/apache-tomcat-9.0.82.tar.gz
+    tar xzf apache-tomcat-9.0.82.tar.gz -C /opt/tomcat --strip-components=1
+    rm apache-tomcat-9.0.82.tar.gz
     
     chgrp -R tomcat /opt/tomcat
     chmod -R g+r /opt/tomcat/conf
