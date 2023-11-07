@@ -172,18 +172,11 @@ if [ ! -f /etc/guacamole/guacd.conf ]; then
     copyOrDownload guacd.conf /etc/guacamole/guacd.conf 0755
 fi
 
-## Make sure there's a folder available where Guacamole can write its PID file.
-#if [ ! -d /run/guacd ]; then
-#    mkdir /run/guacd
-#    chown daemon:daemon /run/guacd
-#fi
-
 # Make sure the Guacamole user-mapping file exists - download our example file if there's no file there already.
 if [ ! -f /etc/guacamole/user-mapping.xml ]; then
     copyOrDownload user-mapping.xml /etc/guacamole/user-mapping.xml 0755
 fi
 chown www-data:www-data /etc/guacamole/user-mapping.xml
-
 
 # Make sure the Remote Gateway RaspberryPis file exists - create a new blank file if not already.
 if [ ! -f /etc/remote-gateway/raspberryPis.csv ]; then
