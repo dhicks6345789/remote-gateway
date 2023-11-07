@@ -34,7 +34,7 @@ def runAndLog(theParameters):
 # component of Windows) and set up a private key for authorisation. Place that private key at /etc/remote-gateway/id_rsa.
 # Replace the IP address in the line below with the address / name of your server.
 runAndLog(["ssh", "-i", "/etc/remote-gateway/id_rsa", "-o", "StrictHostKeyChecking=no", "administrator@192.168.1.112", "-t", "net user " + username + " " + password + " /ADD /Y"])
-runAndLog(["ssh", "-i", "/etc/remote-gateway/id_rsa", "-o", "StrictHostKeyChecking=no", "administrator@192.168.1.112", "-t", "net user + " username + " /passwordneverexpires /logonpasswordchg:no"])
+runAndLog(["ssh", "-i", "/etc/remote-gateway/id_rsa", "-o", "StrictHostKeyChecking=no", "administrator@192.168.1.112", "-t", "net user " + username + " /passwordneverexpires /logonpasswordchg:no"])
 runAndLog(["ssh", "-i", "/etc/remote-gateway/id_rsa", "-o", "StrictHostKeyChecking=no", "administrator@192.168.1.112", "-t", "net localgroup \"Remote Desktop Users\" " + username + " /ADD"])
 # Return the new username and password to the calling CGI script.
 print(username + "," + password)
