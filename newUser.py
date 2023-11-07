@@ -1,5 +1,5 @@
 # This script is run whenever a user not listed in /etc/guacamole/user-mapping.xml logs in. If, for instance, you have your Cloudflare Zero Trust application
-# set up to allow all users in your domain to log in but you don't want to have to pre-create accounts for every user onyour domain, you can have this script
+# set up to allow all users in your domain to log in but you don't want to have to pre-create accounts for every user on your domain, you can have this script
 # create accounts as needed. Uncomment the section you want to use.
 
 import os
