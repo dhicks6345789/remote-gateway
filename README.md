@@ -43,7 +43,7 @@ You'll need to provide one value:
 You can also provide an optional value:
 - A page title for the HTML page used to display the remote desktop. This generally gets used by browsers as a tab title, will simply default to "Guacamole" if not defined.
 
-This script starts up Itiligent's [script]https://github.com/itiligent/Guacamole-Setup), which will ask you for some further values.
+This script starts up Itiligent's [script](https://github.com/itiligent/Guacamole-Setup), which will ask you for some further values.
 
 The script will take a little while to run - it downloads and installs various components as it goes along, it might take half an hour or so.
 
