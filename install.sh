@@ -240,4 +240,5 @@ echo "Starting Tomcat..."
 systemctl start tomcat
 
 echo "Starting Guacamole server..."
+systemctl enable guacd
 systemctl start guacd
